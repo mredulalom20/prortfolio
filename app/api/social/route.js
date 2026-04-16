@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 
 const PLATFORMS = ["facebook", "instagram", "linkedin", "behance", "pinterest"];
 
 // GET all social links
 export async function GET() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("social_links")
     .select("*")
     .in("platform", PLATFORMS);
@@ -23,7 +23,7 @@ export async function POST(req) {
     .filter(([k]) => PLATFORMS.includes(k))
     .map(([platform, url]) => ({ platform, url: url || "" }));
 
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from("social_links")
     .upsert(rows, { onConflict: "platform" });
 

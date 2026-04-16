@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 
 const SAMPLE_BLOGS = [
   {
@@ -47,11 +47,11 @@ const SAMPLE_BLOGS = [
 export async function GET() {
   // Seed sample blogs if table is empty
   try {
-    const { data: existing } = await supabase.from("blogs").select("id").limit(1);
+    const { data: existing } = await supabaseAdmin.from("blogs").select("id").limit(1);
     if (!existing || existing.length === 0) {
-      await supabase.from("blogs").insert(SAMPLE_BLOGS);
+      await supabaseAdmin.from("blogs").insert(SAMPLE_BLOGS);
     }
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("blogs")
       .select("*")
       .eq("published", true)
@@ -66,7 +66,7 @@ export async function GET() {
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { data, error } = await supabase.from("blogs").insert([body]).select().single();
+    const { data, error } = await supabaseAdmin.from("blogs").insert([body]).select().single();
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json(data, { status: 201 });
   } catch (e) {

@@ -1,9 +1,9 @@
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
 // GET all reviews
 export async function GET() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("reviews")
     .select("*")
     .order("created_at", { ascending: false });
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req) {
   const body = await req.json();
   const { name, role, message, avatar_url, published } = body;
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("reviews")
     .insert([{ name, role, message, avatar_url: avatar_url || "", published: published ?? true }])
     .select();
@@ -26,7 +26,7 @@ export async function POST(req) {
 // DELETE review
 export async function DELETE(req) {
   const { id } = await req.json();
-  const { error } = await supabase.from("reviews").delete().eq("id", id);
+  const { error } = await supabaseAdmin.from("reviews").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });
 }
@@ -34,7 +34,7 @@ export async function DELETE(req) {
 // PATCH toggle publish
 export async function PATCH(req) {
   const { id, published } = await req.json();
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("reviews")
     .update({ published })
     .eq("id", id)

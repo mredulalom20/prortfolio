@@ -1,9 +1,9 @@
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
 // GET all contact submissions
 export async function GET() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("contacts")
     .select("*")
     .order("created_at", { ascending: false });
@@ -18,7 +18,7 @@ export async function POST(req) {
   if (!name || !email || !message) {
     return NextResponse.json({ error: "Name, email and message are required." }, { status: 400 });
   }
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("contacts")
     .insert([{ name, email, service: service || "", message, read: false }])
     .select();
@@ -29,7 +29,7 @@ export async function POST(req) {
 // PATCH mark as read/unread
 export async function PATCH(req) {
   const { id, read } = await req.json();
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("contacts")
     .update({ read })
     .eq("id", id)
@@ -41,7 +41,7 @@ export async function PATCH(req) {
 // DELETE a contact
 export async function DELETE(req) {
   const { id } = await req.json();
-  const { error } = await supabase.from("contacts").delete().eq("id", id);
+  const { error } = await supabaseAdmin.from("contacts").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });
 }

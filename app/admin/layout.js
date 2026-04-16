@@ -1,25 +1,48 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useEffect } from "react";
 import Link from "next/link";
+import { supabaseBrowser } from "@/lib/supabaseClient";
 
 export default function AdminLayout({ children }) {
-  const { data: session, status } = useSession();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    } else if (session && session.user.role !== "admin") {
-      router.push("/");
-    }
-  }, [status, session, router]);
+    let active = true;
 
-  if (status === "loading") return <div className="min-h-screen text-white flex items-center justify-center">Loading...</div>;
-  if (!session) return null;
+    supabaseBrowser.auth.getSession().then(({ data }) => {
+      if (!active) return;
+      const nextUser = data.session?.user || null;
+      setUser(nextUser);
+      setLoading(false);
+
+      if (!nextUser) {
+        router.push("/login");
+      } else if (nextUser.user_metadata?.role && nextUser.user_metadata.role !== "admin") {
+        router.push("/");
+      }
+    });
+
+    const { data: listener } = supabaseBrowser.auth.onAuthStateChange((_event, session) => {
+      const nextUser = session?.user || null;
+      setUser(nextUser);
+      if (!nextUser) {
+        router.push("/login");
+      }
+    });
+
+    return () => {
+      active = false;
+      listener.subscription.unsubscribe();
+    };
+  }, [router]);
+
+  if (loading) return <div className="min-h-screen text-white flex items-center justify-center">Loading...</div>;
+  if (!user) return null;
 
   const navLinks = [
     { name: "Dashboard",    href: "/admin",          icon: "dashboard" },
@@ -59,8 +82,8 @@ export default function AdminLayout({ children }) {
           })}
         </nav>
 
-        <button 
-          onClick={() => signOut()}
+        <button
+          onClick={() => supabaseBrowser.auth.signOut()}
           className="flex items-center gap-3 p-3 rounded-xl hover:bg-red-500/10 text-red-400 mt-auto transition-all"
         >
           <span className="material-symbols-outlined">logout</span>
