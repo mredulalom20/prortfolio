@@ -15,6 +15,8 @@ const categories = [
 export default function ProjectManagement() {
   const [projects, setProjects] = useState([]);
   const [view, setView] = useState("list"); // 'list', 'create', 'edit'
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   
   // Form State
   const [formData, setFormData] = useState({ 
@@ -41,17 +43,44 @@ export default function ProjectManagement() {
   const handleSave = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
+    setSuccess("");
     try {
       const res = await fetch("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });
+      const data = await res.json();
       if(res.ok) {
-        setView("list");
+        setSuccess("Project saved successfully!");
+        setTimeout(() => setView("list"), 800);
+      } else {
+        setError(data?.error || `Error ${res.status}: Failed to save project.`);
       }
-    } catch(e) {}
+    } catch(e) {
+      setError("Network error. Please try again.");
+    }
     setLoading(false);
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this project? This cannot be undone.")) return;
+    try {
+      const res = await fetch("/api/projects", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id })
+      });
+      if (res.ok) {
+        fetchProjects();
+      } else {
+        const data = await res.json();
+        alert(data?.error || "Failed to delete project.");
+      }
+    } catch(e) {
+      alert("Network error. Please try again.");
+    }
   };
 
   const handleImageUpload = async (e, field, isArray = false) => {
@@ -68,8 +97,12 @@ export default function ProjectManagement() {
         } else {
           setFormData({ ...formData, [field]: data.url });
         }
+      } else {
+        setError(data?.error || "Image upload failed.");
       }
-    } catch(e) {}
+    } catch(e) {
+      setError("Image upload failed. Check your connection.");
+    }
   };
 
   const setAdditional = (key, val) => {
@@ -81,66 +114,78 @@ export default function ProjectManagement() {
       <div className="max-w-4xl">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-black">{view === "create" ? "Add New Project" : "Edit Project"}</h1>
-          <button onClick={() => setView("list")} className="px-4 py-2 border border-white/10 rounded-lg hover:bg-white/5 transition-all text-sm font-bold">
+          <button onClick={() => { setView("list"); setError(""); }} className="px-4 py-2 border border-white/10 rounded-lg hover:bg-white/5 transition-all text-sm font-bold">
             Back to List
           </button>
         </div>
+
+        {error && (
+          <div className="mb-4 bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm flex items-start gap-2">
+            <span className="material-symbols-outlined text-base mt-0.5">error</span>
+            {error}
+          </div>
+        )}
+        {success && (
+          <div className="mb-4 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
+            <span className="material-symbols-outlined text-base">check_circle</span>
+            {success}
+          </div>
+        )}
         
         <form onSubmit={handleSave} className="space-y-6 bg-surface p-8 rounded-2xl border border-white/5">
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2 col-span-2">
               <label className="text-sm font-bold text-slate-300">Category</label>
-              <select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="w-full bg-slate-900 border-white/10 rounded-xl p-3 focus:border-primary focus:ring-1 text-white appearance-none">
+              <select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 focus:border-primary focus:outline-none text-white appearance-none">
                 {categories.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
             
             <div className="space-y-2 col-span-2 md:col-span-1">
               <label className="text-sm font-bold text-slate-300">Project Title</label>
-              <input type="text" required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full bg-slate-900 border-white/10 rounded-xl p-3 focus:border-primary focus:ring-1 text-white" />
+              <input type="text" required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 focus:border-primary focus:outline-none text-white" />
             </div>
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-bold text-slate-300">Description</label>
-            <textarea required value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-slate-900 border-white/10 rounded-xl p-3 text-white" rows="3" />
+            <textarea required value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white" rows="3" />
           </div>
 
-          {/* Dynamic Fields based on Category */}
           <div className="p-6 bg-white/5 rounded-xl border border-white/10 space-y-4">
             <h3 className="text-primary font-bold mb-4 tracking-wider text-sm uppercase">Category Specific Fields</h3>
             
-            {/* Graphic Design & UI/UX get Gallery */}
             {(formData.category === "Graphic Design Projects" || formData.category === "UI/UX Design") && (
               <div className="space-y-2 mb-4">
                 <label className="text-sm font-bold text-slate-300">Image Gallery Upload</label>
                 <div className="flex flex-col gap-4">
-                  <input type="file" onChange={e => handleImageUpload(e, "images", true)} className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary cursor-pointer" />
+                  <input type="file" accept="image/*" onChange={e => handleImageUpload(e, "images", true)} className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary cursor-pointer" />
                   <div className="flex gap-2 flex-wrap">
                     {formData.images.map((img, i) => (
-                      <img key={i} src={img} className="h-16 w-16 object-cover rounded shadow border border-white/20" />
+                      <div key={i} className="relative group">
+                        <img src={img} className="h-16 w-16 object-cover rounded shadow border border-white/20" />
+                        <button type="button" onClick={() => setFormData({...formData, images: formData.images.filter((_, idx) => idx !== i)})} className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">x</button>
+                      </div>
                     ))}
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Single App/Thumbnail Image */}
             {(formData.category === "Meta Ads / Marketing Proof" || formData.category === "CMS Projects" || formData.category === "WordPress Plugins & Themes" || formData.category === "Landing Page Bundles") && (
               <div className="space-y-2 mb-4">
                 <label className="text-sm font-bold text-slate-300">Preview Image / Screenshot</label>
-                 <div className="flex items-center gap-4">
-                    <input type="file" onChange={e => handleImageUpload(e, "thumbnail", false)} className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary cursor-pointer" />
-                    {formData.thumbnail && <img src={formData.thumbnail} alt="preview" className="h-12 w-12 rounded object-cover" />}
+                <div className="flex items-center gap-4">
+                  <input type="file" accept="image/*" onChange={e => handleImageUpload(e, "thumbnail", false)} className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary cursor-pointer" />
+                  {formData.thumbnail && <img src={formData.thumbnail} alt="preview" className="h-12 w-12 rounded object-cover" />}
                 </div>
               </div>
             )}
 
-            {/* External Links */}
             {(formData.category === "UI/UX Design") && (
               <div className="space-y-2">
                 <label className="text-sm font-bold text-slate-300">Figma / Dribbble Link (Optional)</label>
-                <input type="url" value={formData.externalLink} onChange={e => setFormData({...formData, externalLink: e.target.value})} className="w-full bg-slate-900 border-white/10 rounded-xl p-3 text-white" />
+                <input type="url" value={formData.externalLink} onChange={e => setFormData({...formData, externalLink: e.target.value})} className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white" />
               </div>
             )}
             
@@ -148,14 +193,14 @@ export default function ProjectManagement() {
               <>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-300">Sub Category</label>
-                  <select value={formData.additionalFields.subCategory || "WordPress"} onChange={e => setAdditional("subCategory", e.target.value)} className="w-full bg-slate-900 border-white/10 rounded-xl p-3 text-white appearance-none">
+                  <select value={formData.additionalFields.subCategory || "WordPress"} onChange={e => setAdditional("subCategory", e.target.value)} className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white appearance-none">
                     <option>WordPress</option>
                     <option>Shopify</option>
                   </select>
                 </div>
                 <div className="space-y-2 mt-4">
                   <label className="text-sm font-bold text-slate-300">Live URL</label>
-                  <input type="url" value={formData.externalLink} onChange={e => setFormData({...formData, externalLink: e.target.value})} className="w-full bg-slate-900 border-white/10 rounded-xl p-3 text-white" />
+                  <input type="url" value={formData.externalLink} onChange={e => setFormData({...formData, externalLink: e.target.value})} className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white" />
                 </div>
               </>
             )}
@@ -163,12 +208,12 @@ export default function ProjectManagement() {
             {(formData.category === "WordPress Plugins & Themes" || formData.category === "Landing Page Bundles") && (
               <div className="space-y-2">
                 <label className="text-sm font-bold text-slate-300">Download / Demo Link</label>
-                <input type="url" value={formData.externalLink} onChange={e => setFormData({...formData, externalLink: e.target.value})} className="w-full bg-slate-900 border-white/10 rounded-xl p-3 text-white" />
+                <input type="url" value={formData.externalLink} onChange={e => setFormData({...formData, externalLink: e.target.value})} className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white" />
               </div>
             )}
           </div>
 
-          <button disabled={loading} type="submit" className="bg-primary hover:bg-primary/90 text-background-dark font-black py-3 px-8 rounded-xl transition-all disabled:opacity-50">
+          <button disabled={loading} type="submit" className="bg-primary hover:bg-primary/90 text-background-dark font-black py-3 px-8 rounded-xl transition-all disabled:opacity-50 flex items-center gap-2">
             {loading ? "Saving..." : "Save Project"}
           </button>
         </form>
@@ -180,7 +225,15 @@ export default function ProjectManagement() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-black">Projects Catalog</h1>
-        <button onClick={() => { setView("create"); setFormData({ title: "", description: "", category: categories[0], thumbnail: "", images: [], externalLink: "", additionalFields: {} }); }} className="bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-6 rounded-lg transition-all flex items-center gap-2 text-sm shadow-lg shadow-primary/20">
+        <button
+          onClick={() => {
+            setView("create");
+            setError("");
+            setSuccess("");
+            setFormData({ title: "", description: "", category: categories[0], thumbnail: "", images: [], externalLink: "", additionalFields: {} });
+          }}
+          className="bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-6 rounded-lg transition-all flex items-center gap-2 text-sm shadow-lg shadow-primary/20"
+        >
           <span className="material-symbols-outlined text-lg">add</span> Add Project
         </button>
       </div>
@@ -204,9 +257,20 @@ export default function ProjectManagement() {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-right">
-                  <button className="text-primary hover:text-white transition-colors" onClick={() => { setFormData(p); setView("edit"); }}>
-                    <span className="material-symbols-outlined text-lg">edit</span>
-                  </button>
+                  <div className="flex items-center justify-end gap-2">
+                    <button
+                      className="text-primary hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5"
+                      onClick={() => { setFormData(p); setView("edit"); setError(""); setSuccess(""); }}
+                    >
+                      <span className="material-symbols-outlined text-lg">edit</span>
+                    </button>
+                    <button
+                      className="text-red-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-red-500/20"
+                      onClick={() => handleDelete(p.id)}
+                    >
+                      <span className="material-symbols-outlined text-lg">delete</span>
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

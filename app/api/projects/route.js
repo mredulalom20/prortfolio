@@ -33,3 +33,17 @@ export async function POST(request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(request) {
+  try {
+    const { id } = await request.json();
+    if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
+
+    const { error } = await supabaseAdmin.from('projects').delete().eq('id', id);
+    if (error) throw error;
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
