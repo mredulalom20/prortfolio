@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CMS Development | Mobarak Hossain Rinku</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#C6A75E",
+                    "background-light": "#f6f8f8",
+                    "background-dark": "#121212",
+                    "surface": "#1A1A1A",
+                    "muted": "#94A3B8",
+                },
+                fontFamily: { "display": ["Inter", "sans-serif"] },
+                borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+            },
+        },
+    }
+</script>
+<style>
+    body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+    .glass-nav { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .service-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .service-card:hover { transform: translateY(-6px); border-color: rgba(198, 167, 94, 0.3); }
+    .process-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .process-card:hover { transform: translateY(-4px); border-color: rgba(198, 167, 94, 0.3); }
+    .portfolio-item img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+    .portfolio-item:hover img { transform: scale(1.1); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease; padding-top: 0; }
+    .faq-answer.open { max-height: 200px; padding-top: 1rem; }
+    .faq-icon { transition: transform 0.3s ease; }
+    .faq-icon.rotated { transform: rotate(180deg); }
+    .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(8px); transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+    .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .mobile-menu.open { transform: translateX(0); }
+    .cta-shimmer { position: relative; overflow: hidden; }
+    .cta-shimmer::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); animation: shimmer 4s ease-in-out infinite; }
+    @keyframes shimmer { 0% { left: -100%; } 50%, 100% { left: 100%; } }
+    .counter-value { display: inline-block; }
+    .floating-card { animation: floatCard 6s ease-in-out infinite; }
+    @keyframes floatCard { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300">
+
+<!-- Glassmorphism Navbar -->
+<nav class="fixed top-0 left-0 right-0 z-50 glass-nav">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 group cursor-pointer">
+            <div class="size-10 bg-primary rounded-lg flex items-center justify-center">
+                <span class="text-background-dark font-black text-xl">M</span>
+            </div>
+            <h2 class="text-xl font-extrabold tracking-tight dark:text-white">MHR</h2>
+        </a>
+        <div class="hidden md:flex items-center gap-10">
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="/">Home</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="/about">About</a>
+            <div class="dropdown relative">
+                <button class="text-sm font-medium text-primary border-b-2 border-primary pb-1 flex items-center gap-1">Services <span class="material-symbols-outlined text-base">expand_more</span></button>
+                <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56">
+                    <div class="bg-surface border border-white/10 rounded-xl shadow-2xl shadow-black/40 overflow-hidden p-2">
+                        <a href="/graphic-design" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">brush</span><span class="text-sm font-medium">Graphic Design</span></a>
+                        <a href="/ui-design" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">layers</span><span class="text-sm font-medium">UI/UX Design</span></a>
+                        <a href="/meta-ads" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">ads_click</span><span class="text-sm font-medium">Meta Ads</span></a>
+                        <a href="/wordpress-dev" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/5 text-primary"><span class="material-symbols-outlined text-primary text-xl">terminal</span><span class="text-sm font-medium">CMS Dev</span></a>
+                    </div>
+                </div>
+            </div>
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html#portfolio">Portfolio</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html#testimonials">Testimonials</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html#contact">Contact</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="index.html#contact" class="hidden sm:block bg-primary hover:bg-primary/90 text-background-dark font-bold py-2.5 px-6 rounded-lg text-sm transition-all shadow-lg shadow-primary/20">Hire Me</a>
+            <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 p-2">
+                <span class="w-6 h-0.5 bg-white transition-all" id="bar1"></span>
+                <span class="w-6 h-0.5 bg-white transition-all" id="bar2"></span>
+                <span class="w-6 h-0.5 bg-white transition-all" id="bar3"></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 bg-background-dark/95 backdrop-blur-xl pt-24 px-8">
+    <div class="flex flex-col gap-6 text-2xl font-bold">
+        <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="/">Home</a>
+        <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="/about">About</a>
+        <div class="py-2 border-b border-white/5">
+            <span class="text-primary">Services</span>
+            <div class="flex flex-col gap-2 mt-3 ml-4 text-lg">
+                <a class="hover:text-primary transition-colors flex items-center gap-2" href="/graphic-design"><span class="material-symbols-outlined text-primary text-xl">brush</span> Graphic Design</a>
+                <a class="hover:text-primary transition-colors flex items-center gap-2" href="/ui-design"><span class="material-symbols-outlined text-primary text-xl">layers</span> UI/UX Design</a>
+                <a class="hover:text-primary transition-colors flex items-center gap-2" href="/meta-ads"><span class="material-symbols-outlined text-primary text-xl">ads_click</span> Meta Ads</a>
+                <a class="text-primary flex items-center gap-2" href="/wordpress-dev"><span class="material-symbols-outlined text-xl">terminal</span> CMS Dev</a>
+            </div>
+        </div>
+        <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="index.html#portfolio">Portfolio</a>
+        <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="index.html#contact">Contact</a>
+        <a href="index.html#contact" class="bg-primary text-background-dark font-bold py-4 px-8 rounded-xl text-lg text-center mt-4 shadow-lg shadow-primary/20">Hire Me</a>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<section class="relative pt-32 pb-32 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(198, 167, 94,0.1)_0%,_transparent_60%)] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-6 relative">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8 reveal">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    WordPress Specialist
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9]">
+                    High-Performance <span class="text-primary">CMS Web Design.</span>
+                </h1>
+                <p class="text-xl text-slate-400 max-w-xl leading-relaxed">
+                    I build scalable, secure, and custom-tailored web solutions for WordPress and Shopify that prioritize speed and user experience. Say goodbye to slow themes and hello to bespoke performance.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="index.html#contact" class="bg-primary hover:bg-primary/90 text-background-dark font-bold py-4 px-8 rounded-xl text-lg transition-all flex items-center gap-2 shadow-lg shadow-primary/20">
+                        Start Your Project <span class="material-symbols-outlined">arrow_forward</span>
+                    </a>
+                    <a href="#portfolio" class="border-2 border-slate-700 hover:border-primary text-slate-100 font-bold py-4 px-8 rounded-xl text-lg transition-all">
+                        View Work
+                    </a>
+                </div>
+            </div>
+            <div class="relative reveal">
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- WordPress Logo Card -->
+                    <div class="relative">
+                        <div class="group bg-surface rounded-2xl border border-white/10 p-10 flex flex-col items-center justify-center aspect-square hover:border-primary/40 transition-all duration-500 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(198, 167, 94,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="relative z-10 flex flex-col items-center">
+                                <svg class="w-24 h-24 mb-6 text-white group-hover:text-primary transition-colors duration-500" viewBox="0 0 122.52 122.523" xmlns="http://www.w3.org/2000/svg">
+                                    <g fill="currentColor">
+                                        <path d="m8.708 61.26c0 20.802 12.089 38.779 29.619 47.298l-25.069-68.686c-2.916 6.536-4.55 13.769-4.55 21.388z"/>
+                                        <path d="m96.74 58.608c0-6.495-2.333-10.993-4.334-14.494-2.664-4.329-5.161-7.995-5.161-12.324 0-4.831 3.664-9.328 8.825-9.328.233 0 .454.029.681.042-9.35-8.566-21.807-13.796-35.489-13.796-18.36 0-34.513 9.42-43.91 23.688 1.233.037 2.395.063 3.382.063 5.497 0 14.006-.668 14.006-.668 2.833-.167 3.167 3.994.337 4.329 0 0-2.847.335-6.015.501l19.138 56.925 11.501-34.493-8.188-22.434c-2.83-.166-5.511-.501-5.511-.501-2.832-.166-2.5-4.496.332-4.329 0 0 8.679.668 13.843.668 5.496 0 14.006-.668 14.006-.668 2.835-.167 3.168 3.994.337 4.329 0 0-2.853.335-6.015.501l18.992 56.494 5.242-17.517c2.272-7.269 4.001-12.49 4.001-16.989z"/>
+                                        <path d="m62.184 65.857-15.768 45.819c4.708 1.384 9.687 2.141 14.846 2.141 6.12 0 11.989-1.058 17.452-2.979-.14-.225-.269-.464-.374-.724z"/>
+                                        <path d="m107.376 36.046c.226 1.674.354 3.471.354 5.404 0 5.333-.996 11.328-3.996 18.824l-16.053 46.449c15.624-9.111 26.133-26.038 26.133-45.463.001-9.541-2.468-18.51-6.438-26.214z"/>
+                                        <path d="m61.262 0c-33.779 0-61.262 27.481-61.262 61.26 0 33.783 27.483 61.263 61.262 61.263 33.778 0 61.265-27.48 61.265-61.263-.005-33.779-27.487-61.26-61.265-61.26zm0 119.715c-32.23 0-58.453-26.223-58.453-58.455 0-32.23 26.222-58.451 58.453-58.451 32.229 0 58.45 26.221 58.45 58.451 0 32.232-26.221 58.455-58.45 58.455z"/>
+                                    </g>
+                                </svg>
+                                <span class="text-lg font-bold text-white group-hover:text-primary transition-colors duration-500">WordPress</span>
+                                <span class="text-xs text-muted mt-1">Custom Development</span>
+                            </div>
+                        </div>
+                        <!-- Small PageSpeed Badge next to WordPress card -->
+                        <div class="floating-card absolute -bottom-4 -left-4 bg-surface px-4 py-3 rounded-lg border border-primary/30 shadow-xl z-10">
+                            <div class="flex items-center gap-2">
+                                <div class="bg-primary/20 p-1.5 rounded-md text-primary"><span class="material-symbols-outlined text-base">speed</span></div>
+                                <div>
+                                    <div class="text-lg font-black text-primary leading-none">98%</div>
+                                    <div class="text-[9px] text-slate-500 uppercase tracking-wider">PageSpeed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Shopify Logo Card -->
+                    <div class="group bg-surface rounded-2xl border border-white/10 p-10 flex flex-col items-center justify-center aspect-square hover:border-primary/40 transition-all duration-500 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(198, 167, 94,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <svg class="w-24 h-24 mb-6 text-white group-hover:text-primary transition-colors duration-500" viewBox="0 0 109.5 124.5" xmlns="http://www.w3.org/2000/svg">
+                                <g fill="currentColor">
+                                    <path d="M95.6 20.7c-.1-.6-.6-1-1.1-1-.5 0-10.2-.8-10.2-.8s-6.7-6.7-7.5-7.5c-.8-.8-2.3-.5-2.9-.4-.1 0-1.5.5-4 1.2C67.6 5.8 63.5 0 54.6 0c-.4 0-.8 0-1.2.1C51.1-2.7 48-3.5 45.3-3.5c-12.2 0-18 15.3-19.8 23.1-4.7 1.4-8 2.5-8.4 2.6-2.6.8-2.7.9-3 3.4-.2 1.9-7.1 54.8-7.1 54.8L54.8 89l36.9-8S95.7 21.3 95.6 20.7zM69 13.5l-5.4 1.7c0-1.7-.1-3.8-.5-5.8C66.2 10.2 68.1 12.2 69 13.5zm-9-4.9c.4 2.2.5 5.3.4 7.2l-11 3.4c2.1-8.2 6.1-12.2 9.7-13C59.6 7 59.8 7.8 60 8.6zm-4.9-5.5c.6 0 1.2.2 1.8.6C52 5.6 47 12 45.2 22.5l-8.7 2.7C39 16.6 44.4 3.1 55.1 3.1z"/>
+                                    <path d="M94.5 19.7c-.5 0-10.2-.8-10.2-.8s-6.7-6.7-7.5-7.5c-.3-.3-.7-.4-1-.5l-5.2 106.1 36.9-8S95.6 21.3 95.5 20.7c-.1-.6-.5-1-1-1z" opacity=".5"/>
+                                    <path d="M54.6 40.4L50 55.5s-5-2.4-10.9-2.4c-8.8 0-9.2 5.5-9.2 6.9 0 7.6 19.8 10.5 19.8 28.3 0 14-8.9 23-20.8 23-14.4 0-21.7-8.9-21.7-8.9l3.8-12.7s7.6 6.5 14 6.5c4.2 0 5.9-3.3 5.9-5.7 0-9.9-16.2-10.4-16.2-26.7 0-13.7 9.9-27 29.8-27 7.7.1 11.5 2.2 11.5 2.2z" fill="#fff"/>
+                                </g>
+                            </svg>
+                            <span class="text-lg font-bold text-white group-hover:text-primary transition-colors duration-500">Shopify</span>
+                            <span class="text-xs text-muted mt-1">E-commerce Solutions</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Floating Sites Card -->
+                <div class="floating-card absolute -top-4 -right-4 bg-surface px-4 py-3 rounded-lg border border-primary/30 shadow-xl z-10" style="animation-delay: -3s;">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-primary/20 p-1.5 rounded-md text-primary"><span class="material-symbols-outlined text-base">web</span></div>
+                        <div>
+                            <div class="text-lg font-black text-primary leading-none">150+</div>
+                            <div class="text-[9px] text-slate-500 uppercase tracking-wider">Sites Launched</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Overview Section -->
+<section class="py-24 bg-slate-900/50">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+            <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Core Expertise</h2>
+            <h3 class="text-4xl md:text-5xl font-black">Technical Excellence Across the <span class="text-primary">WordPress Ecosystem</span></h3>
+            <p class="text-slate-400 mt-4 text-lg">Focused on delivering lightweight, performant, and custom-coded solutions — no bloated page builders.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="service-card p-8 bg-surface rounded-2xl border border-white/5 group reveal" style="transition-delay:0.1s">
+                <div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl">palette</span>
+                </div>
+                <h4 class="text-2xl font-bold mb-3">Custom Themes</h4>
+                <p class="text-muted leading-relaxed">Bespoke themes built from scratch with lightweight code for WordPress and Shopify. No bloated builders—just pure performance and pixel-perfect design.</p>
+            </div>
+            <div class="service-card p-8 bg-surface rounded-2xl border border-white/5 group reveal" style="transition-delay:0.2s">
+                <div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl">shopping_cart</span>
+                </div>
+                <h4 class="text-2xl font-bold mb-3">Shopify Solutions</h4>
+                <p class="text-muted leading-relaxed">High-converting, custom Shopify stores with seamless app integrations, advanced liquid coding, and optimized checkout experiences.</p>
+            </div>
+            <div class="service-card p-8 bg-surface rounded-2xl border border-white/5 group reveal" style="transition-delay:0.3s">
+                <div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl">bolt</span>
+                </div>
+                <h4 class="text-2xl font-bold mb-3">SEO & Speed</h4>
+                <p class="text-muted leading-relaxed">90+ Core Web Vitals scores guaranteed on any CMS. Technical SEO setup that ensures your WordPress or Shopify site ranks where it belongs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Metrics Counters -->
+<section class="py-20 border-y border-white/5 reveal">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-12 text-center">
+            <div>
+                <p class="text-5xl font-black text-white mb-2"><span class="counter-value" data-target="98" data-suffix="%">0</span></p>
+                <p class="text-primary font-bold uppercase tracking-widest text-xs">Avg. PageSpeed</p>
+            </div>
+            <div>
+                <p class="text-5xl font-black text-white mb-2"><span class="counter-value" data-target="150" data-suffix="+">0</span></p>
+                <p class="text-primary font-bold uppercase tracking-widest text-xs">Sites Launched</p>
+            </div>
+            <div>
+                <p class="text-5xl font-black text-white mb-2"><span class="counter-value" data-target="2" data-suffix="x">0</span></p>
+                <p class="text-primary font-bold uppercase tracking-widest text-xs">SEO Growth</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-16 reveal">
+            <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">The Workflow</h2>
+            <h3 class="text-4xl md:text-5xl font-black">A Transparent 4-Step <span class="text-primary">Process</span></h3>
+            <p class="text-slate-400 mt-4 text-lg max-w-2xl">Designed for clarity, speed, and exceptional results every time.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="process-card relative p-6 rounded-2xl bg-surface border border-white/5 group reveal" style="transition-delay:0.05s">
+                <div class="absolute top-3 right-4 text-5xl font-black text-white/[0.03] select-none italic">01</div>
+                <div class="size-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-2xl">search_check</span>
+                </div>
+                <h4 class="font-bold text-lg mb-2 text-primary">Planning</h4>
+                <p class="text-xs text-muted leading-relaxed">Discovery phase to understand goals, user personas, and technical requirements.</p>
+            </div>
+            <div class="process-card relative p-6 rounded-2xl bg-surface border border-white/5 group reveal" style="transition-delay:0.1s">
+                <div class="absolute top-3 right-4 text-5xl font-black text-white/[0.03] select-none italic">02</div>
+                <div class="size-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-2xl">code</span>
+                </div>
+                <h4 class="font-bold text-lg mb-2 text-primary">Development</h4>
+                <p class="text-xs text-muted leading-relaxed">Agile coding phase focusing on clean architecture and responsive implementation.</p>
+            </div>
+            <div class="process-card relative p-6 rounded-2xl bg-surface border border-white/5 group reveal" style="transition-delay:0.15s">
+                <div class="absolute top-3 right-4 text-5xl font-black text-white/[0.03] select-none italic">03</div>
+                <div class="size-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-2xl">bug_report</span>
+                </div>
+                <h4 class="font-bold text-lg mb-2 text-primary">QA & Testing</h4>
+                <p class="text-xs text-muted leading-relaxed">Rigorous cross-browser testing, security audits, and performance benchmarks.</p>
+            </div>
+            <div class="process-card relative p-6 rounded-2xl bg-surface border border-white/5 group reveal" style="transition-delay:0.2s">
+                <div class="absolute top-3 right-4 text-5xl font-black text-white/[0.03] select-none italic">04</div>
+                <div class="size-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-2xl">rocket_launch</span>
+                </div>
+                <h4 class="font-bold text-lg mb-2 text-primary">Launch</h4>
+                <p class="text-xs text-muted leading-relaxed">Smooth deployment, final optimization, and post-launch support training.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Section -->
+<section class="py-24 bg-slate-900/50" id="portfolio">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Portfolio</h2>
+            <h3 class="text-4xl md:text-5xl font-black">Recent <span class="text-primary">Projects</span></h3>
+            <p class="text-slate-400 mt-4 text-lg">High-impact websites built on the world's most popular CMS.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface border border-white/5 reveal">
+                <img alt="Nexus Corp Global - Corporate Portal" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiiuNx68yEDVvpEANsKWZDqSMa1a6jFrT05r-52uaKYTL-K-ftu9AuXJZO4YHIyCaBQUKEp_kXq7HU0gXTABW2phVJbh0L66YeAZCEjlH4s2-JOC5frM04714WTwarOCgPZxfLsciTxMzFN7O8BOqDTsnoAcy8oNLdrC0eYIOmfogu9SF7hGBAYRSjZXli0eOzaTCqx6M41oVHHVqRAO2QeFxkloPkp0Cv5Ro9UiAgib3BshNjHhRef_Qs2xZ2DngBdEzDKPnaKDvY"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">WordPress</span>
+                    <h4 class="text-2xl font-bold">Nexus Corp Global</h4>
+                    <p class="text-slate-300 text-sm mt-2">Custom corporate portal with multi-language support and internal dashboard integration.</p>
+                    <a href="#" class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Site <span class="material-symbols-outlined text-base">arrow_forward</span></a>
+                </div>
+            </div>
+            <div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface border border-white/5 reveal">
+                <img alt="Ethereal Boutique - Shopify Store" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvYPdFYAyZyhvpWkUtjPSYRzrYEZiwRm29oP1GKnNnH6AvPJcc8cFd0bUOcsQGwso7MZXzm8cvNTdnCyhwDJzX3AbD-fR0UgdHJi64ygdMjc9beonHDB2h_4hDn7o_JSvBZZOcQDBHtVReZirKyX-jTmh2JyJ1RT3THy6YJ7-VWQHjDiXM0dLomMY17ztdLTF-e9fyqYqQ_FAv-jqSOAYlokhRbaSC0xEgRAMIXHRrOCZOcX4Yk8CGDNDTaBZyvdbgU3qg-bBTTyaM"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Shopify</span>
+                    <h4 class="text-2xl font-bold">Ethereal Boutique</h4>
+                    <p class="text-slate-300 text-sm mt-2">High-end fashion e-commerce store with custom product filtering and fast checkout.</p>
+                    <a href="#" class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Site <span class="material-symbols-outlined text-base">arrow_forward</span></a>
+                </div>
+            </div>
+            <div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface border border-white/5 reveal">
+                <img alt="TechPulse Insights - News Platform" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwpbcmmRFCVTWniK8mjn_C1dFFvziUgqgj7IkgP67IMs43_Xfk7tWa_E3ml4esKD9N1kt_KfV1VjvpIjz-AZaG9Fn_VDE5C5rTdOhtfTTauoEQ7-bswhWvlooLwulNCiuEbnfudjd7XD-wbz2ZncTygAA6I08TpJFrO4rL4nokqimPR-uS21TJ3KQ0mm3B3GvT3GMnEmNb9IpOLkcX-P2y9ZhIqFiJbnbzQA8Sw9xC7oaKvrrUVOjr3Jij-WE2LldFOgRHsMZWtNST"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">WordPress</span>
+                    <h4 class="text-2xl font-bold">TechPulse Insights</h4>
+                    <p class="text-slate-300 text-sm mt-2">News and media platform optimized for core web vitals and high traffic volume.</p>
+                    <a href="#" class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Site <span class="material-symbols-outlined text-base">arrow_forward</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products / Downloads Section -->
+<section class="py-24" id="products">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">My Products</h2>
+            <h3 class="text-4xl md:text-5xl font-black">Plugins, Themes & <span class="text-primary">Downloads</span></h3>
+            <p class="text-slate-400 mt-4 text-lg max-w-2xl mx-auto">Handcrafted WordPress plugins, themes, and Shopify themes built for performance and real-world use.</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap gap-2 justify-center mb-12" id="product-filters">
+            <button onclick="filterProducts('all')" data-filter="all" class="prod-filter active px-5 py-2 rounded-full text-sm font-bold bg-primary text-background-dark transition-all">All</button>
+            <button onclick="filterProducts('WordPress Plugin')" data-filter="WordPress Plugin" class="prod-filter px-5 py-2 rounded-full text-sm font-bold border border-white/10 text-muted hover:border-primary hover:text-white transition-all">WP Plugins</button>
+            <button onclick="filterProducts('WordPress Theme')" data-filter="WordPress Theme" class="prod-filter px-5 py-2 rounded-full text-sm font-bold border border-white/10 text-muted hover:border-primary hover:text-white transition-all">WP Themes</button>
+            <button onclick="filterProducts('Shopify Theme')" data-filter="Shopify Theme" class="prod-filter px-5 py-2 rounded-full text-sm font-bold border border-white/10 text-muted hover:border-primary hover:text-white transition-all">Shopify Themes</button>
+        </div>
+
+        <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-surface rounded-2xl border border-white/5 h-64 animate-pulse"></div>
+            <div class="bg-surface rounded-2xl border border-white/5 h-64 animate-pulse"></div>
+            <div class="bg-surface rounded-2xl border border-white/5 h-64 animate-pulse"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+.prod-filter.active { background-color: #C6A75E; color: #121212; border-color: transparent; }
+.prod-filter:not(.active) { background: transparent; }
+.product-card { transition: transform 0.3s ease, border-color 0.3s ease; }
+.product-card:hover { transform: translateY(-6px); border-color: rgba(198,167,94,0.4); }
+</style>
+
+<script>
+let allProducts = [];
+
+async function loadProducts() {
+    const grid = document.getElementById('products-grid');
+    try {
+        const res = await fetch('/api/products');
+        allProducts = await res.json();
+        if (!Array.isArray(allProducts) || allProducts.length === 0) {
+            grid.innerHTML = '<p class="col-span-3 text-center text-muted py-16 text-lg">No products available yet. Check back soon!</p>';
+            return;
+        }
+        renderProducts(allProducts);
+    } catch(e) {
+        grid.innerHTML = '<p class="col-span-3 text-center text-muted py-16">Could not load products.</p>';
+    }
+}
+
+function renderProducts(products) {
+    const grid = document.getElementById('products-grid');
+    if (products.length === 0) {
+        grid.innerHTML = '<p class="col-span-3 text-center text-muted py-16">No products in this category.</p>';
+        return;
+    }
+    const catColors = { 'WordPress Plugin': '#3b82f6', 'WordPress Theme': '#a855f7', 'Shopify Theme': '#22c55e', 'Other': '#888' };
+    grid.innerHTML = products.map(p => `
+        <div class="product-card bg-surface rounded-2xl border border-white/5 overflow-hidden flex flex-col">
+            ${p.cover_url
+                ? `<div class="aspect-video overflow-hidden"><img src="${p.cover_url}" alt="${p.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"/></div>`
+                : `<div class="aspect-video bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center"><span class="material-symbols-outlined text-primary/40 text-6xl">extension</span></div>`
+            }
+            <div class="p-6 flex flex-col flex-1">
+                <div class="flex items-start justify-between gap-3 mb-3">
+                    <div>
+                        <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:${catColors[p.category] || '#888'}22;color:${catColors[p.category] || '#888'}">${p.category}</span>
+                        ${p.badge ? `<span class="ml-2 text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold">${p.badge}</span>` : ''}
+                    </div>
+                </div>
+                <h4 class="text-lg font-black text-white mb-2">${p.title}</h4>
+                <p class="text-muted text-sm leading-relaxed mb-5 flex-1">${p.description.substring(0,120)}${p.description.length > 120 ? '...' : ''}</p>
+                <a href="${p.action_url}" target="_blank" rel="noopener noreferrer"
+                   class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-sm transition-all
+                          ${p.action_type === 'download'
+                              ? 'bg-primary hover:bg-primary/90 text-background-dark shadow-lg shadow-primary/20'
+                              : 'border border-primary text-primary hover:bg-primary/5'}">
+                    <span class="material-symbols-outlined text-base">${p.action_type === 'download' ? 'download' : 'open_in_new'}</span>
+                    ${p.action_type === 'download' ? 'Download Free' : 'Visit / View'}
+                </a>
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterProducts(category) {
+    document.querySelectorAll('.prod-filter').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === category);
+    });
+    if (category === 'all') renderProducts(allProducts);
+    else renderProducts(allProducts.filter(p => p.category === category));
+}
+
+loadProducts();
+</script>
+
+<!-- FAQ Section -->
+<section class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-16">
+            <div class="reveal">
+                <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">FAQ</h2>
+                <h3 class="text-4xl md:text-5xl font-black mb-8">Frequently Asked <span class="text-primary">Questions</span></h3>
+                <div class="space-y-4">
+                    <div class="faq-item bg-surface rounded-2xl border border-white/5 overflow-hidden">
+                        <div class="flex justify-between items-center cursor-pointer p-6 faq-toggle">
+                            <h4 class="font-bold text-lg">WordPress vs. Shopify: Which one should I choose?</h4>
+                            <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+                        </div>
+                        <div class="faq-answer px-6 pb-6">
+                            <p class="text-muted leading-relaxed">It depends on your business goals. WordPress (with WooCommerce) offers ultimate flexibility and ownership, while Shopify is a powerful, managed platform ideal for scaling e-commerce quickly with less technical overhead.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-surface rounded-2xl border border-white/5 overflow-hidden">
+                        <div class="flex justify-between items-center cursor-pointer p-6 faq-toggle">
+                            <h4 class="font-bold text-lg">Can you help with CMS migrations?</h4>
+                            <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+                        </div>
+                        <div class="faq-answer px-6 pb-6">
+                            <p class="text-muted leading-relaxed">Yes! I specialize in seamless migrations between platforms (e.g., WordPress to Shopify or vice versa), ensuring your SEO rankings, customer data, and product catalogs remain intact.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-surface rounded-2xl border border-white/5 overflow-hidden">
+                        <div class="flex justify-between items-center cursor-pointer p-6 faq-toggle">
+                            <h4 class="font-bold text-lg">How long does a typical custom site take?</h4>
+                            <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+                        </div>
+                        <div class="faq-answer px-6 pb-6">
+                            <p class="text-muted leading-relaxed">A standard custom CMS site typically takes 4–8 weeks from discovery to launch, depending on complexity, platform choice, and specific feature requirements.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-surface rounded-2xl border border-white/5 overflow-hidden">
+                        <div class="flex justify-between items-center cursor-pointer p-6 faq-toggle">
+                            <h4 class="font-bold text-lg">Do you offer post-launch maintenance?</h4>
+                            <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+                        </div>
+                        <div class="faq-answer px-6 pb-6">
+                            <p class="text-muted leading-relaxed">Absolutely. I offer ongoing maintenance packages covering plugin updates, security monitoring, performance optimization, and content updates to keep your site running smoothly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CTA -->
+            <div class="reveal">
+                <div class="cta-shimmer bg-primary rounded-3xl p-10 md:p-12 h-full flex flex-col justify-center relative">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-white/20 rounded-full -mr-24 -mt-24 blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 bg-black/10 rounded-full -ml-16 -mb-16 blur-2xl"></div>
+                    <div class="relative z-10">
+                        <h2 class="text-3xl md:text-4xl font-black text-background-dark mb-6 leading-tight">Ready to scale your business?</h2>
+                        <p class="text-background-dark/80 text-lg font-medium mb-8">Let's build a WordPress site that doesn't just look good but performs like a powerhouse.</p>
+                        <a href="index.html#contact" class="bg-background-dark text-primary hover:bg-slate-900 px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-3 transition-all shadow-xl w-fit">
+                            Start Your Project <span class="material-symbols-outlined">rocket_launch</span>
+                        </a>
+                        <div class="mt-8 flex items-center gap-4">
+                            <div class="flex -space-x-2">
+                                <div class="w-10 h-10 rounded-full border-2 border-primary bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuApFUbG6QmfD-g7mTPjgJlQ8qgBamCzPxEX4j6bHqv000MLmqk6HT9QvLJoaJqYqGr7fi9SUEFWAxvRK6BxlUXUpEAiwVWkIdoLwtgJyjlxbNKsSullgWWrsFGRCv3UbeO5SvYEJOWgdx5SORdk65MJdwuPsZd35TvZE_wo8dcWw6K0h-VGAHZ8SvzGIxZL5VAg-6boc5TRWDz5yh_vC4ZWL3nscDtmq_gAJBlu_f0sg-7R506_0sLRD2O9eNTposIWlHH5Acyr39Qj');"></div>
+                                <div class="w-10 h-10 rounded-full border-2 border-primary bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdG67xxCLRA3udDijwIC18AgaVq43hOXvGRyPEwRG82vZIBbPC_i7E7ZZc081ZfOXNdJ2vPyQZFyG6g0dXrBsV0I4ILDmwzxTT8l7UvciGqUlSkStB5ogXWDUNAM0qKYusm48HQGGhyKbAgS9RUaWEDjPYbD_6UaDR52HtH6sOrsBFH7WsL7AHUaU_d_8ZNTjWvdVz0rd_BaUGjsxWPEKppzOjvGzUlrTpwImjlwfjtdfKdp9qcWCP14TOd8l2SkYMgCgBPhD7Yuju');"></div>
+                                <div class="w-10 h-10 rounded-full border-2 border-primary bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBUn5oXhz-gGYiWmYQARjeltN2Fv_DUB6A0Zq1YjQfQtjKzrk2h2VaB10Q3KgFRFV8cG2AU5selVi5ZhkLtlCGJ3Pa3LmSispRAiEpzwEu13yQWE5Fq5YZ6lUKWCQZSZglsMdVq7LRXeTbVkA7ZmKroMXiQDYKsLgoE5JsM1clCwZKJpMIxDLbWRpvuJNOsbkth7Zi41w4tAVcHZvoK2z56yj6OJXJGD2wWOpVwj8ro7VXeNqFy2WIkY42KRgIHF8WiXvyNNMl8sXCp');"></div>
+                            </div>
+                            <span class="text-sm font-bold text-background-dark">Join 150+ launched sites</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-slate-200 dark:border-slate-800 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-12 mb-12">
+            <div class="col-span-2">
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+                        <span class="text-background-dark font-bold">M</span>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight">Mobarak<span class="text-primary text-2xl">.</span></span>
+                </div>
+                <p class="text-slate-400 max-w-sm mb-6">A results-driven designer specialized in building digital experiences that matter.</p>
+                <div class="flex gap-3 flex-wrap" id="footer-social-icons">
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/facebook/C6A75E" class="w-5 h-5" alt="fb"/></a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/instagram/C6A75E" class="w-5 h-5" alt="ig"/></a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/linkedin/C6A75E" class="w-5 h-5" alt="li"/></a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/behance/C6A75E" class="w-5 h-5" alt="be"/></a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/pinterest/C6A75E" class="w-5 h-5" alt="pi"/></a>
+                </div>
+                <script>
+                (function(){
+                  const platforms = ["facebook","instagram","linkedin","behance","pinterest"];
+                  const icons = document.getElementById('footer-social-icons');
+                  if(!icons) return;
+                  fetch('/api/social').then(r=>r.json()).then(data=>{
+                    const links = platforms.map(p=>({key:p,url:data[p]||''}));
+                    icons.innerHTML = links.map(({key,url})=>{
+                      const active = url && url.length > 0;
+                      return `<a href="${active?url:'#'}" ${active?'target="_blank" rel="noopener noreferrer"':''} title="${key}" class="w-11 h-11 rounded-full flex items-center justify-center border transition-all duration-300 ${active?'bg-primary/10 border-primary/30 hover:bg-primary hover:scale-110 cursor-pointer':'bg-white/5 border-white/10 opacity-30 cursor-default'}">
+                        <img src="https://cdn.simpleicons.org/${key}/C6A75E" class="w-5 h-5" alt="${key}"/>
+                      </a>`;
+                    }).join('');
+                  }).catch(()=>{});
+                })();
+                </script>
+            </div>
+            <div>
+                <h5 class="font-bold mb-6">Services</h5>
+                <ul class="space-y-4 text-slate-400">
+                    <li><a class="hover:text-primary transition-colors" href="/ui-design">UI/UX Design</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="/graphic-design">Graphic Design</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="/meta-ads">Meta Ads</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="/wordpress-dev">CMS Dev</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold mb-6">Company</h5>
+                <ul class="space-y-4 text-slate-400">
+                    <li><a class="hover:text-primary transition-colors" href="/about">About Me</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="index.html#testimonials">Testimonials</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="index.html#contact">Contact</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+            <p>© 2024 Mobarak Hossain Rinku. All rights reserved.</p>
+            <p>Designed with passion and precision.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Scroll reveal
+    function revealOnScroll() {
+        document.querySelectorAll('.reveal').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('active');
+        });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // Counter animation
+    let countersAnimated = false;
+    function animateCounters() {
+        if (countersAnimated) return;
+        const counters = document.querySelectorAll('.counter-value');
+        if (!counters.length) return;
+        const first = counters[0];
+        if (first.getBoundingClientRect().top < window.innerHeight - 50) {
+            countersAnimated = true;
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const suffix = counter.getAttribute('data-suffix') || '';
+                const duration = 2000;
+                const startTime = performance.now();
+                function update(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const val = target <= 10 ? (target * eased).toFixed(1) : Math.round(target * eased);
+                    counter.textContent = val + suffix;
+                    if (progress < 1) requestAnimationFrame(update);
+                }
+                requestAnimationFrame(update);
+            });
+        }
+    }
+    window.addEventListener('scroll', animateCounters);
+    window.addEventListener('load', animateCounters);
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const answer = toggle.nextElementSibling;
+            const icon = toggle.querySelector('.faq-icon');
+            const isOpen = answer.classList.contains('open');
+            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('rotated'));
+            if (!isOpen) { answer.classList.add('open'); icon.classList.add('rotated'); }
+        });
+    });
+
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const bar1 = document.getElementById('bar1');
+    const bar2 = document.getElementById('bar2');
+    const bar3 = document.getElementById('bar3');
+    let menuOpen = false;
+    mobileMenuBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open');
+        bar1.style.transform = menuOpen ? 'rotate(45deg) translate(4px, 4px)' : '';
+        bar2.style.opacity = menuOpen ? '0' : '1';
+        bar3.style.transform = menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuOpen = false; mobileMenu.classList.remove('open');
+            bar1.style.transform = ''; bar2.style.opacity = '1'; bar3.style.transform = '';
+        });
+    });
+
+    // Navbar shadow
+    window.addEventListener('scroll', () => {
+        document.querySelector('nav').style.boxShadow = window.scrollY > 50 ? '0 10px 40px rgba(0,0,0,0.3)' : 'none';
+    });
+</script>
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/8801786029947" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20bd5a] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-[#25D366]/30 hover:scale-110 transition-all duration-300 group" aria-label="Chat on WhatsApp">
+    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-ping"></span>
+    <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full"></span>
+</a>
+</body></html>

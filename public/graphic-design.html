@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Graphic Design Services | Mobarak Hossain Rinku</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#C6A75E",
+                    "background-light": "#f6f8f8",
+                    "background-dark": "#121212",
+                    "surface": "#1A1A1A",
+                    "muted": "#94A3B8",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        scroll-behavior: smooth;
+    }
+    .glass-nav {
+        background: rgba(18, 18, 18, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Scroll reveal */
+    .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* Process card hover */
+    .process-card {
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .process-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(198, 167, 94, 0.3);
+    }
+
+    /* Portfolio hover */
+    .portfolio-item img {
+        transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .portfolio-item:hover img { transform: scale(1.1); }
+
+    /* FAQ accordion */
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+        padding-top: 0;
+    }
+    .faq-answer.open {
+        max-height: 200px;
+        padding-top: 1rem;
+    }
+    .faq-icon { transition: transform 0.3s ease; }
+    .faq-icon.rotated { transform: rotate(180deg); }
+
+    /* Hero glow */
+    .hero-glow {
+        background: radial-gradient(ellipse at top left, rgba(198, 167, 94, 0.1) 0%, transparent 60%);
+    }
+
+    /* CTA shimmer */
+    .cta-section { position: relative; overflow: hidden; }
+    .cta-section::after {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%; width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+        animation: shimmer 4s ease-in-out infinite;
+    }
+    @keyframes shimmer { 0% { left: -100%; } 50%, 100% { left: 100%; } }
+
+    /* Mobile menu */
+    .mobile-menu {
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+
+    /* Services dropdown */
+    .dropdown-menu {
+        opacity: 0; visibility: hidden; transform: translateY(8px);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dropdown:hover .dropdown-menu {
+        opacity: 1; visibility: visible; transform: translateY(0);
+    }
+
+    /* Number step glow */
+    .step-number {
+        background: linear-gradient(135deg, rgba(198, 167, 94,0.15), transparent);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300">
+
+<!-- Glassmorphism Navbar -->
+<nav class="fixed top-0 left-0 right-0 z-50 glass-nav">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 group cursor-pointer">
+            <div class="size-10 bg-primary rounded-lg flex items-center justify-center">
+                <span class="text-background-dark font-black text-xl">M</span>
+            </div>
+            <h2 class="text-xl font-extrabold tracking-tight dark:text-white">MHR</h2>
+        </a>
+        <div class="hidden md:flex items-center gap-10">
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="/">Home</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="/about">About</a>
+            <div class="dropdown relative">
+                <button class="text-sm font-medium text-primary border-b-2 border-primary pb-1 flex items-center gap-1">Services <span class="material-symbols-outlined text-base">expand_more</span></button>
+                <div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56">
+                    <div class="bg-surface border border-white/10 rounded-xl shadow-2xl shadow-black/40 overflow-hidden p-2">
+                        <a href="/graphic-design" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/5 text-primary"><span class="material-symbols-outlined text-primary text-xl">brush</span><span class="text-sm font-medium">Graphic Design</span></a>
+                        <a href="/ui-design" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">layers</span><span class="text-sm font-medium">UI/UX Design</span></a>
+                        <a href="/meta-ads" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">ads_click</span><span class="text-sm font-medium">Meta Ads</span></a>
+                        <a href="/wordpress-dev" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">terminal</span><span class="text-sm font-medium">CMS Dev</span></a>
+                    </div>
+                </div>
+            </div>
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html#portfolio">Portfolio</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html#testimonials">Testimonials</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="index.html#contact">Contact</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="index.html#contact" class="hidden sm:block bg-primary hover:bg-primary/90 text-background-dark font-bold py-2.5 px-6 rounded-lg text-sm transition-all shadow-lg shadow-primary/20">
+                Hire Me
+            </a>
+            <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 p-2">
+                <span class="w-6 h-0.5 bg-white transition-all" id="bar1"></span>
+                <span class="w-6 h-0.5 bg-white transition-all" id="bar2"></span>
+                <span class="w-6 h-0.5 bg-white transition-all" id="bar3"></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 bg-background-dark/95 backdrop-blur-xl pt-24 px-8">
+    <div class="flex flex-col gap-6 text-2xl font-bold">
+        <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="/">Home</a>
+        <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="/about">About</a>
+        <div class="py-2 border-b border-white/5">
+            <span class="text-primary">Services</span>
+            <div class="flex flex-col gap-2 mt-3 ml-4 text-lg">
+                <a class="text-primary flex items-center gap-2" href="/graphic-design"><span class="material-symbols-outlined text-xl">brush</span> Graphic Design</a>
+                <a class="hover:text-primary transition-colors flex items-center gap-2" href="/ui-design"><span class="material-symbols-outlined text-primary text-xl">layers</span> UI/UX Design</a>
+                <a class="hover:text-primary transition-colors flex items-center gap-2" href="/meta-ads"><span class="material-symbols-outlined text-primary text-xl">ads_click</span> Meta Ads</a>
+                <a class="hover:text-primary transition-colors flex items-center gap-2" href="/wordpress-dev"><span class="material-symbols-outlined text-primary text-xl">terminal</span> CMS Dev</a>
+            </div>
+        </div>
+        <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="index.html#portfolio">Portfolio</a>
+        <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="index.html#contact">Contact</a>
+        <a href="index.html#contact" class="bg-primary text-background-dark font-bold py-4 px-8 rounded-xl text-lg text-center mt-4 shadow-lg shadow-primary/20">Hire Me</a>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<section class="relative pt-32 pb-32 overflow-hidden">
+    <div class="absolute inset-0 hero-glow pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-6 relative">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8 reveal">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    Professional Design Solutions
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9]">
+                    Graphic Design <span class="text-primary">Services.</span>
+                </h1>
+                <p class="text-xl text-slate-400 leading-relaxed max-w-xl">
+                    Crafting visual identities that resonate and scale. I transform complex ideas into compelling brand stories through strategic design and creative excellence.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="index.html#contact" class="bg-primary hover:bg-primary/90 text-background-dark font-bold py-4 px-8 rounded-xl text-lg transition-all flex items-center gap-2 shadow-lg shadow-primary/20">
+                        Start Your Project
+                        <span class="material-symbols-outlined">arrow_outward</span>
+                    </a>
+                    <a href="index.html#contact" class="border-2 border-slate-700 hover:border-primary text-slate-100 font-bold py-4 px-8 rounded-xl text-lg transition-all">
+                        Book Consultation
+                    </a>
+                </div>
+            </div>
+            <!-- Adobe Creative Suite Logos -->
+            <div class="relative reveal">
+                <div class="grid grid-cols-3 gap-4">
+                    <!-- Photoshop -->
+                    <div class="group bg-surface rounded-2xl border border-white/10 p-6 flex flex-col items-center justify-center aspect-square hover:border-[#31A8FF]/40 transition-all duration-500 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(49,168,255,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div class="w-16 h-16 mb-3 rounded-xl bg-[#001E36] flex items-center justify-center border border-[#31A8FF]/30 group-hover:border-[#31A8FF] transition-colors duration-500">
+                                <span class="text-[#31A8FF] font-black text-2xl">Ps</span>
+                            </div>
+                            <span class="text-sm font-bold text-white group-hover:text-[#31A8FF] transition-colors duration-500">Photoshop</span>
+                        </div>
+                    </div>
+                    <!-- Illustrator -->
+                    <div class="group bg-surface rounded-2xl border border-white/10 p-6 flex flex-col items-center justify-center aspect-square hover:border-[#FF9A00]/40 transition-all duration-500 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,154,0,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div class="w-16 h-16 mb-3 rounded-xl bg-[#330000] flex items-center justify-center border border-[#FF9A00]/30 group-hover:border-[#FF9A00] transition-colors duration-500">
+                                <span class="text-[#FF9A00] font-black text-2xl">Ai</span>
+                            </div>
+                            <span class="text-sm font-bold text-white group-hover:text-[#FF9A00] transition-colors duration-500">Illustrator</span>
+                        </div>
+                    </div>
+                    <!-- InDesign -->
+                    <div class="group bg-surface rounded-2xl border border-white/10 p-6 flex flex-col items-center justify-center aspect-square hover:border-[#FF3366]/40 transition-all duration-500 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,51,102,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div class="w-16 h-16 mb-3 rounded-xl bg-[#49021F] flex items-center justify-center border border-[#FF3366]/30 group-hover:border-[#FF3366] transition-colors duration-500">
+                                <span class="text-[#FF3366] font-black text-2xl">Id</span>
+                            </div>
+                            <span class="text-sm font-bold text-white group-hover:text-[#FF3366] transition-colors duration-500">InDesign</span>
+                        </div>
+                    </div>
+                    <!-- Lightroom -->
+                    <div class="group bg-surface rounded-2xl border border-white/10 p-6 flex flex-col items-center justify-center aspect-square hover:border-[#31A8FF]/40 transition-all duration-500 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(49,168,255,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div class="w-16 h-16 mb-3 rounded-xl bg-[#001D34] flex items-center justify-center border border-[#31A8FF]/30 group-hover:border-[#31A8FF] transition-colors duration-500">
+                                <span class="text-[#31A8FF] font-black text-2xl">Lr</span>
+                            </div>
+                            <span class="text-sm font-bold text-white group-hover:text-[#31A8FF] transition-colors duration-500">Lightroom</span>
+                        </div>
+                    </div>
+                    <!-- Adobe XD -->
+                    <div class="group bg-surface rounded-2xl border border-white/10 p-6 flex flex-col items-center justify-center aspect-square hover:border-[#FF61F6]/40 transition-all duration-500 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,97,246,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div class="w-16 h-16 mb-3 rounded-xl bg-[#470137] flex items-center justify-center border border-[#FF61F6]/30 group-hover:border-[#FF61F6] transition-colors duration-500">
+                                <span class="text-[#FF61F6] font-black text-2xl">Xd</span>
+                            </div>
+                            <span class="text-sm font-bold text-white group-hover:text-[#FF61F6] transition-colors duration-500">Adobe XD</span>
+                        </div>
+                    </div>
+                    <!-- Projects Counter -->
+                    <div class="group bg-surface rounded-2xl border border-primary/20 p-6 flex flex-col items-center justify-center aspect-square hover:border-primary/40 transition-all duration-500 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(198, 167, 94,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div class="text-3xl font-black text-primary mb-1">500+</div>
+                            <span class="text-xs text-muted uppercase tracking-wider text-center">Projects Delivered</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Overview Section -->
+<section class="py-24 bg-slate-900/50">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="relative group reveal">
+                <div class="absolute -inset-4 bg-primary/20 rounded-2xl blur-2xl group-hover:bg-primary/30 transition-all duration-700"></div>
+                <img alt="Design Showcase" class="relative rounded-2xl shadow-2xl border border-white/10 w-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABlf8gjE040jUD0pbl9PHoztu4ltMQ6mTWaKWvzcPGfWg6LcjJ6nhxpfSTJoydGuZzSSK89L4f5NrJvUwXjzIsvVYNi8bpiFU3BhV8C3Yd0rqqzwNqlGv1h4o0ICts2eTzQzOZl3GF43YBJa_LEY3P_QswxLea1DQKhC8KdFwhEsNJ_mc5RH1zJZcEWeX1UEnC5bjDnRb67PUXp92O8sJuTLRr29fhPPXypFNnpvf4desvf2sGn0JiGdRhnF17iPy73nGp3G9t0WA1"/>
+            </div>
+            <div class="reveal">
+                <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Why Choose Me</h2>
+                <h3 class="text-4xl md:text-5xl font-black mb-6">Visual Storytelling &amp; Brand Consistency</h3>
+                <div class="space-y-6 text-slate-400 text-lg leading-relaxed">
+                    <p>In a world of noise, clarity is your biggest competitive advantage. My approach to graphic design goes beyond just "making things look good." I focus on strategic communication that aligns with your business objectives.</p>
+                    <p>Whether you're a startup looking for your first logo or an established brand needing a visual refresh, I provide comprehensive design solutions that maintain consistency across all platforms.</p>
+                    <ul class="space-y-4 pt-4">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-300 font-medium">Scalable Vector Identity Systems</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-300 font-medium">Modern Digital Asset Libraries</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">check_circle</span>
+                            <span class="text-slate-300 font-medium">Strategic Design Architecture</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Workflow</h2>
+            <h3 class="text-4xl md:text-5xl font-black">My Creative <span class="text-primary">Process</span></h3>
+            <p class="text-slate-400 max-w-2xl mx-auto mt-4 text-lg">A structured workflow designed to deliver excellence from initial idea to final pixel.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="process-card bg-surface p-8 rounded-2xl border border-white/5 relative group overflow-hidden reveal" style="transition-delay:0.1s">
+                <div class="absolute top-3 right-5 text-7xl font-black text-white/[0.03] select-none">01</div>
+                <div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl">search</span>
+                </div>
+                <h4 class="text-2xl font-bold mb-3">Discovery</h4>
+                <p class="text-muted leading-relaxed">Deep dive into your business goals, target audience, and market landscape.</p>
+            </div>
+            <div class="process-card bg-surface p-8 rounded-2xl border border-white/5 relative group overflow-hidden reveal" style="transition-delay:0.2s">
+                <div class="absolute top-3 right-5 text-7xl font-black text-white/[0.03] select-none">02</div>
+                <div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl">lightbulb</span>
+                </div>
+                <h4 class="text-2xl font-bold mb-3">Concept</h4>
+                <p class="text-muted leading-relaxed">Translating insights into initial sketches, moodboards, and design directions.</p>
+            </div>
+            <div class="process-card bg-surface p-8 rounded-2xl border border-white/5 relative group overflow-hidden reveal" style="transition-delay:0.3s">
+                <div class="absolute top-3 right-5 text-7xl font-black text-white/[0.03] select-none">03</div>
+                <div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl">auto_fix_high</span>
+                </div>
+                <h4 class="text-2xl font-bold mb-3">Refinement</h4>
+                <p class="text-muted leading-relaxed">Iterative development based on your feedback to perfect the final look.</p>
+            </div>
+            <div class="process-card bg-surface p-8 rounded-2xl border border-white/5 relative group overflow-hidden reveal" style="transition-delay:0.4s">
+                <div class="absolute top-3 right-5 text-7xl font-black text-white/[0.03] select-none">04</div>
+                <div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl">verified</span>
+                </div>
+                <h4 class="text-2xl font-bold mb-3">Delivery</h4>
+                <p class="text-muted leading-relaxed">Handing over organized, print-ready, and web-optimized source files.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Section -->
+<section class="py-24 bg-slate-900/50">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 reveal">
+            <div>
+                <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Portfolio</h2>
+                <h3 class="text-4xl md:text-5xl font-black text-white">Featured Work</h3>
+                <p class="text-slate-400 max-w-xl mt-4 text-lg">A glimpse into recent design challenges and visual solutions delivered for global clients.</p>
+            </div>
+            <div class="flex flex-wrap gap-2 p-1.5 bg-surface rounded-xl border border-white/5">
+                <button class="px-6 py-2 rounded-lg text-sm font-bold bg-primary text-background-dark transition-all">All</button>
+                <button class="px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Logo</button>
+                <button class="px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Social</button>
+                <button class="px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Print</button>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="portfolio-item group relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface border border-white/5 reveal">
+                <img class="w-full h-full object-cover" alt="Nexus Tech Identity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMYI_6Q0OSrjbcLykZR6kr56RvUmpyToRSy3fcotLxS1d7Wkrti9ejXV06mpzGKUxWdG8o52NDJSNqf9fQ21qgchKwFb_irU9qLHDtN-6bH3KO7QCo3ptxpZfdw4jH_MvzklprkE9SmcBZPSXSRMTWOOPFYCMsymOQk51M-0xjX1GdWLXl3XPu0DZE4108UvErogbSRWUplcR-zifiM1IJzfNHjnM6JvgffsZOM1AipZH9GuikQ6fIrnqFxsXmAeolFr7-pJSX1yFA"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Logo Design</span>
+                    <h4 class="text-2xl font-bold">Nexus Tech Identity</h4>
+                    <p class="text-slate-300 text-sm mt-2">Full brand ecosystem for a Silicon Valley startup.</p>
+                    <button class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">
+                        View Project <span class="material-symbols-outlined text-base">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+            <div class="portfolio-item group relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface border border-white/5 reveal">
+                <img class="w-full h-full object-cover" alt="Vibe Social Campaign" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT1RyT8rrdISNCgeAZ53bGTqXnpnL5xYmJt6Z0BG1E7uxfyaq8Mk5NskwupK5pd2vTgJJjL0cev0DDyVv9AJzmNqw-Md_WMWoO80L23yeaLWRT-zDOeWBw1JAKVc6zkPVQ8j-c_aWiOdwkCn26xjmj93gOPSzWR0c7mTRrNiQ85sych36ZJhWfb3cQDzGfSUkQlSdr0eR0DLZEtZpU9bTuMm5OtT--YqDAi5sSiihCCKrqUYZhTcQ7JNxOhrrzFUIrq60b9BAW9Zx_"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Marketing Material</span>
+                    <h4 class="text-2xl font-bold">Vibe Social Campaign</h4>
+                    <p class="text-slate-300 text-sm mt-2">Dynamic social media kit for product launch.</p>
+                    <button class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">
+                        View Project <span class="material-symbols-outlined text-base">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+            <div class="portfolio-item group relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface border border-white/5 reveal">
+                <img class="w-full h-full object-cover" alt="Luxe Packaging" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDai4WXj20X1ZEZkxmCt48A3k_By9EEtlcLvxMDBj_FOjupwvgqEVeOqRbwwTU4YPwnDRdFctleBb5Z6hOG9Ogfe7mT-dcn5p281IWCv84223opkdh5rILN7H2sbSAvDXUeVyafo5ukRZpn6yeyjo9RBx2DcZelpVa57eZOteBNY8e-vOWNp5lRzsSxqsn5yNTRk_WkpeHFibDBl8CRA1ftO4m3DTK5TeJwn5QxiuDqH19Oh_CVgTYTkWj6k73hAxfW5ipYZqvd-zqZ"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Print Media</span>
+                    <h4 class="text-2xl font-bold">Luxe Packaging</h4>
+                    <p class="text-slate-300 text-sm mt-2">Minimalist packaging for organic cosmetics line.</p>
+                    <button class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">
+                        View Project <span class="material-symbols-outlined text-base">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-24">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">FAQ</h2>
+            <h3 class="text-4xl md:text-5xl font-black">Common Questions</h3>
+        </div>
+        <div class="space-y-4 reveal">
+            <div class="faq-item bg-surface rounded-2xl border border-white/5 overflow-hidden">
+                <div class="flex justify-between items-center cursor-pointer p-6 faq-toggle">
+                    <h4 class="font-bold text-lg">What is the typical project timeline?</h4>
+                    <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+                </div>
+                <div class="faq-answer px-6 pb-6">
+                    <p class="text-muted leading-relaxed">Most graphic design projects range from 2 to 4 weeks, depending on the complexity and scope. Identity systems usually take longer than individual collateral pieces.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-surface rounded-2xl border border-white/5 overflow-hidden">
+                <div class="flex justify-between items-center cursor-pointer p-6 faq-toggle">
+                    <h4 class="font-bold text-lg">What file formats will I receive?</h4>
+                    <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+                </div>
+                <div class="faq-answer px-6 pb-6">
+                    <p class="text-muted leading-relaxed">I deliver comprehensive packages including AI, EPS, SVG for vectors, and high-res PNG/JPG for web use. For print projects, you'll receive production-ready PDFs with bleeds.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-surface rounded-2xl border border-white/5 overflow-hidden">
+                <div class="flex justify-between items-center cursor-pointer p-6 faq-toggle">
+                    <h4 class="font-bold text-lg">Do you offer unlimited revisions?</h4>
+                    <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+                </div>
+                <div class="faq-answer px-6 pb-6">
+                    <p class="text-muted leading-relaxed">Each package comes with a set number of revision rounds (typically 3). This ensures we stay focused on the project objectives while providing enough flexibility to reach perfection.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-surface rounded-2xl border border-white/5 overflow-hidden">
+                <div class="flex justify-between items-center cursor-pointer p-6 faq-toggle">
+                    <h4 class="font-bold text-lg">What's the investment for a full brand identity?</h4>
+                    <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+                </div>
+                <div class="faq-answer px-6 pb-6">
+                    <p class="text-muted leading-relaxed">Brand identity packages vary based on scope. A basic logo starts from a competitive rate, while comprehensive identity systems (logo, typography, colors, guidelines, stationery) are priced based on your specific requirements. Let's discuss your needs for an accurate quote.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="max-w-7xl mx-auto px-6 pb-24 reveal">
+    <div class="cta-section bg-primary rounded-3xl p-12 md:p-16 relative">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-black/10 rounded-full -ml-24 -mb-24 blur-2xl"></div>
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="text-center md:text-left">
+                <h2 class="text-3xl md:text-4xl font-black text-background-dark mb-4">Ready to Elevate Your Brand?</h2>
+                <p class="text-background-dark/80 text-lg font-medium">Let's collaborate to create something that drives real business growth.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="index.html#contact" class="bg-background-dark text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-900 transition-colors shadow-2xl text-center">
+                    Start Your Project
+                </a>
+                <a href="index.html#contact" class="bg-transparent border-2 border-background-dark text-background-dark px-8 py-4 rounded-xl font-bold hover:bg-background-dark hover:text-white transition-all text-center">
+                    Free Consultation
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-slate-200 dark:border-slate-800 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-12 mb-12">
+            <div class="col-span-2">
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+                        <span class="text-background-dark font-bold">M</span>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight">Mobarak<span class="text-primary text-2xl">.</span></span>
+                </div>
+                <p class="text-slate-400 max-w-sm mb-6">A results-driven designer specialized in building digital experiences that matter.</p>
+                <div class="flex gap-3 flex-wrap" id="footer-social-icons">
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/facebook/C6A75E" class="w-5 h-5" alt="fb"/></a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/instagram/C6A75E" class="w-5 h-5" alt="ig"/></a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/linkedin/C6A75E" class="w-5 h-5" alt="li"/></a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/behance/C6A75E" class="w-5 h-5" alt="be"/></a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/pinterest/C6A75E" class="w-5 h-5" alt="pi"/></a>
+                </div>
+                <script>
+                (function(){
+                  const platforms = ["facebook","instagram","linkedin","behance","pinterest"];
+                  const icons = document.getElementById('footer-social-icons');
+                  if(!icons) return;
+                  fetch('/api/social').then(r=>r.json()).then(data=>{
+                    const links = platforms.map(p=>({key:p,url:data[p]||''}));
+                    icons.innerHTML = links.map(({key,url})=>{
+                      const active = url && url.length > 0;
+                      return `<a href="${active?url:'#'}" ${active?'target="_blank" rel="noopener noreferrer"':''} title="${key}" class="w-11 h-11 rounded-full flex items-center justify-center border transition-all duration-300 ${active?'bg-primary/10 border-primary/30 hover:bg-primary hover:scale-110 cursor-pointer':'bg-white/5 border-white/10 opacity-30 cursor-default'}">
+                        <img src="https://cdn.simpleicons.org/${key}/C6A75E" class="w-5 h-5" alt="${key}"/>
+                      </a>`;
+                    }).join('');
+                  }).catch(()=>{});
+                })();
+                </script>
+            </div>
+            <div>
+                <h5 class="font-bold mb-6">Services</h5>
+                <ul class="space-y-4 text-slate-400">
+                    <li><a class="hover:text-primary transition-colors" href="/ui-design">UI/UX Design</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="/graphic-design">Graphic Design</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="/meta-ads">Meta Ads</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="/wordpress-dev">CMS Dev</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold mb-6">Company</h5>
+                <ul class="space-y-4 text-slate-400">
+                    <li><a class="hover:text-primary transition-colors" href="/about">About Me</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="index.html#testimonials">Testimonials</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="index.html#contact">Contact</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+            <p>© 2024 Mobarak Hossain Rinku. All rights reserved.</p>
+            <p>Designed with passion and precision.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Scroll reveal
+    function revealOnScroll() {
+        document.querySelectorAll('.reveal').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 80) {
+                el.classList.add('active');
+            }
+        });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const answer = toggle.nextElementSibling;
+            const icon = toggle.querySelector('.faq-icon');
+            const isOpen = answer.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('rotated'));
+            // Open clicked if it was closed
+            if (!isOpen) {
+                answer.classList.add('open');
+                icon.classList.add('rotated');
+            }
+        });
+    });
+
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const bar1 = document.getElementById('bar1');
+    const bar2 = document.getElementById('bar2');
+    const bar3 = document.getElementById('bar3');
+    let menuOpen = false;
+    mobileMenuBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open');
+        bar1.style.transform = menuOpen ? 'rotate(45deg) translate(4px, 4px)' : '';
+        bar2.style.opacity = menuOpen ? '0' : '1';
+        bar3.style.transform = menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuOpen = false;
+            mobileMenu.classList.remove('open');
+            bar1.style.transform = '';
+            bar2.style.opacity = '1';
+            bar3.style.transform = '';
+        });
+    });
+
+    // Navbar shadow on scroll
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        nav.style.boxShadow = window.scrollY > 50 ? '0 10px 40px rgba(0,0,0,0.3)' : 'none';
+    });
+</script>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/8801786029947" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20bd5a] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-[#25D366]/30 hover:scale-110 transition-all duration-300 group" aria-label="Chat on WhatsApp">
+    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-ping"></span>
+    <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full"></span>
+</a>
+</body></html>
