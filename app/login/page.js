@@ -19,6 +19,19 @@ export default function Login() {
     setMessage("");
 
     if (isSignup) {
+      // Check if email is on the invite allowlist
+      const checkRes = await fetch("/api/invitations/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const checkData = await checkRes.json();
+
+      if (!checkData.allowed) {
+        setError("Sign up is by invitation only. Please contact the admin.");
+        return;
+      }
+
       const { data, error: signUpError } = await supabaseBrowser.auth.signUp({
         email,
         password,
