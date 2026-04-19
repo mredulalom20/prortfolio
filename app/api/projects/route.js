@@ -24,11 +24,34 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    
-    const { data: project, error } = await supabaseAdmin.from('projects').insert([body]).select().single();
+    // Strip any existing id so Supabase generates a fresh one
+    const { id, created_at, ...fields } = body;
+
+    const { data: project, error } = await supabaseAdmin.from('projects').insert([fields]).select().single();
     if (error) throw error;
 
     return NextResponse.json(project, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function PUT(request) {
+  try {
+    const body = await request.json();
+    const { id, created_at, ...fields } = body;
+
+    if (!id) return NextResponse.json({ error: "ID is required for update" }, { status: 400 });
+
+    const { data: project, error } = await supabaseAdmin
+      .from('projects')
+      .update(fields)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw error;
+
+    return NextResponse.json(project, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
