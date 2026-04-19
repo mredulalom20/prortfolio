@@ -24,6 +24,7 @@ export default function Login() {
         password,
         options: {
           data: { name: name || "", role: "admin" },
+          emailRedirectTo: `${window.location.origin}/admin`
         },
       });
 

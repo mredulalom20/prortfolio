@@ -148,7 +148,7 @@ export default function BlogManagement() {
                     {blog.published ? "Published" : "Draft"}
                   </span>
                 </td>
-                <td className="px-6 py-4">{new Date(blog.createdAt).toLocaleDateString()}</td>
+                <td className="px-6 py-4">{new Date(blog.created_at).toLocaleDateString()}</td>
                 <td className="px-6 py-4 text-right">
                   <button className="text-primary hover:text-white transition-colors" onClick={() => { setFormData(blog); setView("edit"); }}>
                     <span className="material-symbols-outlined text-lg">edit</span>

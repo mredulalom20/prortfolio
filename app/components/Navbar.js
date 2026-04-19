@@ -45,6 +45,7 @@ export default function Navbar() {
             </div>
             <Link className="text-xs uppercase tracking-widest text-[#888888] hover:text-[#EDEDED] transition-colors" href="/#portfolio">Portfolio</Link>
             <Link className="text-xs uppercase tracking-widest text-[#888888] hover:text-[#EDEDED] transition-colors" href="/#testimonials">Testimonials</Link>
+            <Link className="text-xs uppercase tracking-widest text-[#888888] hover:text-[#EDEDED] transition-colors" href="/blog">Blog</Link>
             <Link className="text-xs uppercase tracking-widest text-[#888888] hover:text-[#EDEDED] transition-colors" href="/#contact">Contact</Link>
           </div>
           <div className="flex items-center gap-4">
@@ -81,6 +82,7 @@ export default function Navbar() {
             </div>
           </div>
           <Link onClick={() => setMenuOpen(false)} className="text-[#888888] hover:text-[#EDEDED] transition-colors pb-2 border-b border-white/5 uppercase text-sm tracking-widest" href="/#portfolio">Portfolio</Link>
+          <Link onClick={() => setMenuOpen(false)} className="text-[#888888] hover:text-[#EDEDED] transition-colors pb-2 border-b border-white/5 uppercase text-sm tracking-widest" href="/blog">Blog</Link>
           <Link onClick={() => setMenuOpen(false)} className="text-[#888888] hover:text-[#EDEDED] transition-colors pb-2 border-b border-white/5 uppercase text-sm tracking-widest" href="/#contact">Contact</Link>
           <Link onClick={() => setMenuOpen(false)} href="/#contact" className="border border-[#C6A75E] text-[#EDEDED] hover:bg-[#C6A75E]/5 py-4 px-8 rounded text-sm text-center tracking-widest uppercase mt-4">Hire Me</Link>
         </div>
