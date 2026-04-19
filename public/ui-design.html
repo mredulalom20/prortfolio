@@ -239,37 +239,47 @@
                 <button class="px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Web</button>
             </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/3] bg-surface border border-white/5 reveal">
-                <div class="bg-img absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBlcSMwt88rMQQC_92tTXi8xk-2guKnGW_YyjoQFoK8IEHCN5bG44UpHGotdNtAlUWE2mSAn4iYharJSse-YVjUocTWeBUhwoU7YTwuyPUqzjYB5X5-IDdIfNMEzsr9OdEYFyks18RRk7m1bklg_bOetVV_qRqxRUdz3nwLDiQNHF3gwKPQTvGL6YQ2tBdqao2BleUQ_pXcxKfQulZvBa89sCHV_WevxqKrmDJu5GgbU6Kx6As5yIGV1dL7rctBbDIBL2t-Pz_ttqSB');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
-                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Mobile App</span>
-                    <h4 class="text-2xl font-bold">Fintech Wallet Solution</h4>
-                    <p class="text-slate-300 text-sm mt-2">Digital payment platform for modern users.</p>
-                    <button class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Project <span class="material-symbols-outlined text-base">arrow_forward</span></button>
-                </div>
-            </div>
-            <div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/3] bg-surface border border-white/5 reveal">
-                <div class="bg-img absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3RwMJmTQ0JRliJIFegEkC1FYR8BkOzYNnhMcVcogwgKZj9HIg_n8uyHtYGmjVjYHOEZe-iahks2ZIfvxtDtxETvSl6RmJA5lrckSPG-Qsvr4diHHN8rh3-DsOj1ayftzbxIdD4s1nNacFmWoLQasXkeaKnhMOYNQlQAiVX23-46c-5yzLk0677Up8cMZb3hqNm0KOaDEboh4odXuFGjC2uh6wBq7sKC5-6RoU795Z-n78tnZ1MJBGn4TH0BRGvhtMOzdd4Evwjk4L');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
-                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Web Application</span>
-                    <h4 class="text-2xl font-bold">Analytics SaaS Dashboard</h4>
-                    <p class="text-slate-300 text-sm mt-2">Data visualization for marketing agencies.</p>
-                    <button class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Project <span class="material-symbols-outlined text-base">arrow_forward</span></button>
-                </div>
-            </div>
-            <div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/3] bg-surface border border-white/5 reveal">
-                <div class="bg-img absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB409kVe5CPTaNG-os-Z3XXEG9X2DIRtTH44JqxiNZ2hiKwVec_fkQ_HGE9e8XkiWsoPFjuNrfwplYMka986hJgTKd8NLjKr_mL3Ji06zH-BRUG5oZgV0beyHwOKl4edWYXgIqADxaZJpp0R0oPJEPa8iaqmpDuig3evV0KCUSyf_SEI9sYse_Rm2987Z6wk1nIQAdNf_UYgRS41Bofv7ya7eFJBNmMUBoy98ib58A9Kgx2Vat5yOVBPNBFv8kYQ2s33dwwmmtXchMi');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
-                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">E-Commerce</span>
-                    <h4 class="text-2xl font-bold">Minimalist Fashion Store</h4>
-                    <p class="text-slate-300 text-sm mt-2">High-conversion shopping experience.</p>
-                    <button class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Project <span class="material-symbols-outlined text-base">arrow_forward</span></button>
-                </div>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+            <div class="animate-pulse bg-surface rounded-2xl aspect-[4/3] border border-white/5"></div>
+            <div class="animate-pulse bg-surface rounded-2xl aspect-[4/3] border border-white/5"></div>
+            <div class="animate-pulse bg-surface rounded-2xl aspect-[4/3] border border-white/5"></div>
         </div>
     </div>
 </section>
+<script>
+(function(){
+    const grid = document.getElementById('projects-grid');
+    fetch('/api/projects?category=UI/UX Design')
+        .then(r => r.json())
+        .then(projects => {
+            if (!Array.isArray(projects) || projects.length === 0) {
+                grid.innerHTML = '<p class="text-muted col-span-3 text-center py-16 italic">No projects uploaded yet. Check back soon!</p>';
+                return;
+            }
+            grid.innerHTML = projects.map(p => {
+                const img = (p.images && p.images[0]) || p.thumbnail || '';
+                const bgHtml = img
+                    ? `<div class="bg-img absolute inset-0 bg-cover bg-center" style="background-image:url('${img}')"></div>`
+                    : `<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-surface flex items-center justify-center"><span class="material-symbols-outlined text-6xl text-primary/30">image</span></div>`;
+                const linkHtml = p.externalLink
+                    ? `<a href="${p.externalLink}" target="_blank" rel="noopener" class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Project <span class="material-symbols-outlined text-base">arrow_forward</span></a>`
+                    : '';
+                return `<div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/3] bg-surface border border-white/5">
+                    ${bgHtml}
+                    <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
+                        <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">${p.category}</span>
+                        <h4 class="text-2xl font-bold">${p.title}</h4>
+                        <p class="text-slate-300 text-sm mt-2 line-clamp-2">${p.description}</p>
+                        ${linkHtml}
+                    </div>
+                </div>`;
+            }).join('');
+        })
+        .catch(() => {
+            grid.innerHTML = '<p class="text-muted col-span-3 text-center py-16 italic">Could not load projects.</p>';
+        });
+})();
+</script>
 
 <!-- FAQ Section -->
 <section class="py-24">

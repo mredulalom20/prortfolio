@@ -277,37 +277,47 @@
             <h3 class="text-4xl md:text-5xl font-black">Ad Creative <span class="text-primary">Showcases</span></h3>
             <p class="text-slate-400 mt-4 text-lg">Winning creatives that stopped the scroll and generated millions in sales.</p>
         </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface border border-white/5 reveal">
-                <img alt="Lifestyle Brand Launch" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrsmY7HMQMDfsv3js60JCIoz6jxVZcYZ0p9plJcIXUIWW7PIR9MjoQIi730iylKDamr8LDVQL-8i6JvD1uk7t5kZV79JuEqCxxpJpiOc8f5hP3-xMX1iOPac46TwHkAwPPHnj8luWFg8TN28BbklF9TQ9SWx7m0gCgD2JjT37Q-c26W8w7ncg4zKwjOSNRGDHAuU0_8onUnRUteNxMk-CLHOR6FPJBqOF7nY74juBFMD3HgSS94YdeUcIUcUPIKKRp2JHXH8BLb76b"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
-                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">E-Commerce</span>
-                    <h4 class="text-2xl font-bold">Lifestyle Brand Launch</h4>
-                    <p class="text-slate-300 text-sm mt-2">Achieved a 6.2x ROAS within the first 30 days.</p>
-                    <a href="#" class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Case Study <span class="material-symbols-outlined text-base">arrow_forward</span></a>
-                </div>
-            </div>
-            <div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface border border-white/5 reveal">
-                <img alt="B2B Lead Generation" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVR-5HVbe8TGs0HjOqcCQl2lyr0aL9Cui6kMWlmrmwH8lLQXFKyS8eAi8zGLBZjj1YZSkd2NQcxxbEi6P2YSjRUuOz7_Df4d6rt-Ldsp0a94NwdL9CcPoqDsIe2kwxHgX0P6LeMGwG1mW_xedJNDiUyyPnwf24S9zzTaEvuFsrUcHWn2FokBnHwep4nFGtcvcq2N3Iu0IG364shjh-GyEjD5kIGSmMR4O_9XEd5D0fIYmYndj04EhFahr0TSpMkPfusNLnp9iPzS8e"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
-                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">SaaS</span>
-                    <h4 class="text-2xl font-bold">B2B Lead Generation</h4>
-                    <p class="text-slate-300 text-sm mt-2">Reduced CPL by 45% using high-intent lookalike audiences.</p>
-                    <a href="#" class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Case Study <span class="material-symbols-outlined text-base">arrow_forward</span></a>
-                </div>
-            </div>
-            <div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface border border-white/5 reveal">
-                <img alt="Mobile Gaming Launch" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4B4E_eT6a8y_eK1waipIE9j2Mc9dRiA55q5AtV9LxpHcewCMLUBbRPYgaHzkHfUyikeFjuMTQlkjYWMjmi7kg5sSkKBTXXd3M_NDA75dyB4MI2UnDzA5U0NwdUcLhr4mjod2HozuIdvRzpOxWJNEeq2uBAmbYSaJRwlEsL1wJNmxocnutOGc9Nlk0EieTOcpyHtNoXIlgx3eF4os_AkooU7huK3Hp2o0YfiB9r1gIBCWH3cLzFbBTkEWUgIAJWRiAugMKEL_cnYZO"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
-                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">App Growth</span>
-                    <h4 class="text-2xl font-bold">Mobile Gaming Launch</h4>
-                    <p class="text-slate-300 text-sm mt-2">Generated 100k+ installs at $0.85 CPI target.</p>
-                    <a href="#" class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Case Study <span class="material-symbols-outlined text-base">arrow_forward</span></a>
-                </div>
-            </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+            <div class="animate-pulse bg-surface rounded-2xl aspect-[4/5] border border-white/5"></div>
+            <div class="animate-pulse bg-surface rounded-2xl aspect-[4/5] border border-white/5"></div>
+            <div class="animate-pulse bg-surface rounded-2xl aspect-[4/5] border border-white/5"></div>
         </div>
     </div>
 </section>
+<script>
+(function(){
+    const grid = document.getElementById('projects-grid');
+    fetch('/api/projects?category=Meta Ads')
+        .then(r => r.json())
+        .then(projects => {
+            if (!Array.isArray(projects) || projects.length === 0) {
+                grid.innerHTML = '<p class="text-muted col-span-3 text-center py-16 italic">No case studies uploaded yet. Check back soon!</p>';
+                return;
+            }
+            grid.innerHTML = projects.map(p => {
+                const img = (p.images && p.images[0]) || p.thumbnail || '';
+                const bgHtml = img
+                    ? `<img src="${img}" alt="${p.title}" class="w-full h-full object-cover"/>`
+                    : `<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-surface flex items-center justify-center"><span class="material-symbols-outlined text-6xl text-primary/30">ads_click</span></div>`;
+                const linkHtml = p.externalLink
+                    ? `<a href="${p.externalLink}" target="_blank" rel="noopener" class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">View Case Study <span class="material-symbols-outlined text-base">arrow_forward</span></a>`
+                    : '';
+                return `<div class="portfolio-item group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface border border-white/5">
+                    ${bgHtml}
+                    <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
+                        <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">${p.category}</span>
+                        <h4 class="text-2xl font-bold">${p.title}</h4>
+                        <p class="text-slate-300 text-sm mt-2 line-clamp-2">${p.description}</p>
+                        ${linkHtml}
+                    </div>
+                </div>`;
+            }).join('');
+        })
+        .catch(() => {
+            grid.innerHTML = '<p class="text-muted col-span-3 text-center py-16 italic">Could not load projects.</p>';
+        });
+})();
+</script>
 
 <!-- FAQ Section -->
 <section class="py-24">
