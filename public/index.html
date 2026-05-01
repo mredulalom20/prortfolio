@@ -7,6 +7,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="/responsive.css" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -76,6 +77,13 @@
             filter: blur(3px) grayscale(1) sepia(1) saturate(3) hue-rotate(5deg);
             transition: opacity 0.3s;
         }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300">
@@ -99,6 +107,7 @@
 <a href="/ui-design" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">layers</span><span class="text-sm font-medium">UI/UX Design</span></a>
 <a href="/meta-ads" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">ads_click</span><span class="text-sm font-medium">Meta Ads</span></a>
 <a href="/wordpress-dev" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">terminal</span><span class="text-sm font-medium">CMS Dev</span></a>
+<a href="/seo" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">query_stats</span><span class="text-sm font-medium">SEO Service</span></a>
 </div>
 </div>
 </div>
@@ -131,6 +140,7 @@
 <a class="hover:text-primary transition-colors flex items-center gap-2" href="/ui-design"><span class="material-symbols-outlined text-primary text-xl">layers</span> UI/UX Design</a>
 <a class="hover:text-primary transition-colors flex items-center gap-2" href="/meta-ads"><span class="material-symbols-outlined text-primary text-xl">ads_click</span> Meta Ads</a>
 <a class="hover:text-primary transition-colors flex items-center gap-2" href="/wordpress-dev"><span class="material-symbols-outlined text-primary text-xl">terminal</span> CMS Dev</a>
+<a class="hover:text-primary transition-colors flex items-center gap-2" href="/seo"><span class="material-symbols-outlined text-primary text-xl">query_stats</span> SEO Service</a>
 </div>
 </div>
 <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="#portfolio">Portfolio</a>
@@ -138,6 +148,79 @@
 <a href="#contact" class="bg-primary text-background-dark font-bold py-4 px-8 rounded-xl text-lg text-center mt-4 shadow-lg shadow-primary/20">Hire Me</a>
 </div>
 </div>
+<script>
+function initAutoCarousel(track, interval) {
+  if (!track || track.children.length < 2) return;
+
+  if (track.dataset.carouselBound === "true") {
+    if (typeof track.__carouselRefresh === "function") {
+      track.__carouselRefresh();
+    }
+    return;
+  }
+
+  track.dataset.carouselBound = "true";
+
+  const mobileQuery = window.matchMedia("(max-width: 1023px)");
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let timer = null;
+
+  const getStep = () => {
+    const card = track.querySelector("[data-carousel-card]");
+    if (!card) return Math.max(track.clientWidth * 0.85, 280);
+
+    const styles = window.getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap || "0") || 0;
+    return card.getBoundingClientRect().width + gap;
+  };
+
+  const scrollNext = () => {
+    if (!mobileQuery.matches) return;
+
+    const maxScrollLeft = track.scrollWidth - track.clientWidth - 1;
+    if (track.scrollLeft >= maxScrollLeft) {
+      track.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+
+    track.scrollBy({ left: getStep(), behavior: "smooth" });
+  };
+
+  const stop = () => {
+    if (timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+  };
+
+  const start = () => {
+    if (reducedMotionQuery.matches || !mobileQuery.matches || timer) return;
+    timer = window.setInterval(scrollNext, interval || 3200);
+  };
+
+  const refresh = () => {
+    stop();
+    start();
+  };
+
+  track.__carouselRefresh = refresh;
+
+  track.addEventListener("mouseenter", stop);
+  track.addEventListener("mouseleave", start);
+  track.addEventListener("touchstart", stop, { passive: true });
+  track.addEventListener("touchend", start, { passive: true });
+  window.addEventListener("resize", refresh);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      stop();
+    } else {
+      refresh();
+    }
+  });
+
+  start();
+}
+</script>
 <!-- Hero Section -->
 <section class="relative min-h-screen pt-32 pb-20 overflow-hidden flex items-center" id="home">
 <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -211,14 +294,14 @@
 <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Expertise</h2>
 <h3 class="text-4xl md:text-5xl font-black">My Specialized Services</h3>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
 <!-- Service 1 -->
-<div class="service-card p-8 bg-surface rounded-2xl border border-white/5 flex flex-col gap-6">
-<div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+<a href="/graphic-design" class="service-card p-8 bg-surface rounded-2xl border border-white/5 flex flex-col gap-6 group cursor-pointer hover:no-underline transition-all duration-300">
+<div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
 <span class="material-symbols-outlined text-4xl">brush</span>
 </div>
 <div>
-<h4 class="text-2xl font-bold mb-4">Graphic Design</h4>
+<h4 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Graphic Design</h4>
 <p class="text-muted leading-relaxed mb-6">Creative branding and visual identity solutions that make your brand stand out in a crowded market.</p>
 <ul class="space-y-3 text-sm font-medium">
 <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Logo &amp; Identity</li>
@@ -226,25 +309,27 @@
 <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Social Media Assets</li>
 </ul>
 </div>
-</div>
+<span class="mt-auto flex items-center gap-1 text-primary text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Learn More <span class="material-symbols-outlined text-sm">arrow_forward</span></span>
+</a>
 <!-- Service 2 -->
-<div class="service-card p-8 bg-surface rounded-2xl border border-white/5 flex flex-col gap-6">
-<div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+<a href="/wordpress-dev" class="service-card p-8 bg-surface rounded-2xl border border-white/5 flex flex-col gap-6 group cursor-pointer hover:no-underline transition-all duration-300">
+<div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
 <span class="material-symbols-outlined text-4xl">terminal</span>
 </div>
 <div>
-<h4 class="text-2xl font-bold mb-4">CMS Web Design</h4>
+<h4 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">CMS Web Design</h4>
 <p class="text-muted leading-relaxed mb-6">Custom, high-performance website development using WordPress / Shopify focused on speed, security, and conversion.</p>
 <ul class="space-y-3 text-sm font-medium"><li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> WordPress / Shopify Dev</li><li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> E-commerce Solutions</li><li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> SEO &amp; Speed Optimization</li></ul>
 </div>
-</div>
+<span class="mt-auto flex items-center gap-1 text-primary text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Learn More <span class="material-symbols-outlined text-sm">arrow_forward</span></span>
+</a>
 <!-- Service 3 -->
-<div class="service-card p-8 bg-surface rounded-2xl border border-white/5 flex flex-col gap-6">
-<div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+<a href="/meta-ads" class="service-card p-8 bg-surface rounded-2xl border border-white/5 flex flex-col gap-6 group cursor-pointer hover:no-underline transition-all duration-300">
+<div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
 <span class="material-symbols-outlined text-4xl">ads_click</span>
 </div>
 <div>
-<h4 class="text-2xl font-bold mb-4">Meta Ads Management</h4>
+<h4 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">Meta Ads Management</h4>
 <p class="text-muted leading-relaxed mb-6">Data-driven ad campaigns designed to maximize ROI through precise targeting and optimization.</p>
 <ul class="space-y-3 text-sm font-medium">
 <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Campaign Strategy</li>
@@ -252,14 +337,15 @@
 <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Performance Analytics</li>
 </ul>
 </div>
-</div>
+<span class="mt-auto flex items-center gap-1 text-primary text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Learn More <span class="material-symbols-outlined text-sm">arrow_forward</span></span>
+</a>
 <!-- Service 4 -->
-<div class="service-card p-8 bg-surface rounded-2xl border border-white/5 flex flex-col gap-6">
-<div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+<a href="/ui-design" class="service-card p-8 bg-surface rounded-2xl border border-white/5 flex flex-col gap-6 group cursor-pointer hover:no-underline transition-all duration-300">
+<div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
 <span class="material-symbols-outlined text-4xl">layers</span>
 </div>
 <div>
-<h4 class="text-2xl font-bold mb-4">UI/UX Design</h4>
+<h4 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">UI/UX Design</h4>
 <p class="text-muted leading-relaxed mb-6">Crafting intuitive and visually stunning user interfaces that enhance user engagement and brand identity.</p>
 <ul class="space-y-3 text-sm font-medium">
 <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> User Research</li>
@@ -267,7 +353,23 @@
 <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> High-Fidelity UI Design</li>
 </ul>
 </div>
-</div></div>
+<span class="mt-auto flex items-center gap-1 text-primary text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Learn More <span class="material-symbols-outlined text-sm">arrow_forward</span></span>
+</a>
+<a href="/seo" class="service-card p-8 bg-surface rounded-2xl border border-white/5 flex flex-col gap-6 group cursor-pointer hover:no-underline transition-all duration-300">
+<div class="size-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-all duration-300">
+<span class="material-symbols-outlined text-4xl">query_stats</span>
+</div>
+<div>
+<h4 class="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">SEO Service</h4>
+<p class="text-muted leading-relaxed mb-6">Technical SEO, content strategy, and search visibility systems built to grow qualified organic traffic.</p>
+<ul class="space-y-3 text-sm font-medium">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Technical Audits</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Keyword Strategy</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> On-page Optimization</li>
+</ul>
+</div>
+<span class="mt-auto flex items-center gap-1 text-primary text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Learn More <span class="material-symbols-outlined text-sm">arrow_forward</span></span>
+</a></div>
 </div>
 </section>
 <!-- Portfolio Section -->
@@ -278,50 +380,88 @@
 <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Portfolio</h2>
 <h3 class="text-4xl md:text-5xl font-black text-white">Featured Projects</h3>
 </div>
-<div class="flex flex-wrap gap-2 p-1.5 bg-surface rounded-xl border border-white/5">
-<button class="px-6 py-2 rounded-lg text-sm font-bold bg-primary text-background-dark transition-all">All</button>
-<button class="px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Design</button>
-<button class="px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">WordPress</button>
-<button class="px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Ads</button>
+<div class="flex flex-wrap gap-2 p-1.5 bg-surface rounded-xl border border-white/5" id="portfolio-filter-bar">
+<button data-filter="all" class="portfolio-filter-btn px-6 py-2 rounded-lg text-sm font-bold bg-primary text-background-dark transition-all">All</button>
+<button data-filter="graphic-design" class="portfolio-filter-btn px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Design</button>
+<button data-filter="wordpress-dev" class="portfolio-filter-btn px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">WordPress</button>
+<button data-filter="meta-ads" class="portfolio-filter-btn px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Ads</button>
+<button data-filter="ui-design" class="portfolio-filter-btn px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">UI/UX</button>
+<button data-filter="seo" class="portfolio-filter-btn px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">SEO</button>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<!-- Project 1 -->
-<div class="group relative aspect-video bg-surface rounded-2xl overflow-hidden border border-white/5">
-<img alt="Project 1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB63Hh7t8JraM3h8upWVwcbJjfA9lI1pl3wWFF5BJNHdJrwPGVcbUHKI8MZ49FYWd-ZJWNfII9pOKIcM_mW83rn8X75XKdbvQfxplGEVCWJNlEYDpyocXtTE4t-ctDOdSUk4RQyMJdNdpTj_jGXWKalvTIjcltpuBipbLUOHBGOv9fH5OmBXVx1uXz6zwijPy3o-q0rDxb9TwnfxaWzT8e40rZceV1Ilh50-1Yed-Y4cS3fQ3ht8tV224rfMCf-fJZM68ERclTMuIzX"/>
-<div class="absolute inset-0 bg-background-dark/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm">
-<h5 class="text-xl font-bold mb-2">E-commerce Transformation</h5>
-<p class="text-muted text-sm mb-6">Full WordPress redesign &amp; Meta Ads management</p>
-<button class="bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2">
-                            View Project <span class="material-symbols-outlined text-base">arrow_forward</span>
-</button>
-</div>
-</div>
-<!-- Project 2 -->
-<div class="group relative aspect-video bg-surface rounded-2xl overflow-hidden border border-white/5">
-<img alt="Project 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-KOHKWZeDtsuLJka0iqMhJt_Xy65pItBCJzGqmU2fdVmmc-QmPqVzlP4pLkeJcPe8j_AKBwEE_szgWc8fIq9MJugYc2itbuhHZQhU-HZLSfDpQ0QMjlPptLbAyCs6WFd4hOSE9wmIaNBUjZoRqx6inkYMhoe8oeGyyCRXZO4yMT-WrUq4iE7c1gDAWBhfbD8GBoR-ft6QPY63mCkyQCY5Z17sg-nh6r0d-tYvXJMJreXpzwZSNoKE8SZgOyD3fiJmCuzEJ4ygGbBG"/>
-<div class="absolute inset-0 bg-background-dark/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm">
-<h5 class="text-xl font-bold mb-2">Luxe Brand Identity</h5>
-<p class="text-muted text-sm mb-6">Logo, typography, and visual guidelines</p>
-<button class="bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2">
-                            View Project <span class="material-symbols-outlined text-base">arrow_forward</span>
-</button>
-</div>
-</div>
-<!-- Project 3 -->
-<div class="group relative aspect-video bg-surface rounded-2xl overflow-hidden border border-white/5">
-<img alt="Project 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBB3QS9CqO3w98Ydzr-7ja8F74-BIBmRKOSEjL9Eo_KxYsR9CfiFEC-HUKhSi9PzbqKfz48VWrvqxYOopaKWOyrGDCPoMI_Paw2rVSSRFWoavul3cPJP3DUobwrMdgvdMA0l1gMAKFiorBCtDuGbVB9A7GbsUiMhqqO4r2Foenz2VXEi38zjU3eruVEeD9yDGvaH2IBcT3wFsMoV5tXcU2cmRZnMIN1u6ywW0qy2amAJeOZV3JsbExX1CEvXZo8AdkAb9U1luG3OKuL"/>
-<div class="absolute inset-0 bg-background-dark/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm">
-<h5 class="text-xl font-bold mb-2">SaaS Performance Ads</h5>
-<p class="text-muted text-sm mb-6">Scaled monthly revenue by 300% via Facebook</p>
-<button class="bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2">
-                            View Project <span class="material-symbols-outlined text-base">arrow_forward</span>
-</button>
-</div>
-</div>
+<div class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 lg:grid lg:grid-cols-3 lg:overflow-visible" id="portfolio-grid">
+<div class="animate-pulse bg-surface rounded-2xl aspect-[4/3] lg:aspect-[12/5] border border-white/5 min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 snap-center flex-shrink-0"></div>
+<div class="animate-pulse bg-surface rounded-2xl aspect-[4/3] lg:aspect-[12/5] border border-white/5 min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 snap-center flex-shrink-0"></div>
+<div class="animate-pulse bg-surface rounded-2xl aspect-[4/3] lg:aspect-[12/5] border border-white/5 min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 snap-center flex-shrink-0"></div>
 </div>
 </div>
 </section>
+<script>
+(function(){
+  let allProjects = [];
+  let activeFilter = 'all';
+
+  function renderProjects(projects) {
+    const grid = document.getElementById('portfolio-grid');
+    const filtered = activeFilter === 'all'
+      ? projects
+      : projects.filter(p => Array.isArray(p.service) && p.service.includes(activeFilter));
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<p class="text-muted col-span-3 text-center py-16 italic">No projects found in this category.</p>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map(p => {
+      const images = Array.isArray(p.images) ? p.images : [];
+      const img = images[0] || p.thumbnail || '';
+      const imgHtml = img
+        ? `<img src="${img}" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"/>`
+        : `<div class="w-full h-full bg-primary/5 flex items-center justify-center"><span class="material-symbols-outlined text-primary/30 text-6xl">image</span></div>`;
+      const linkEl = p.externalLink
+        ? `<a href="${p.externalLink}" target="_blank" rel="noopener noreferrer" class="bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2">View Project <span class="material-symbols-outlined text-base">arrow_forward</span></a>`
+        : `<a href="/projects/${p.id}" class="bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2">Case Study <span class="material-symbols-outlined text-base">arrow_forward</span></a>`;
+      const services = Array.isArray(p.service) && p.service.length > 0
+        ? `<span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">${p.service.join(' · ')}</span>`
+        : `<span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">${p.category}</span>`;
+      return `<div data-carousel-card class="preview-card group relative aspect-[4/3] lg:aspect-[12/5] bg-surface rounded-2xl overflow-hidden border border-white/5 hover:border-primary/30 transition-colors duration-300 min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 flex-shrink-0 snap-center">
+        ${imgHtml}
+        <div class="absolute inset-0 bg-background-dark/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm">
+          ${services}
+          <h5 class="text-xl font-bold mb-2">${p.title}</h5>
+          <p class="text-muted text-sm mb-6 line-clamp-2">${p.description}</p>
+          ${linkEl}
+        </div>
+      </div>`;
+    }).join('');
+
+    initAutoCarousel(grid, 3200);
+  }
+
+  // Fetch all projects once
+  fetch('/api/projects')
+    .then(r => r.json())
+    .then(data => {
+      allProjects = Array.isArray(data) ? data : [];
+      renderProjects(allProjects);
+    })
+    .catch(() => {
+      document.getElementById('portfolio-grid').innerHTML = '<p class="text-muted col-span-3 text-center py-16">Could not load projects.</p>';
+    });
+
+  // Filter buttons
+  document.querySelectorAll('.portfolio-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeFilter = btn.getAttribute('data-filter');
+      document.querySelectorAll('.portfolio-filter-btn').forEach(b => {
+        b.className = 'portfolio-filter-btn px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all';
+      });
+      btn.className = 'portfolio-filter-btn px-6 py-2 rounded-lg text-sm font-bold bg-primary text-background-dark transition-all';
+      renderProjects(allProjects);
+    });
+  });
+})();
+</script>
 <!-- Stats Section -->
 <section class="py-20 bg-primary/5 border-y border-primary/10">
 <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
@@ -350,7 +490,7 @@
 <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Testimonials</h2>
 <h3 class="text-4xl md:text-5xl font-black text-white">What Clients Say</h3>
 </div>
-<div id="testimonials-grid" class="flex flex-col lg:flex-row gap-8 items-start justify-center flex-wrap">
+<div id="testimonials-grid" class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 lg:grid lg:grid-cols-3 lg:overflow-visible">
   <div class="text-muted text-center py-10 w-full">Loading reviews...</div>
 </div>
 </div>
@@ -367,7 +507,7 @@
     }
     const published = reviews.filter(r => r.published);
     grid.innerHTML = published.map(r => `
-      <div class="max-w-xl bg-background-dark p-10 rounded-2xl border border-white/5 relative flex-1 min-w-[280px]">
+      <div data-carousel-card class="max-w-xl bg-background-dark p-10 rounded-2xl border border-white/5 relative min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 flex-shrink-0 snap-center">
         <span class="material-symbols-outlined text-primary/20 text-8xl absolute top-4 right-8 select-none">format_quote</span>
         <div class="flex items-center gap-4 mb-8">
           ${r.avatar_url
@@ -382,8 +522,53 @@
         <p class="text-slate-300 text-lg italic leading-relaxed">"${r.message}"</p>
       </div>
     `).join('');
+
+    initAutoCarousel(grid, 3600);
   } catch(e) {
     document.getElementById('testimonials-grid').innerHTML = '<p class="text-muted text-center w-full">Could not load reviews.</p>';
+  }
+})();
+</script>
+
+<!-- Our Team Section -->
+<section class="py-24 bg-background-dark" id="team">
+<div class="max-w-7xl mx-auto px-6">
+<div class="mb-16 text-center">
+<h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Our Team</h2>
+<h3 class="text-4xl md:text-5xl font-black text-white">People Behind the Work</h3>
+</div>
+<div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+  <div class="text-muted text-center py-10 col-span-full">Loading team...</div>
+</div>
+</div>
+</section>
+<script>
+(async function() {
+  try {
+    const res = await fetch('/api/team');
+    const members = await res.json();
+    const grid = document.getElementById('team-grid');
+    if (!Array.isArray(members) || members.length === 0) {
+      grid.innerHTML = '<p class="text-muted text-center col-span-full py-10">No team members yet.</p>';
+      return;
+    }
+    grid.innerHTML = members.map(member => `
+      <div class="bg-surface border border-white/5 rounded-2xl overflow-hidden group hover:border-primary/30 transition-all">
+        <div class="aspect-[4/5] bg-primary/5 overflow-hidden">
+          ${member.photo_url
+            ? `<img src="${member.photo_url}" alt="${member.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>`
+            : `<div class="w-full h-full flex items-center justify-center text-primary text-6xl font-black">${member.name?.charAt(0) || '?'}</div>`
+          }
+        </div>
+        <div class="p-6">
+          <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">${member.role || ''}</p>
+          <h4 class="text-xl font-black text-white mb-3">${member.name}</h4>
+          <p class="text-muted text-sm leading-relaxed">${member.bio || ''}</p>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {
+    document.getElementById('team-grid').innerHTML = '<p class="text-muted text-center col-span-full">Could not load team.</p>';
   }
 })();
 </script>
@@ -402,15 +587,13 @@
 </div>
 <!-- Carousel Wrapper -->
 <div class="relative overflow-hidden">
-  <div id="blog-carousel" class="flex gap-6 transition-transform duration-500 ease-in-out"></div>
+  <div id="blog-carousel" class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 lg:grid lg:grid-cols-3 lg:overflow-visible"></div>
 </div>
-<div class="flex justify-center gap-3 mt-8" id="carousel-dots"></div>
 </div>
 </section>
 <script>
 (async function() {
   const track = document.getElementById('blog-carousel');
-  const dotsContainer = document.getElementById('carousel-dots');
   try {
     const res = await fetch('/api/blogs');
     const blogs = await res.json();
@@ -421,8 +604,8 @@
     track.innerHTML = blogs.slice(0, 6).map(b => {
       const date = new Date(b.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
       const excerpt = b.content.replace(/<[^>]+>/g, '').substring(0, 100) + '...';
-      return `<a href="/blog/${b.slug}" class="flex-shrink-0 w-80 bg-surface rounded-2xl border border-white/5 overflow-hidden group hover:border-primary/30 transition-all duration-300" style="transform: translateY(0);transition:transform 0.3s,border-color 0.3s" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='translateY(0)'">
-        ${b.featuredImage ? `<div class="aspect-video overflow-hidden"><img src="${b.featuredImage}" alt="${b.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/></div>`: `<div class="aspect-video bg-primary/5 flex items-center justify-center"><span class="material-symbols-outlined text-primary/30 text-5xl">article</span></div>`}
+      return `<a data-carousel-card href="/blog/${b.slug}" class="blog-card flex-shrink-0 min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 bg-surface rounded-2xl border border-white/5 overflow-hidden group hover:border-primary/30 transition-all duration-300 snap-center" style="transform: translateY(0);transition:transform 0.3s,border-color 0.3s" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='translateY(0)'">
+        ${b.featuredImage ? `<div class="aspect-[4/3] lg:aspect-[12/5] overflow-hidden"><img src="${b.featuredImage}" alt="${b.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/></div>`: `<div class="aspect-[4/3] lg:aspect-[12/5] bg-primary/5 flex items-center justify-center"><span class="material-symbols-outlined text-primary/30 text-5xl">article</span></div>`}
         <div class="p-6">
           <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">${date}</p>
           <h4 class="font-black text-white text-lg leading-snug mb-3 group-hover:text-primary transition-colors">${b.title}</h4>
@@ -431,24 +614,8 @@
         </div>
       </a>`;
     }).join('');
-    // Dots
-    const total = Math.min(blogs.length, 6);
-    const visibleCards = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1;
-    const pages = Math.ceil(total / visibleCards);
-    let current = 0;
-    const cardWidth = 336; // 320 + 16 gap
-    for (let i = 0; i < pages; i++) {
-      const dot = document.createElement('button');
-      dot.className = `w-2 h-2 rounded-full transition-all ${i === 0 ? 'bg-primary w-6' : 'bg-white/20'}`;
-      dot.onclick = () => { current = i; moveTo(i); };
-      dotsContainer.appendChild(dot);
-    }
-    function moveTo(idx) {
-      track.style.transform = `translateX(-${idx * visibleCards * cardWidth}px)`;
-      dotsContainer.querySelectorAll('button').forEach((d, i) => {
-        d.className = `w-2 h-2 rounded-full transition-all ${i === idx ? 'bg-primary w-6' : 'bg-white/20'}`;
-      });
-    }
+
+    initAutoCarousel(track, 3000);
   } catch(e) {
     track.innerHTML = '<p class="text-muted py-10 w-full text-center">Could not load blog posts.</p>';
   }
@@ -615,6 +782,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
                     <li><a class="hover:text-primary transition-colors" href="/graphic-design">Graphic Design</a></li>
                     <li><a class="hover:text-primary transition-colors" href="/meta-ads">Meta Ads</a></li>
                     <li><a class="hover:text-primary transition-colors" href="/wordpress-dev">CMS Dev</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="/seo">SEO Service</a></li>
                 </ul>
             </div>
             <div>

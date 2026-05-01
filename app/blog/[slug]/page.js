@@ -45,7 +45,7 @@ export default async function BlogPostPage({ params }) {
       <Navbar />
       <main className="min-h-screen bg-background-dark pt-32 pb-20">
         {blog.featuredImage && (
-          <div className="w-full h-72 md:h-96 overflow-hidden mb-12">
+          <div className="w-full aspect-[4/3] lg:aspect-[12/5] overflow-hidden mb-12">
             <img src={blog.featuredImage} alt={blog.title} className="w-full h-full object-cover" />
           </div>
         )}

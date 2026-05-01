@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import MobileCarousel from "../components/MobileCarousel";
 
 export const metadata = {
   title: "Blog | MHR",
@@ -37,15 +38,17 @@ export default async function BlogPage() {
           {blogs.length === 0 ? (
             <p className="text-muted text-center py-20">No posts published yet. Check back soon.</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <MobileCarousel className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 lg:grid lg:grid-cols-2 lg:overflow-visible" interval={3000}>
               {blogs.map((blog) => (
-                <Link key={blog.id} href={`/blog/${blog.slug}`} className="group block bg-surface border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-all">
+                <Link key={blog.id} href={`/blog/${blog.slug}`} className="blog-card group block bg-surface border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-all min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 flex-shrink-0 snap-center" data-carousel-card>
                   {blog.featuredImage && (
-                    <img
-                      src={blog.featuredImage}
-                      alt={blog.title}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    <div className="aspect-[4/3] lg:aspect-[12/5] overflow-hidden">
+                      <img
+                        src={blog.featuredImage}
+                        alt={blog.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
                   )}
                   <div className="p-6">
                     <p className="text-xs text-muted uppercase tracking-widest mb-3">
@@ -58,7 +61,7 @@ export default async function BlogPage() {
                   </div>
                 </Link>
               ))}
-            </div>
+            </MobileCarousel>
           )}
         </div>
       </main>

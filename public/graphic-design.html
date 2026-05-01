@@ -6,6 +6,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="/responsive.css" rel="stylesheet"/>
 <script id="tailwind-config">
     tailwind.config = {
         darkMode: "class",
@@ -142,6 +143,7 @@
                         <a href="/ui-design" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">layers</span><span class="text-sm font-medium">UI/UX Design</span></a>
                         <a href="/meta-ads" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">ads_click</span><span class="text-sm font-medium">Meta Ads</span></a>
                         <a href="/wordpress-dev" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">terminal</span><span class="text-sm font-medium">CMS Dev</span></a>
+                        <a href="/seo" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">query_stats</span><span class="text-sm font-medium">SEO Service</span></a>
                     </div>
                 </div>
             </div>
@@ -174,6 +176,7 @@
                 <a class="hover:text-primary transition-colors flex items-center gap-2" href="/ui-design"><span class="material-symbols-outlined text-primary text-xl">layers</span> UI/UX Design</a>
                 <a class="hover:text-primary transition-colors flex items-center gap-2" href="/meta-ads"><span class="material-symbols-outlined text-primary text-xl">ads_click</span> Meta Ads</a>
                 <a class="hover:text-primary transition-colors flex items-center gap-2" href="/wordpress-dev"><span class="material-symbols-outlined text-primary text-xl">terminal</span> CMS Dev</a>
+                <a class="hover:text-primary transition-colors flex items-center gap-2" href="/seo"><span class="material-symbols-outlined text-primary text-xl">query_stats</span> SEO Service</a>
             </div>
         </div>
         <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="/#portfolio">Portfolio</a>
@@ -366,50 +369,52 @@
                 <h3 class="text-4xl md:text-5xl font-black text-white">Featured Work</h3>
                 <p class="text-slate-400 max-w-xl mt-4 text-lg">A glimpse into recent design challenges and visual solutions delivered for global clients.</p>
             </div>
-            <div class="flex flex-wrap gap-2 p-1.5 bg-surface rounded-xl border border-white/5">
-                <button class="px-6 py-2 rounded-lg text-sm font-bold bg-primary text-background-dark transition-all">All</button>
-                <button class="px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Logo</button>
-                <button class="px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Social</button>
-                <button class="px-6 py-2 rounded-lg text-sm font-bold text-muted hover:text-white transition-all">Print</button>
-            </div>
         </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="portfolio-item group relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface border border-white/5 reveal">
-                <img class="w-full h-full object-cover" alt="Nexus Tech Identity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMYI_6Q0OSrjbcLykZR6kr56RvUmpyToRSy3fcotLxS1d7Wkrti9ejXV06mpzGKUxWdG8o52NDJSNqf9fQ21qgchKwFb_irU9qLHDtN-6bH3KO7QCo3ptxpZfdw4jH_MvzklprkE9SmcBZPSXSRMTWOOPFYCMsymOQk51M-0xjX1GdWLXl3XPu0DZE4108UvErogbSRWUplcR-zifiM1IJzfNHjnM6JvgffsZOM1AipZH9GuikQ6fIrnqFxsXmAeolFr7-pJSX1yFA"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
-                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Logo Design</span>
-                    <h4 class="text-2xl font-bold">Nexus Tech Identity</h4>
-                    <p class="text-slate-300 text-sm mt-2">Full brand ecosystem for a Silicon Valley startup.</p>
-                    <button class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">
-                        View Project <span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </button>
-                </div>
-            </div>
-            <div class="portfolio-item group relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface border border-white/5 reveal">
-                <img class="w-full h-full object-cover" alt="Vibe Social Campaign" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT1RyT8rrdISNCgeAZ53bGTqXnpnL5xYmJt6Z0BG1E7uxfyaq8Mk5NskwupK5pd2vTgJJjL0cev0DDyVv9AJzmNqw-Md_WMWoO80L23yeaLWRT-zDOeWBw1JAKVc6zkPVQ8j-c_aWiOdwkCn26xjmj93gOPSzWR0c7mTRrNiQ85sych36ZJhWfb3cQDzGfSUkQlSdr0eR0DLZEtZpU9bTuMm5OtT--YqDAi5sSiihCCKrqUYZhTcQ7JNxOhrrzFUIrq60b9BAW9Zx_"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
-                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Marketing Material</span>
-                    <h4 class="text-2xl font-bold">Vibe Social Campaign</h4>
-                    <p class="text-slate-300 text-sm mt-2">Dynamic social media kit for product launch.</p>
-                    <button class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">
-                        View Project <span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </button>
-                </div>
-            </div>
-            <div class="portfolio-item group relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface border border-white/5 reveal">
-                <img class="w-full h-full object-cover" alt="Luxe Packaging" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDai4WXj20X1ZEZkxmCt48A3k_By9EEtlcLvxMDBj_FOjupwvgqEVeOqRbwwTU4YPwnDRdFctleBb5Z6hOG9Ogfe7mT-dcn5p281IWCv84223opkdh5rILN7H2sbSAvDXUeVyafo5ukRZpn6yeyjo9RBx2DcZelpVa57eZOteBNY8e-vOWNp5lRzsSxqsn5yNTRk_WkpeHFibDBl8CRA1ftO4m3DTK5TeJwn5QxiuDqH19Oh_CVgTYTkWj6k73hAxfW5ipYZqvd-zqZ"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
-                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Print Media</span>
-                    <h4 class="text-2xl font-bold">Luxe Packaging</h4>
-                    <p class="text-slate-300 text-sm mt-2">Minimalist packaging for organic cosmetics line.</p>
-                    <button class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">
-                        View Project <span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </button>
-                </div>
-            </div>
+        <!-- Dynamic projects grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="gd-portfolio-grid">
+            <div class="animate-pulse bg-surface rounded-2xl aspect-[4/5] border border-white/5"></div>
+            <div class="animate-pulse bg-surface rounded-2xl aspect-[4/5] border border-white/5"></div>
+            <div class="animate-pulse bg-surface rounded-2xl aspect-[4/5] border border-white/5"></div>
         </div>
     </div>
 </section>
+<script>
+(function(){
+  fetch('/api/projects?service=graphic-design')
+    .then(r => r.json())
+    .then(data => {
+      const grid = document.getElementById('gd-portfolio-grid');
+      const projects = Array.isArray(data) ? data : [];
+      if (projects.length === 0) {
+        grid.innerHTML = '<p class="text-muted col-span-3 text-center py-16 italic">No graphic design projects yet. Check back soon!</p>';
+        return;
+      }
+      grid.innerHTML = projects.map(p => {
+        const images = Array.isArray(p.images) ? p.images : [];
+        const img = images[0] || p.thumbnail || '';
+        const imgHtml = img
+          ? `<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${img}" alt="${p.title}"/>`
+          : `<div class="w-full h-full bg-primary/5 flex items-center justify-center"><span class="material-symbols-outlined text-primary/30 text-6xl">brush</span></div>`;
+        const linkHref = p.externalLink ? p.externalLink : `/projects/${p.id}`;
+        const linkTarget = p.externalLink ? ' target="_blank" rel="noopener noreferrer"' : '';
+        return `<div class="portfolio-item group relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface border border-white/5 hover:border-primary/30 transition-colors duration-300">
+          ${imgHtml}
+          <div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 backdrop-blur-[2px]">
+            <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">${p.category}</span>
+            <h4 class="text-2xl font-bold">${p.title}</h4>
+            <p class="text-slate-300 text-sm mt-2 line-clamp-2">${p.description}</p>
+            <a href="${linkHref}"${linkTarget} class="mt-4 bg-primary text-background-dark font-bold px-6 py-2 rounded-lg text-sm flex items-center gap-2 w-fit">
+              View Project <span class="material-symbols-outlined text-base">arrow_forward</span>
+            </a>
+          </div>
+        </div>`;
+      }).join('');
+    })
+    .catch(() => {
+      document.getElementById('gd-portfolio-grid').innerHTML = '<p class="text-muted col-span-3 text-center py-16">Could not load projects.</p>';
+    });
+})();
+</script>
 
 <!-- FAQ Section -->
 <section class="py-24">
@@ -524,6 +529,7 @@
                     <li><a class="hover:text-primary transition-colors" href="/graphic-design">Graphic Design</a></li>
                     <li><a class="hover:text-primary transition-colors" href="/meta-ads">Meta Ads</a></li>
                     <li><a class="hover:text-primary transition-colors" href="/wordpress-dev">CMS Dev</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="/seo">SEO Service</a></li>
                 </ul>
             </div>
             <div>
