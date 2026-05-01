@@ -44,18 +44,23 @@ const SAMPLE_BLOGS = [
   },
 ];
 
-export async function GET() {
+export async function GET(request) {
   // Seed sample blogs if table is empty
   try {
+    const { searchParams } = new URL(request.url);
+    const admin = searchParams.get("admin") === "1";
     const { data: existing } = await supabaseAdmin.from("blogs").select("id").limit(1);
     if (!existing || existing.length === 0) {
       await supabaseAdmin.from("blogs").insert(SAMPLE_BLOGS);
     }
-    const { data, error } = await supabaseAdmin
+    let query = supabaseAdmin
       .from("blogs")
       .select("*")
-      .eq("published", true)
       .order("created_at", { ascending: false });
+
+    if (!admin) query = query.eq("published", true);
+
+    const { data, error } = await query;
     if (error) return NextResponse.json([], { status: 200 });
     return NextResponse.json(data);
   } catch {
@@ -69,6 +74,39 @@ export async function POST(req) {
     const { data, error } = await supabaseAdmin.from("blogs").insert([body]).select().single();
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json(data, { status: 201 });
+  } catch (e) {
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}
+
+export async function PUT(req) {
+  try {
+    const body = await req.json();
+    const { id, created_at, ...fields } = body;
+    if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
+
+    const { data, error } = await supabaseAdmin
+      .from("blogs")
+      .update(fields)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(data);
+  } catch (e) {
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(req) {
+  try {
+    const { id } = await req.json();
+    if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
+
+    const { error } = await supabaseAdmin.from("blogs").delete().eq("id", id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ success: true });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }

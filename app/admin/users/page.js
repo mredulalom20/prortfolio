@@ -7,6 +7,7 @@ export default function UsersAdmin() {
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
+  const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -28,21 +29,30 @@ export default function UsersAdmin() {
     setSuccess("");
 
     const res = await fetch("/api/invitations", {
-      method: "POST",
+      method: editingId ? "PATCH" : "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, note }),
+      body: JSON.stringify({ id: editingId, email, note }),
     });
     const data = await res.json();
 
     if (!res.ok) {
       setError(data.error || "Something went wrong.");
     } else {
-      setSuccess(`${email} has been added to the invite list.`);
+      setSuccess(editingId ? `${email} has been updated.` : `${email} has been added to the invite list.`);
       setEmail("");
       setNote("");
+      setEditingId(null);
       fetchInvitations();
     }
     setSubmitting(false);
+  };
+
+  const handleEdit = (invitation) => {
+    setEditingId(invitation.id);
+    setEmail(invitation.email);
+    setNote(invitation.note || "");
+    setError("");
+    setSuccess("");
   };
 
   const handleRevoke = async (id, invEmail) => {
@@ -91,9 +101,18 @@ export default function UsersAdmin() {
             disabled={submitting}
             className="bg-primary hover:bg-primary/90 text-background-dark font-bold py-3 px-6 rounded-xl transition-all text-sm disabled:opacity-50 flex items-center gap-2 whitespace-nowrap"
           >
-            <span className="material-symbols-outlined text-sm">add</span>
-            {submitting ? "Adding..." : "Add to List"}
+            <span className="material-symbols-outlined text-sm">{editingId ? "save" : "add"}</span>
+            {submitting ? "Saving..." : editingId ? "Update" : "Add to List"}
           </button>
+          {editingId && (
+            <button
+              type="button"
+              onClick={() => { setEditingId(null); setEmail(""); setNote(""); }}
+              className="border border-white/10 hover:bg-white/5 text-white font-bold py-3 px-6 rounded-xl transition-all text-sm"
+            >
+              Cancel
+            </button>
+          )}
         </form>
       </div>
 
@@ -136,13 +155,22 @@ export default function UsersAdmin() {
                     {new Date(inv.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <button
-                      onClick={() => handleRevoke(inv.id, inv.email)}
-                      className="p-1.5 hover:bg-red-500/20 text-red-400 rounded-lg transition-all"
-                      title="Remove from invite list"
-                    >
-                      <span className="material-symbols-outlined text-lg">person_remove</span>
-                    </button>
+                    <div className="flex items-center justify-end gap-2">
+                      <button
+                        onClick={() => handleEdit(inv)}
+                        className="p-1.5 hover:bg-white/10 text-primary rounded-lg transition-all"
+                        title="Edit invitation"
+                      >
+                        <span className="material-symbols-outlined text-lg">edit</span>
+                      </button>
+                      <button
+                        onClick={() => handleRevoke(inv.id, inv.email)}
+                        className="p-1.5 hover:bg-red-500/20 text-red-400 rounded-lg transition-all"
+                        title="Remove from invite list"
+                      >
+                        <span className="material-symbols-outlined text-lg">person_remove</span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

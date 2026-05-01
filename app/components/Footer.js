@@ -29,6 +29,7 @@ export default function Footer() {
               <li><Link className="hover:text-primary transition-colors" href="/graphic-design">Graphic Design</Link></li>
               <li><Link className="hover:text-primary transition-colors" href="/meta-ads">Meta Ads</Link></li>
               <li><Link className="hover:text-primary transition-colors" href="/wordpress-dev">CMS Dev</Link></li>
+              <li><Link className="hover:text-primary transition-colors" href="/seo">SEO Service</Link></li>
             </ul>
           </div>
           <div>

@@ -3,21 +3,17 @@
 import { useState, useEffect } from "react";
 import RichTextEditor from "../../components/RichTextEditor";
 
+const EMPTY_FORM = { title: "", slug: "", content: "", featuredImage: "", metaTitle: "", metaDescription: "", published: false };
+
 export default function BlogManagement() {
   const [blogs, setBlogs] = useState([]);
   const [view, setView] = useState("list"); // 'list', 'create', 'edit'
-  
-  // Form State
-  const [formData, setFormData] = useState({ title: "", slug: "", content: "", featuredImage: "", metaTitle: "", metaDescription: "", published: false });
+  const [formData, setFormData] = useState(EMPTY_FORM);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    fetchBlogs();
-  }, [view]);
 
   const fetchBlogs = async () => {
     try {
-      const res = await fetch("/api/blogs");
+      const res = await fetch("/api/blogs?admin=1");
       if (res.ok) {
         const data = await res.json();
         setBlogs(Array.isArray(data) ? data : []);
@@ -25,23 +21,38 @@ export default function BlogManagement() {
     } catch(e) {}
   };
 
+  useEffect(() => {
+    fetchBlogs();
+  }, [view]);
+
   const handleSave = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
+      const isEdit = view === "edit";
       const res = await fetch("/api/blogs", {
-        method: "POST",
+        method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });
       if(res.ok) {
         setView("list");
-        setFormData({ title: "", slug: "", content: "", featuredImage: "", metaTitle: "", metaDescription: "", published: false });
+        setFormData(EMPTY_FORM);
       }
     } catch(e) {
       console.error(e);
     }
     setLoading(false);
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this blog post?")) return;
+    await fetch("/api/blogs", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    });
+    fetchBlogs();
   };
 
   const handleImageUpload = async (e) => {
@@ -113,7 +124,7 @@ export default function BlogManagement() {
           </div>
 
           <button disabled={loading} type="submit" className="bg-primary hover:bg-primary/90 text-background-dark font-black py-3 px-8 rounded-xl transition-all disabled:opacity-50">
-            {loading ? "Saving..." : "Save Blog Post"}
+            {loading ? "Saving..." : view === "edit" ? "Update Blog Post" : "Save Blog Post"}
           </button>
         </form>
       </div>
@@ -124,7 +135,7 @@ export default function BlogManagement() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-black">Blog Posts</h1>
-        <button onClick={() => { setView("create"); setFormData({ title: "", slug: "", content: "", featuredImage: "", metaTitle: "", metaDescription: "", published: false }); }} className="bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-6 rounded-lg transition-all flex items-center gap-2 text-sm shadow-lg shadow-primary/20">
+        <button onClick={() => { setView("create"); setFormData(EMPTY_FORM); }} className="bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-6 rounded-lg transition-all flex items-center gap-2 text-sm shadow-lg shadow-primary/20">
           <span className="material-symbols-outlined text-lg">add</span> Create Post
         </button>
       </div>
@@ -150,9 +161,14 @@ export default function BlogManagement() {
                 </td>
                 <td className="px-6 py-4">{new Date(blog.created_at).toLocaleDateString()}</td>
                 <td className="px-6 py-4 text-right">
-                  <button className="text-primary hover:text-white transition-colors" onClick={() => { setFormData(blog); setView("edit"); }}>
-                    <span className="material-symbols-outlined text-lg">edit</span>
-                  </button>
+                  <div className="flex items-center justify-end gap-2">
+                    <button className="text-primary hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5" onClick={() => { setFormData({ ...EMPTY_FORM, ...blog }); setView("edit"); }} title="Edit">
+                      <span className="material-symbols-outlined text-lg">edit</span>
+                    </button>
+                    <button className="text-red-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-red-500/20" onClick={() => handleDelete(blog.id)} title="Delete">
+                      <span className="material-symbols-outlined text-lg">delete</span>
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

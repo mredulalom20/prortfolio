@@ -1,13 +1,19 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 
-// GET all published products
-export async function GET() {
-  const { data, error } = await supabaseAdmin
+// GET products
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const admin = searchParams.get("admin") === "1";
+
+  let query = supabaseAdmin
     .from("products")
     .select("*")
-    .eq("published", true)
     .order("created_at", { ascending: false });
+
+  if (!admin) query = query.eq("published", true);
+
+  const { data, error } = await query;
   if (error) return NextResponse.json([], { status: 200 });
   return NextResponse.json(data);
 }
@@ -22,6 +28,22 @@ export async function POST(req) {
     .select();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data[0]);
+}
+
+export async function PUT(req) {
+  const body = await req.json();
+  const { id, created_at, ...fields } = body;
+  if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
+
+  const { data, error } = await supabaseAdmin
+    .from("products")
+    .update(fields)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json(data);
 }
 
 // PATCH toggle publish

@@ -40,6 +40,10 @@ export default function Navbar() {
                     <span className="material-symbols-outlined text-[#C6A75E] text-lg">terminal</span>
                     <span className="text-xs uppercase tracking-widest text-[#888888]">CMS Dev</span>
                   </Link>
+                  <Link href="/seo" className="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors">
+                    <span className="material-symbols-outlined text-[#C6A75E] text-lg">query_stats</span>
+                    <span className="text-xs uppercase tracking-widest text-[#888888]">SEO Service</span>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -79,6 +83,7 @@ export default function Navbar() {
               <Link onClick={() => setMenuOpen(false)} className="text-[#888888] hover:text-white transition-colors flex items-center gap-3" href="/ui-design"><span className="material-symbols-outlined text-base">layers</span> UI/UX Design</Link>
               <Link onClick={() => setMenuOpen(false)} className="text-[#888888] hover:text-white transition-colors flex items-center gap-3" href="/meta-ads"><span className="material-symbols-outlined text-base">ads_click</span> Meta Ads</Link>
               <Link onClick={() => setMenuOpen(false)} className="text-[#888888] hover:text-white transition-colors flex items-center gap-3" href="/wordpress-dev"><span className="material-symbols-outlined text-base">terminal</span> CMS Dev</Link>
+              <Link onClick={() => setMenuOpen(false)} className="text-[#888888] hover:text-white transition-colors flex items-center gap-3" href="/seo"><span className="material-symbols-outlined text-base">query_stats</span> SEO Service</Link>
             </div>
           </div>
           <Link onClick={() => setMenuOpen(false)} className="text-[#888888] hover:text-[#EDEDED] transition-colors pb-2 border-b border-white/5 uppercase text-sm tracking-widest" href="/#portfolio">Portfolio</Link>

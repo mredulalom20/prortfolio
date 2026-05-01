@@ -4,10 +4,22 @@ import { useState, useEffect } from "react";
 
 export default function MediaManager() {
   const [loading, setLoading] = useState(false);
-  // For a real app, you would fetch the list of medias from an API. 
-  // Next.js doesn't natively expose public files without a custom API reading fs.readdir.
-  // We'll mock the state for now for the UI presentation.
+  const [fetching, setFetching] = useState(true);
   const [mediaItems, setMediaItems] = useState([]);
+
+  const fetchMedia = async () => {
+    setFetching(true);
+    try {
+      const res = await fetch("/api/media");
+      const data = await res.json();
+      setMediaItems(Array.isArray(data) ? data : []);
+    } catch (e) {
+      setMediaItems([]);
+    }
+    setFetching(false);
+  };
+
+  useEffect(() => { fetchMedia(); }, []);
 
   const handleUpload = async (e) => {
     const file = e.target.files[0];
@@ -20,7 +32,7 @@ export default function MediaManager() {
       const res = await fetch("/api/upload", { method: "POST", body });
       const data = await res.json();
       if (res.ok) {
-        setMediaItems([{ url: data.url, name: file.name, date: new Date().toISOString() }, ...mediaItems]);
+        await fetchMedia();
       }
     } catch(e) {}
     setLoading(false);
@@ -42,6 +54,9 @@ export default function MediaManager() {
         </label>
       </div>
 
+      {fetching ? (
+        <div className="text-muted text-center py-20">Loading media...</div>
+      ) : (
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {mediaItems.map((item, i) => (
           <div key={i} className="bg-surface rounded-xl border border-white/5 overflow-hidden group relative">
@@ -66,6 +81,7 @@ export default function MediaManager() {
           </div>
         )}
       </div>
+      )}
     </div>
   );
 }

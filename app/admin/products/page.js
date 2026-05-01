@@ -13,7 +13,7 @@ export default function ProductsAdmin() {
   const [msg, setMsg] = useState("");
 
   const fetchProducts = async () => {
-    const res = await fetch("/api/products");
+    const res = await fetch("/api/products?admin=1");
     const data = await res.json();
     setProducts(Array.isArray(data) ? data : []);
   };
@@ -22,15 +22,22 @@ export default function ProductsAdmin() {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    setLoading(true); setMsg("");
+    setLoading(true);
+    setMsg("");
+    const isEdit = view === "edit";
     const res = await fetch("/api/products", {
-      method: "POST",
+      method: isEdit ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
     const data = await res.json();
-    if (data.error) setMsg("❌ " + data.error);
-    else { setMsg("✅ Product saved!"); setForm(emptyForm); setView("list"); fetchProducts(); }
+    if (data.error) setMsg("Error: " + data.error);
+    else {
+      setMsg(isEdit ? "Product updated." : "Product saved.");
+      setForm(emptyForm);
+      setView("list");
+      fetchProducts();
+    }
     setLoading(false);
   };
 
@@ -62,13 +69,13 @@ export default function ProductsAdmin() {
             <span className="material-symbols-outlined text-lg">add</span> Add Product
           </button>
         ) : (
-          <button onClick={() => setView("list")} className="px-4 py-2 border border-white/10 rounded-lg hover:bg-white/5 text-sm font-bold transition-all">← Back</button>
+          <button onClick={() => setView("list")} className="px-4 py-2 border border-white/10 rounded-lg hover:bg-white/5 text-sm font-bold transition-all">Back</button>
         )}
       </div>
 
-      {view === "create" && (
+      {(view === "create" || view === "edit") && (
         <form onSubmit={handleSave} className="space-y-6 bg-surface p-8 rounded-2xl border border-white/5 max-w-2xl">
-          <h2 className="text-xl font-bold">New Product</h2>
+          <h2 className="text-xl font-bold">{view === "edit" ? "Edit Product" : "New Product"}</h2>
 
           <div>
             <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-2">Title *</label>
@@ -133,7 +140,7 @@ export default function ProductsAdmin() {
 
           {msg && <p className="text-sm font-bold text-primary">{msg}</p>}
           <button disabled={loading} type="submit" className="bg-primary hover:bg-primary/90 text-background-dark font-black py-3 px-8 rounded-xl transition-all disabled:opacity-50">
-            {loading ? "Saving..." : "Save Product"}
+            {loading ? "Saving..." : view === "edit" ? "Update Product" : "Save Product"}
           </button>
         </form>
       )}
@@ -177,7 +184,10 @@ export default function ProductsAdmin() {
                     <a href={p.action_url} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-white/10 rounded-lg transition-all text-muted hover:text-white">
                       <span className="material-symbols-outlined text-lg">open_in_new</span>
                     </a>
-                    <button onClick={() => handleDelete(p.id)} className="p-2 hover:bg-red-500/20 text-red-400 rounded-lg transition-all">
+                    <button onClick={() => { setView("edit"); setMsg(""); setForm({ ...emptyForm, ...p }); }} className="p-2 hover:bg-white/10 text-primary rounded-lg transition-all" title="Edit">
+                      <span className="material-symbols-outlined text-lg">edit</span>
+                    </button>
+                    <button onClick={() => handleDelete(p.id)} className="p-2 hover:bg-red-500/20 text-red-400 rounded-lg transition-all" title="Delete">
                       <span className="material-symbols-outlined text-lg">delete</span>
                     </button>
                   </div>

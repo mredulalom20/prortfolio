@@ -7,7 +7,7 @@ const emptyForm = { name: "", role: "", message: "", avatar_url: "", published: 
 export default function ReviewsAdmin() {
   const [reviews, setReviews] = useState([]);
   const [form, setForm] = useState(emptyForm);
-  const [view, setView] = useState("list"); // "list" | "create"
+  const [view, setView] = useState("list");
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
 
@@ -23,14 +23,20 @@ export default function ReviewsAdmin() {
     e.preventDefault();
     setLoading(true);
     setMsg("");
+    const isEdit = view === "edit";
     const res = await fetch("/api/reviews", {
-      method: "POST",
+      method: isEdit ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
     const data = await res.json();
-    if (data.error) { setMsg("Error: " + data.error); }
-    else { setMsg("✅ Review added!"); setForm(emptyForm); fetchReviews(); setView("list"); }
+    if (data.error) setMsg("Error: " + data.error);
+    else {
+      setMsg(isEdit ? "Review updated." : "Review added.");
+      setForm(emptyForm);
+      fetchReviews();
+      setView("list");
+    }
     setLoading(false);
   };
 
@@ -66,14 +72,14 @@ export default function ReviewsAdmin() {
           </button>
         ) : (
           <button onClick={() => setView("list")} className="px-4 py-2 border border-white/10 rounded-lg hover:bg-white/5 transition-all text-sm font-bold">
-            ← Back to List
+            Back to List
           </button>
         )}
       </div>
 
-      {view === "create" && (
+      {(view === "create" || view === "edit") && (
         <form onSubmit={handleSave} className="space-y-6 bg-surface p-8 rounded-2xl border border-white/5 max-w-2xl">
-          <h2 className="text-xl font-bold mb-2">New Testimonial</h2>
+          <h2 className="text-xl font-bold mb-2">{view === "edit" ? "Edit Testimonial" : "New Testimonial"}</h2>
 
           <div>
             <label className="block text-sm font-bold text-muted mb-2 uppercase tracking-wider">Client Name *</label>
@@ -103,14 +109,14 @@ export default function ReviewsAdmin() {
               required
               value={form.message}
               onChange={e => setForm({ ...form, message: e.target.value })}
-              placeholder="Client's testimonial..."
+              placeholder="Client testimonial..."
               rows="4"
               className="w-full bg-background-dark border border-white/10 rounded-xl p-3 text-white outline-none focus:border-primary"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-muted mb-2 uppercase tracking-wider">Profile Photo URL (optional)</label>
+            <label className="block text-sm font-bold text-muted mb-2 uppercase tracking-wider">Profile Photo URL</label>
             <input
               type="url"
               value={form.avatar_url}
@@ -133,7 +139,7 @@ export default function ReviewsAdmin() {
           {msg && <p className="text-sm font-bold text-primary">{msg}</p>}
 
           <button disabled={loading} type="submit" className="bg-primary hover:bg-primary/90 text-background-dark font-black py-3 px-8 rounded-xl transition-all disabled:opacity-50">
-            {loading ? "Saving..." : "Save Review"}
+            {loading ? "Saving..." : view === "edit" ? "Update Review" : "Save Review"}
           </button>
         </form>
       )}
@@ -144,7 +150,7 @@ export default function ReviewsAdmin() {
             <div className="p-16 text-center text-muted">
               <span className="material-symbols-outlined text-6xl mb-4 block">format_quote</span>
               <p className="font-bold text-lg">No reviews yet</p>
-              <p className="text-sm mt-1">Click "Add Review" to add your first testimonial</p>
+              <p className="text-sm mt-1">Click &quot;Add Review&quot; to add your first testimonial</p>
             </div>
           ) : (
             <table className="w-full text-sm">
@@ -170,7 +176,7 @@ export default function ReviewsAdmin() {
                       )}
                       {r.name}
                     </td>
-                    <td className="p-4 text-muted">{r.role || "—"}</td>
+                    <td className="p-4 text-muted">{r.role || "-"}</td>
                     <td className="p-4 text-muted max-w-xs truncate">{r.message}</td>
                     <td className="p-4 text-center">
                       <button
@@ -181,9 +187,14 @@ export default function ReviewsAdmin() {
                       </button>
                     </td>
                     <td className="p-4 text-center">
-                      <button onClick={() => handleDelete(r.id)} className="p-2 hover:bg-red-500/20 text-red-400 rounded-lg transition-all">
-                        <span className="material-symbols-outlined text-lg">delete</span>
-                      </button>
+                      <div className="flex items-center justify-center gap-2">
+                        <button onClick={() => { setView("edit"); setMsg(""); setForm({ ...emptyForm, ...r }); }} className="p-2 hover:bg-white/10 text-primary rounded-lg transition-all" title="Edit">
+                          <span className="material-symbols-outlined text-lg">edit</span>
+                        </button>
+                        <button onClick={() => handleDelete(r.id)} className="p-2 hover:bg-red-500/20 text-red-400 rounded-lg transition-all" title="Delete">
+                          <span className="material-symbols-outlined text-lg">delete</span>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
