@@ -1,11 +1,11 @@
 # Graph Report - E:\mobarok-portfolio  (2026-05-07)
 
 ## Corpus Check
-- 52 files · ~226,922 words
+- 54 files · ~228,212 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 118 nodes · 136 edges · 36 communities detected
+- 121 nodes · 140 edges · 36 communities detected
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
@@ -48,14 +48,14 @@
 - [[_COMMUNITY_Community 35|Community 35]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `GET()` - 19 edges
+1. `GET()` - 20 edges
 2. `DELETE()` - 13 edges
 3. `POST()` - 12 edges
 4. `PATCH()` - 9 edges
 5. `createDbClient()` - 7 edges
-6. `generateMetadata()` - 6 edges
-7. `Home Page (index.html)` - 6 edges
-8. `PUT()` - 5 edges
+6. `PUT()` - 6 edges
+7. `generateMetadata()` - 6 edges
+8. `Home Page (index.html)` - 6 edges
 9. `UPLOAD_DIR()` - 5 edges
 10. `TRASH_DIR()` - 5 edges
 
@@ -74,7 +74,7 @@
 ## Communities
 
 ### Community 0 - "Community 0"
-Cohesion: 0.2
+Cohesion: 0.19
 Nodes (7): DELETE(), GET(), PATCH(), POST(), PUT(), TRASH_DIR(), UPLOAD_DIR()
 
 ### Community 1 - "Community 1"
@@ -86,12 +86,12 @@ Cohesion: 0.33
 Nodes (7): BlogPostPage(), generateMetadata(), getBlog(), getMember(), getProject(), ProjectCaseStudyPage(), TeamMemberPage()
 
 ### Community 3 - "Community 3"
-Cohesion: 0.29
-Nodes (7): About Page, Blog Page, Graphic Design Service, Home Page (index.html), Meta Ads Management, UI/UX Design Service, WordPress CMS Development
+Cohesion: 0.25
+Nodes (1): Toast()
 
 ### Community 4 - "Community 4"
-Cohesion: 0.33
-Nodes (1): Toast()
+Cohesion: 0.29
+Nodes (7): About Page, Blog Page, Graphic Design Service, Home Page (index.html), Meta Ads Management, UI/UX Design Service, WordPress CMS Development
 
 ### Community 5 - "Community 5"
 Cohesion: 1.0
@@ -285,8 +285,8 @@ Nodes (0):
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `DELETE()` connect `Community 0` to `Community 1`?**
-  _High betweenness centrality (0.064) - this node is a cross-community bridge._
+  _High betweenness centrality (0.063) - this node is a cross-community bridge._
 - **Why does `deleteRowById()` connect `Community 1` to `Community 0`?**
-  _High betweenness centrality (0.059) - this node is a cross-community bridge._
+  _High betweenness centrality (0.058) - this node is a cross-community bridge._
 - **What connects `About Page`, `Graphic Design Service`, `UI/UX Design Service` to the rest of the system?**
   _6 weakly-connected nodes found - possible documentation gaps or missing edges._

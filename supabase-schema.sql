@@ -106,5 +106,7 @@ create table if not exists site_settings (
 -- Insert default hero image settings
 insert into site_settings (key, value) values
   ('hero_image', 'img/profile.jpg'),
-  ('about_hero_image', 'img/profile.jpg')
+  ('about_hero_image', 'img/profile.jpg'),
+  ('graphic_design_image', ''),
+  ('meta_ads_image', '')
 on conflict (key) do nothing;

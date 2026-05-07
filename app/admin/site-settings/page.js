@@ -17,11 +17,40 @@ function Toast({ message, type }) {
   );
 }
 
+const IMAGE_SETTINGS = [
+  {
+    key: "hero_image",
+    label: "Homepage Hero Image",
+    icon: "image",
+    description: "The main profile image shown in the homepage hero section.",
+  },
+  {
+    key: "about_hero_image",
+    label: "About Section Hero Image",
+    icon: "person",
+    description:
+      'The portrait image in the "Crafting Digital Masterpieces" section on the homepage and about page.',
+  },
+  {
+    key: "graphic_design_image",
+    label: "Graphic Design Showcase Image",
+    icon: "brush",
+    description:
+      "The showcase image in the overview section of the Graphic Design service page.",
+  },
+  {
+    key: "meta_ads_image",
+    label: "Meta Ads Hero Image",
+    icon: "ads_click",
+    description:
+      "The dashboard image in the hero section of the Meta Ads service page.",
+  },
+];
+
 export default function SiteSettingsPage() {
-  const [heroImage, setHeroImage] = useState("");
-  const [aboutHeroImage, setAboutHeroImage] = useState("");
-  const [uploading, setUploading] = useState(null); // "hero" | "about" | null
-  const [saving, setSaving] = useState(false);
+  const [settings, setSettings] = useState({});
+  const [uploading, setUploading] = useState(null);
+  const [saving, setSaving] = useState(null);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState({ message: "", type: "success" });
 
@@ -30,17 +59,15 @@ export default function SiteSettingsPage() {
     setTimeout(() => setToast({ message: "", type: "success" }), 3000);
   };
 
-  // Fetch current settings
   const fetchSettings = useCallback(async () => {
     setLoading(true);
     try {
       const res = await fetch("/api/site-settings");
       const data = await res.json();
       if (Array.isArray(data)) {
-        const heroSetting = data.find((s) => s.key === "hero_image");
-        const aboutSetting = data.find((s) => s.key === "about_hero_image");
-        if (heroSetting) setHeroImage(heroSetting.value);
-        if (aboutSetting) setAboutHeroImage(aboutSetting.value);
+        const map = {};
+        data.forEach((s) => (map[s.key] = s.value));
+        setSettings(map);
       }
     } catch {
       showToast("Failed to load settings", "error");
@@ -53,22 +80,21 @@ export default function SiteSettingsPage() {
     fetchSettings();
   }, [fetchSettings]);
 
-  // Upload image
   const handleUpload = async (e, settingKey) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(settingKey);
-
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const uploadRes = await fetch("/api/upload", { method: "POST", body: formData });
+      const uploadRes = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
       const uploadData = await uploadRes.json();
-
       if (!uploadRes.ok) throw new Error(uploadData.error || "Upload failed");
 
       const imageUrl = uploadData.url;
-      // Save to site_settings
       const saveRes = await fetch("/api/site-settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -76,8 +102,7 @@ export default function SiteSettingsPage() {
       });
       if (!saveRes.ok) throw new Error("Failed to save setting");
 
-      if (settingKey === "hero_image") setHeroImage(imageUrl);
-      if (settingKey === "about_hero_image") setAboutHeroImage(imageUrl);
+      setSettings((prev) => ({ ...prev, [settingKey]: imageUrl }));
       showToast("Image updated successfully!");
     } catch (err) {
       showToast(err.message || "Upload failed", "error");
@@ -86,21 +111,20 @@ export default function SiteSettingsPage() {
     }
   };
 
-  // Save URL directly
-  const handleSaveUrl = async (settingKey, value) => {
-    setSaving(true);
+  const handleSaveUrl = async (settingKey) => {
+    setSaving(settingKey);
     try {
       const res = await fetch("/api/site-settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: settingKey, value }),
+        body: JSON.stringify({ key: settingKey, value: settings[settingKey] || "" }),
       });
       if (!res.ok) throw new Error("Failed to save");
       showToast("Setting saved!");
     } catch (err) {
       showToast(err.message || "Save failed", "error");
     } finally {
-      setSaving(false);
+      setSaving(null);
     }
   };
 
@@ -116,127 +140,77 @@ export default function SiteSettingsPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-black text-white mb-2">Site Settings</h1>
         <p className="text-slate-400">
-          Manage your homepage hero images and other site-wide settings.
+          Manage images across your website. Upload or paste a URL for each section.
         </p>
       </div>
 
       <div className="grid gap-8 max-w-4xl">
-        {/* Homepage Hero Image */}
-        <div className="bg-surface border border-white/5 rounded-2xl p-8">
-          <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary">image</span>
-            Homepage Hero Image
-          </h2>
-          <p className="text-slate-400 text-sm mb-6">
-            The main profile image shown in the homepage hero section.
-          </p>
+        {IMAGE_SETTINGS.map((item) => (
+          <div
+            key={item.key}
+            className="bg-surface border border-white/5 rounded-2xl p-8"
+          >
+            <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary">
+                {item.icon}
+              </span>
+              {item.label}
+            </h2>
+            <p className="text-slate-400 text-sm mb-6">{item.description}</p>
 
-          {/* Current image preview */}
-          {heroImage && (
-            <div className="mb-6 relative inline-block">
-              <img
-                src={heroImage}
-                alt="Hero preview"
-                className="w-48 h-60 object-cover rounded-xl border border-white/10"
-              />
-            </div>
-          )}
+            {/* Preview */}
+            {settings[item.key] && (
+              <div className="mb-6 relative inline-block">
+                <img
+                  src={settings[item.key]}
+                  alt={`${item.label} preview`}
+                  className="w-48 h-60 object-cover rounded-xl border border-white/10"
+                />
+              </div>
+            )}
 
-          {/* URL input */}
-          <div className="flex gap-3 mb-4">
-            <input
-              type="text"
-              value={heroImage}
-              onChange={(e) => setHeroImage(e.target.value)}
-              placeholder="Image URL (e.g. img/profile.jpg)"
-              className="flex-1 bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/50"
-            />
-            <button
-              onClick={() => handleSaveUrl("hero_image", heroImage)}
-              disabled={saving}
-              className="bg-primary hover:bg-primary/90 text-background-dark font-bold px-6 py-3 rounded-xl text-sm transition-all disabled:opacity-50"
-            >
-              {saving ? "Saving..." : "Save URL"}
-            </button>
-          </div>
-
-          {/* Or upload */}
-          <div className="flex items-center gap-4">
-            <span className="text-slate-500 text-xs uppercase font-bold tracking-widest">
-              Or upload a new image
-            </span>
-            <label className="cursor-pointer bg-slate-800 hover:bg-slate-700 border border-white/10 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
-              <span className="material-symbols-outlined text-base">upload</span>
-              {uploading === "hero_image" ? "Uploading..." : "Choose File"}
+            {/* URL input */}
+            <div className="flex gap-3 mb-4">
               <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => handleUpload(e, "hero_image")}
-                disabled={uploading === "hero_image"}
+                type="text"
+                value={settings[item.key] || ""}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    [item.key]: e.target.value,
+                  }))
+                }
+                placeholder="Image URL"
+                className="flex-1 bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/50"
               />
-            </label>
-          </div>
-        </div>
-
-        {/* About Hero Image */}
-        <div className="bg-surface border border-white/5 rounded-2xl p-8">
-          <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary">person</span>
-            About Section Hero Image
-          </h2>
-          <p className="text-slate-400 text-sm mb-6">
-            The portrait image shown in the &ldquo;Crafting Digital Masterpieces&rdquo;
-            section on the homepage and about page.
-          </p>
-
-          {/* Current image preview */}
-          {aboutHeroImage && (
-            <div className="mb-6 relative inline-block">
-              <img
-                src={aboutHeroImage}
-                alt="About hero preview"
-                className="w-48 h-60 object-cover rounded-xl border border-white/10"
-              />
+              <button
+                onClick={() => handleSaveUrl(item.key)}
+                disabled={saving === item.key}
+                className="bg-primary hover:bg-primary/90 text-background-dark font-bold px-6 py-3 rounded-xl text-sm transition-all disabled:opacity-50"
+              >
+                {saving === item.key ? "Saving..." : "Save URL"}
+              </button>
             </div>
-          )}
 
-          {/* URL input */}
-          <div className="flex gap-3 mb-4">
-            <input
-              type="text"
-              value={aboutHeroImage}
-              onChange={(e) => setAboutHeroImage(e.target.value)}
-              placeholder="Image URL (e.g. img/profile.jpg)"
-              className="flex-1 bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/50"
-            />
-            <button
-              onClick={() => handleSaveUrl("about_hero_image", aboutHeroImage)}
-              disabled={saving}
-              className="bg-primary hover:bg-primary/90 text-background-dark font-bold px-6 py-3 rounded-xl text-sm transition-all disabled:opacity-50"
-            >
-              {saving ? "Saving..." : "Save URL"}
-            </button>
+            {/* Upload */}
+            <div className="flex items-center gap-4">
+              <span className="text-slate-500 text-xs uppercase font-bold tracking-widest">
+                Or upload a new image
+              </span>
+              <label className="cursor-pointer bg-slate-800 hover:bg-slate-700 border border-white/10 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
+                <span className="material-symbols-outlined text-base">upload</span>
+                {uploading === item.key ? "Uploading..." : "Choose File"}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => handleUpload(e, item.key)}
+                  disabled={uploading === item.key}
+                />
+              </label>
+            </div>
           </div>
-
-          {/* Or upload */}
-          <div className="flex items-center gap-4">
-            <span className="text-slate-500 text-xs uppercase font-bold tracking-widest">
-              Or upload a new image
-            </span>
-            <label className="cursor-pointer bg-slate-800 hover:bg-slate-700 border border-white/10 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
-              <span className="material-symbols-outlined text-base">upload</span>
-              {uploading === "about_hero_image" ? "Uploading..." : "Choose File"}
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => handleUpload(e, "about_hero_image")}
-                disabled={uploading === "about_hero_image"}
-              />
-            </label>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

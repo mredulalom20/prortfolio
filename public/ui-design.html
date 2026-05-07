@@ -34,8 +34,8 @@
     .service-card:hover { transform: translateY(-6px); border-color: rgba(198, 167, 94, 0.3); }
     .portfolio-item img, .portfolio-item .bg-img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
     .portfolio-item:hover img, .portfolio-item:hover .bg-img { transform: scale(1.1); }
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease; padding-top: 0; }
-    .faq-answer.open { max-height: 200px; padding-top: 1rem; }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease; padding: 0 1.5rem; }
+    .faq-answer.open { max-height: 300px; padding: 1rem 1.5rem 1.5rem; }
     .faq-icon { transition: transform 0.3s ease; }
     .faq-icon.rotated { transform: rotate(180deg); }
     .hero-glow { position: absolute; top: -10%; left: -10%; width: 40%; height: 40%; background: rgba(198, 167, 94, 0.08); border-radius: 50%; filter: blur(120px); pointer-events: none; }
@@ -66,7 +66,7 @@
         </a>
         <div class="hidden md:flex items-center gap-10">
             <a class="text-sm font-medium hover:text-primary transition-colors" href="/">Home</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors" href="/about">About</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors" href="/#about-hero">About</a>
             <div class="dropdown relative">
                 <button class="text-sm font-medium text-primary border-b-2 border-primary pb-1 flex items-center gap-1">
                     Services <span class="material-symbols-outlined text-base">expand_more</span>
@@ -112,7 +112,7 @@
 <div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 bg-background-dark/95 backdrop-blur-xl pt-24 px-8">
     <div class="flex flex-col gap-6 text-2xl font-bold">
         <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="/">Home</a>
-        <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="/about">About</a>
+        <a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="/#about-hero">About</a>
         <div class="py-2 border-b border-white/5">
             <span class="text-primary">Services</span>
             <div class="flex flex-col gap-2 mt-3 ml-4 text-lg">
@@ -299,7 +299,7 @@
                     <h4 class="font-bold text-lg">What design tools do you use?</h4>
                     <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
                 </div>
-                <div class="faq-answer px-6 pb-6">
+                <div class="faq-answer">
                     <p class="text-muted leading-relaxed">I primarily use Figma for the entire design process from wireframing to prototyping. For complex illustrations or high-end visual assets, I integrate Adobe Illustrator and Photoshop.</p>
                 </div>
             </div>
@@ -308,7 +308,7 @@
                     <h4 class="font-bold text-lg">Do you perform user testing?</h4>
                     <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
                 </div>
-                <div class="faq-answer px-6 pb-6">
+                <div class="faq-answer">
                     <p class="text-muted leading-relaxed">Yes, user testing is integral. I conduct moderated and unmoderated usability tests on interactive prototypes to validate design decisions before moving to development.</p>
                 </div>
             </div>
@@ -317,7 +317,7 @@
                     <h4 class="font-bold text-lg">How long does a typical UI project take?</h4>
                     <span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
                 </div>
-                <div class="faq-answer px-6 pb-6">
+                <div class="faq-answer">
                     <p class="text-muted leading-relaxed">Timelines vary based on scope, but a standard landing page or small mobile app design typically takes 2-4 weeks from research to final handoff.</p>
                 </div>
             </div>
@@ -358,13 +358,14 @@
                 <div class="flex gap-3 flex-wrap" id="footer-social-icons">
                     <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/facebook/C6A75E" class="w-5 h-5" alt="fb"/></a>
                     <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/instagram/C6A75E" class="w-5 h-5" alt="ig"/></a>
-                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/linkedin/C6A75E" class="w-5 h-5" alt="li"/></a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><svg class="w-5 h-5" fill="#C6A75E" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
                     <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/behance/C6A75E" class="w-5 h-5" alt="be"/></a>
                     <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/pinterest/C6A75E" class="w-5 h-5" alt="pi"/></a>
                 </div>
                 <script>
                 (function(){
                   const platforms = ["facebook","instagram","linkedin","behance","pinterest"];
+                  const linkedinSvg = '<svg class="w-5 h-5" fill="#C6A75E" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>';
                   const icons = document.getElementById('footer-social-icons');
                   if(!icons) return;
                   fetch('/api/social').then(r=>r.json()).then(data=>{
@@ -372,7 +373,7 @@
                     icons.innerHTML = links.map(({key,url})=>{
                       const active = url && url.length > 0;
                       return `<a href="${active?url:'#'}" ${active?'target="_blank" rel="noopener noreferrer"':''} title="${key}" class="w-11 h-11 rounded-full flex items-center justify-center border transition-all duration-300 ${active?'bg-primary/10 border-primary/30 hover:bg-primary hover:scale-110 cursor-pointer':'bg-white/5 border-white/10 opacity-30 cursor-default'}">
-                        <img src="https://cdn.simpleicons.org/${key}/C6A75E" class="w-5 h-5" alt="${key}"/>
+                        ${key === 'linkedin' ? linkedinSvg : '<img src="https://cdn.simpleicons.org/'+key+'/C6A75E" class="w-5 h-5" alt="'+key+'"/>'}
                       </a>`;
                     }).join('');
                   }).catch(()=>{});
@@ -392,7 +393,7 @@
             <div>
                 <h5 class="font-bold mb-6">Company</h5>
                 <ul class="space-y-4 text-slate-400">
-                    <li><a class="hover:text-primary transition-colors" href="/about">About Me</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="/#about-hero">About Me</a></li>
                     <li><a class="hover:text-primary transition-colors" href="/#testimonials">Testimonials</a></li>
                     <li><a class="hover:text-primary transition-colors" href="/#contact">Contact</a></li>
                     <li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
@@ -400,7 +401,7 @@
             </div>
         </div>
         <div class="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
-            <p>© 2024 Mobarak Hossain Rinku. All rights reserved.</p>
+            <p>© 2026 Mobarak Hossain Rinku. All rights reserved.</p>
             <p>Designed with passion and precision.</p>
         </div>
     </div>
