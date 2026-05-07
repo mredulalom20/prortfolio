@@ -1,12 +1,12 @@
-# Graph Report - E:\mobarok-portfolio  (2026-05-02)
+# Graph Report - E:\mobarok-portfolio  (2026-05-07)
 
 ## Corpus Check
-- 47 files · ~125,174 words
+- 52 files · ~226,055 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 106 nodes · 109 edges · 36 communities detected
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)
+- 118 nodes · 136 edges · 36 communities detected
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
@@ -48,54 +48,54 @@
 - [[_COMMUNITY_Community 35|Community 35]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `GET()` - 14 edges
-2. `POST()` - 12 edges
-3. `DELETE()` - 8 edges
-4. `createDbClient()` - 7 edges
-5. `Home Page (index.html)` - 6 edges
-6. `PUT()` - 5 edges
-7. `PATCH()` - 5 edges
-8. `generateMetadata()` - 4 edges
-9. `getBlog()` - 3 edges
-10. `getProject()` - 3 edges
+1. `GET()` - 19 edges
+2. `DELETE()` - 13 edges
+3. `POST()` - 12 edges
+4. `PATCH()` - 9 edges
+5. `createDbClient()` - 7 edges
+6. `generateMetadata()` - 6 edges
+7. `Home Page (index.html)` - 6 edges
+8. `PUT()` - 5 edges
+9. `UPLOAD_DIR()` - 5 edges
+10. `TRASH_DIR()` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `DELETE()` --calls--> `deleteRowById()`  [INFERRED]
   E:\mobarok-portfolio\app\api\team\route.js → E:\mobarok-portfolio\mcp\cms-mcp-server.mjs
 - `GET()` --calls--> `POST()`  [INFERRED]
   E:\mobarok-portfolio\app\seo\route.js → app\api\upload\route.js
-- `generateMetadata()` --calls--> `getBlog()`  [EXTRACTED]
-  E:\mobarok-portfolio\app\projects\[id]\page.js → E:\mobarok-portfolio\app\blog\[slug]\page.js
-- `Home Page (index.html)` --references--> `About Page`  [EXTRACTED]
-  public/index.html → public/about.html
-- `Home Page (index.html)` --references--> `Graphic Design Service`  [EXTRACTED]
-  public/index.html → public/graphic-design.html
+- `GET()` --calls--> `UPLOAD_DIR()`  [EXTRACTED]
+  E:\mobarok-portfolio\app\seo\route.js → E:\mobarok-portfolio\app\api\media\trash\route.js
+- `GET()` --calls--> `TRASH_DIR()`  [EXTRACTED]
+  E:\mobarok-portfolio\app\seo\route.js → E:\mobarok-portfolio\app\api\media\trash\route.js
+- `DELETE()` --calls--> `TRASH_DIR()`  [EXTRACTED]
+  E:\mobarok-portfolio\app\api\team\route.js → E:\mobarok-portfolio\app\api\media\trash\route.js
 
 ## Communities
 
 ### Community 0 - "Community 0"
-Cohesion: 0.22
-Nodes (5): DELETE(), GET(), PATCH(), POST(), PUT()
+Cohesion: 0.2
+Nodes (7): DELETE(), GET(), PATCH(), POST(), PUT(), TRASH_DIR(), UPLOAD_DIR()
 
 ### Community 1 - "Community 1"
 Cohesion: 0.19
 Nodes (11): blogSlugExists(), createDbClient(), deleteRowById(), fetchSingleRow(), insertSingleRow(), loadEnvFile(), parseEnvLine(), slugify() (+3 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.48
-Nodes (5): BlogPostPage(), generateMetadata(), getBlog(), getProject(), ProjectCaseStudyPage()
+Cohesion: 0.33
+Nodes (7): BlogPostPage(), generateMetadata(), getBlog(), getMember(), getProject(), ProjectCaseStudyPage(), TeamMemberPage()
 
 ### Community 3 - "Community 3"
 Cohesion: 0.29
 Nodes (7): About Page, Blog Page, Graphic Design Service, Home Page (index.html), Meta Ads Management, UI/UX Design Service, WordPress CMS Development
 
 ### Community 4 - "Community 4"
-Cohesion: 1.0
-Nodes (2): BlogPage(), getBlogs()
+Cohesion: 0.33
+Nodes (1): Toast()
 
 ### Community 5 - "Community 5"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): BlogPage(), getBlogs()
 
 ### Community 6 - "Community 6"
 Cohesion: 1.0
@@ -220,23 +220,21 @@ Nodes (0):
 ## Knowledge Gaps
 - **6 isolated node(s):** `About Page`, `Graphic Design Service`, `UI/UX Design Service`, `Meta Ads Management`, `WordPress CMS Development` (+1 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 5`** (2 nodes): `add-service-column.js`, `main()`
+- **Thin community `Community 6`** (2 nodes): `add-service-column.js`, `main()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 6`** (2 nodes): `build-page.js`, `jsxify()`
+- **Thin community `Community 7`** (2 nodes): `build-page.js`, `jsxify()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 7`** (2 nodes): `layout.js`, `RootLayout()`
+- **Thin community `Community 8`** (2 nodes): `layout.js`, `RootLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 8`** (2 nodes): `Providers.js`, `AuthProvider()`
+- **Thin community `Community 9`** (2 nodes): `Providers.js`, `AuthProvider()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 9`** (2 nodes): `layout.js`, `AdminLayout()`
+- **Thin community `Community 10`** (2 nodes): `layout.js`, `AdminLayout()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 10`** (2 nodes): `page.js`, `AdminDashboard()`
+- **Thin community `Community 11`** (2 nodes): `page.js`, `AdminDashboard()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 11`** (2 nodes): `page.js`, `BlogManagement()`
+- **Thin community `Community 12`** (2 nodes): `page.js`, `BlogManagement()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 12`** (2 nodes): `page.js`, `ContactsAdmin()`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 13`** (2 nodes): `page.js`, `MediaManager()`
+- **Thin community `Community 13`** (2 nodes): `page.js`, `ContactsAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 14`** (2 nodes): `page.js`, `ProductsAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
@@ -287,7 +285,7 @@ Nodes (0):
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `DELETE()` connect `Community 0` to `Community 1`?**
-  _High betweenness centrality (0.060) - this node is a cross-community bridge._
+  _High betweenness centrality (0.064) - this node is a cross-community bridge._
 - **Why does `deleteRowById()` connect `Community 1` to `Community 0`?**
   _High betweenness centrality (0.059) - this node is a cross-community bridge._
 - **What connects `About Page`, `Graphic Design Service`, `UI/UX Design Service` to the rest of the system?**
