@@ -56,13 +56,28 @@ export async function GET(request) {
     let query = supabaseAdmin
       .from("blogs")
       .select("*")
+      .is("deleted_at", null)
       .order("created_at", { ascending: false });
 
     if (!admin) query = query.eq("published", true);
 
-    const { data, error } = await query;
+    let { data, error } = await query;
+
+    // Graceful fallback if deleted_at column doesn't exist yet
+    if (error && error.message?.includes("deleted_at")) {
+      let fallback = supabaseAdmin
+        .from("blogs")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (!admin) fallback = fallback.eq("published", true);
+      const result = await fallback;
+      if (result.error) return NextResponse.json([], { status: 200 });
+      data = result.data;
+      error = null;
+    }
+
     if (error) return NextResponse.json([], { status: 200 });
-    return NextResponse.json(data);
+    return NextResponse.json(data ?? []);
   } catch {
     return NextResponse.json([], { status: 200 });
   }
@@ -104,7 +119,12 @@ export async function DELETE(req) {
     const { id } = await req.json();
     if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
 
-    const { error } = await supabaseAdmin.from("blogs").delete().eq("id", id);
+    // Soft-delete: stamp deleted_at instead of removing the row
+    const { error } = await supabaseAdmin
+      .from("blogs")
+      .update({ deleted_at: new Date().toISOString() })
+      .eq("id", id);
+
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json({ success: true });
   } catch (e) {

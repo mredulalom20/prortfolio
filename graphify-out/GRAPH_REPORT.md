@@ -1,7 +1,7 @@
 # Graph Report - E:\mobarok-portfolio  (2026-05-02)
 
 ## Corpus Check
-- 47 files · ~123,607 words
+- 47 files · ~125,174 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -60,8 +60,8 @@
 10. `getProject()` - 3 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `deleteRowById()` --calls--> `DELETE()`  [INFERRED]
-  E:\mobarok-portfolio\mcp\cms-mcp-server.mjs → E:\mobarok-portfolio\app\api\team\route.js
+- `DELETE()` --calls--> `deleteRowById()`  [INFERRED]
+  E:\mobarok-portfolio\app\api\team\route.js → E:\mobarok-portfolio\mcp\cms-mcp-server.mjs
 - `GET()` --calls--> `POST()`  [INFERRED]
   E:\mobarok-portfolio\app\seo\route.js → app\api\upload\route.js
 - `generateMetadata()` --calls--> `getBlog()`  [EXTRACTED]

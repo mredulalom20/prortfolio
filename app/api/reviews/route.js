@@ -1,17 +1,28 @@
 import { supabaseAdmin } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
-// GET all reviews
 export async function GET() {
-  const { data, error } = await supabaseAdmin
+  let { data, error } = await supabaseAdmin
     .from("reviews")
     .select("*")
+    .is("deleted_at", null)
     .order("created_at", { ascending: false });
+
+  // Graceful fallback if deleted_at column doesn't exist yet
+  if (error && error.message?.includes("deleted_at")) {
+    const result = await supabaseAdmin
+      .from("reviews")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (result.error) return NextResponse.json({ error: result.error.message }, { status: 500 });
+    data = result.data;
+    error = null;
+  }
+
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data);
 }
 
-// POST create review
 export async function POST(req) {
   const body = await req.json();
   const { name, role, message, avatar_url, published } = body;
@@ -39,17 +50,29 @@ export async function PUT(req) {
   return NextResponse.json(data);
 }
 
-// DELETE review
 export async function DELETE(req) {
   const { id } = await req.json();
-  const { error } = await supabaseAdmin.from("reviews").delete().eq("id", id);
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
+
+  // Try soft-delete; fall back to hard delete if column missing
+  const { error } = await supabaseAdmin
+    .from("reviews")
+    .update({ deleted_at: new Date().toISOString() })
+    .eq("id", id);
+
+  if (error && error.message?.includes("deleted_at")) {
+    const { error: delErr } = await supabaseAdmin.from("reviews").delete().eq("id", id);
+    if (delErr) return NextResponse.json({ error: delErr.message }, { status: 500 });
+  } else if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
   return NextResponse.json({ success: true });
 }
 
-// PATCH toggle publish
 export async function PATCH(req) {
   const { id, published } = await req.json();
+  if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
   const { data, error } = await supabaseAdmin
     .from("reviews")
     .update({ published })

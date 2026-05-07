@@ -24,7 +24,6 @@ export default function RichTextEditor({ value, onChange }) {
     "strike",
     "blockquote",
     "list",
-    "bullet",
     "link",
     "image",
   ];

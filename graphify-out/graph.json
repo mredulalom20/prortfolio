@@ -1580,8 +1580,8 @@
       "source_file": "E:\\mobarok-portfolio\\mcp\\cms-mcp-server.mjs",
       "source_location": "L244",
       "weight": 1.0,
-      "_src": "cms_mcp_server_deleterowbyid",
-      "_tgt": "route_delete",
+      "_src": "route_delete",
+      "_tgt": "cms_mcp_server_deleterowbyid",
       "source": "route_delete",
       "target": "cms_mcp_server_deleterowbyid"
     },

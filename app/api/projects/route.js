@@ -10,22 +10,30 @@ export async function GET(request) {
     let query = supabaseAdmin
       .from("projects")
       .select("*")
+      .is("deleted_at", null)
       .order("created_at", { ascending: false });
 
-    if (category) {
-      // Partial match so "Meta Ads" matches "Meta Ads / Marketing Proof"
-      query = query.ilike("category", `%${category}%`);
+    if (category) query = query.ilike("category", `%${category}%`);
+    if (service)  query = query.contains("service", [service]);
+
+    let { data: projects, error } = await query;
+
+    // Graceful fallback if deleted_at column doesn't exist yet (migration not run)
+    if (error && error.message?.includes("deleted_at")) {
+      const fallback = supabaseAdmin
+        .from("projects")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (category) fallback.ilike("category", `%${category}%`);
+      if (service)  fallback.contains("service", [service]);
+      const result = await fallback;
+      if (result.error) throw result.error;
+      projects = result.data;
+    } else if (error) {
+      throw error;
     }
 
-    if (service) {
-      // service is stored as a text[] — filter rows where the array contains the value
-      query = query.contains("service", [service]);
-    }
-
-    const { data: projects, error } = await query;
-    if (error) throw error;
-
-    return NextResponse.json(projects, { status: 200 });
+    return NextResponse.json(projects || [], { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: "Failed to fetch projects" }, { status: 500 });
   }
@@ -34,13 +42,8 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    // Strip any existing id so Supabase generates a fresh one
     const { id, created_at, ...fields } = body;
-
-    // Ensure service is always an array
-    if (!Array.isArray(fields.service)) {
-      fields.service = [];
-    }
+    if (!Array.isArray(fields.service)) fields.service = [];
 
     const { data: project, error } = await supabaseAdmin
       .from("projects")
@@ -59,13 +62,8 @@ export async function PUT(request) {
   try {
     const body = await request.json();
     const { id, created_at, ...fields } = body;
-
     if (!id) return NextResponse.json({ error: "ID is required for update" }, { status: 400 });
-
-    // Ensure service is always an array
-    if (!Array.isArray(fields.service)) {
-      fields.service = [];
-    }
+    if (!Array.isArray(fields.service)) fields.service = [];
 
     const { data: project, error } = await supabaseAdmin
       .from("projects")
@@ -86,8 +84,19 @@ export async function DELETE(request) {
     const { id } = await request.json();
     if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
 
-    const { error } = await supabaseAdmin.from("projects").delete().eq("id", id);
-    if (error) throw error;
+    // Try soft-delete first; fall back to hard delete if column missing
+    const { error } = await supabaseAdmin
+      .from("projects")
+      .update({ deleted_at: new Date().toISOString() })
+      .eq("id", id);
+
+    if (error && error.message?.includes("deleted_at")) {
+      // Column not yet migrated — hard delete as fallback
+      const { error: delErr } = await supabaseAdmin.from("projects").delete().eq("id", id);
+      if (delErr) throw delErr;
+    } else if (error) {
+      throw error;
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

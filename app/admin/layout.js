@@ -45,16 +45,16 @@ export default function AdminLayout({ children }) {
   if (!user) return null;
 
   const navLinks = [
-    { name: "Dashboard",    href: "/admin",          icon: "dashboard" },
-    { name: "Blog Posts",   href: "/admin/blog",     icon: "article" },
-    { name: "Projects",     href: "/admin/projects", icon: "folder" },
-    { name: "Products",     href: "/admin/products", icon: "extension" },
-    { name: "Reviews",      href: "/admin/reviews",  icon: "format_quote" },
-    { name: "Our Team",     href: "/admin/team",     icon: "groups" },
-    { name: "Contacts",     href: "/admin/contacts", icon: "inbox" },
-    { name: "Social Links", href: "/admin/social",   icon: "share" },
-    { name: "Media",        href: "/admin/media",    icon: "perm_media" },
-    { name: "Users",        href: "/admin/users",    icon: "manage_accounts" },
+    { name: "Dashboard",    href: "/admin",             icon: "dashboard" },
+    { name: "Blog Posts",   href: "/admin/blog",        icon: "article" },
+    { name: "Projects",     href: "/admin/projects",    icon: "folder" },
+    { name: "Products",     href: "/admin/products",    icon: "extension" },
+    { name: "Reviews",      href: "/admin/reviews",     icon: "format_quote" },
+    { name: "Our Team",     href: "/admin/team",        icon: "groups" },
+    { name: "Contacts",     href: "/admin/contacts",    icon: "inbox" },
+    { name: "Social Links", href: "/admin/social",      icon: "share" },
+    { name: "Media",        href: "/admin/media",       icon: "perm_media" },
+    { name: "Users",        href: "/admin/users",       icon: "manage_accounts" },
   ];
 
   return (
@@ -67,26 +67,45 @@ export default function AdminLayout({ children }) {
           </div>
           <span className="text-xl font-bold tracking-tight">Admin Panel</span>
         </div>
-        
-        <nav className="flex-1 space-y-2">
+
+        <nav className="flex-1 space-y-1">
           {navLinks.map((link) => {
             const active = pathname === link.href;
             return (
-              <Link 
-                key={link.name} 
+              <Link
+                key={link.name}
                 href={link.href}
-                className={`flex items-center gap-3 p-3 rounded-xl transition-all font-medium ${active ? 'bg-primary/10 text-primary border border-primary/20' : 'hover:bg-white/5 text-slate-400 hover:text-white'}`}
+                className={`flex items-center gap-3 p-3 rounded-xl transition-all font-medium ${
+                  active
+                    ? "bg-primary/10 text-primary border border-primary/20"
+                    : "hover:bg-white/5 text-slate-400 hover:text-white"
+                }`}
               >
                 <span className="material-symbols-outlined">{link.icon}</span>
                 {link.name}
               </Link>
-            )
+            );
           })}
+
+          {/* Recycle Bin — visually separated */}
+          <div className="pt-2 mt-2 border-t border-white/5">
+            <Link
+              href="/admin/recycle-bin"
+              className={`flex items-center gap-3 p-3 rounded-xl transition-all font-medium ${
+                pathname === "/admin/recycle-bin"
+                  ? "bg-red-500/15 text-red-400 border border-red-500/20"
+                  : "hover:bg-red-500/10 text-slate-500 hover:text-red-400"
+              }`}
+            >
+              <span className="material-symbols-outlined">delete</span>
+              Recycle Bin
+            </Link>
+          </div>
         </nav>
 
         <button
           onClick={() => supabaseBrowser.auth.signOut()}
-          className="flex items-center gap-3 p-3 rounded-xl hover:bg-red-500/10 text-red-400 mt-auto transition-all"
+          className="flex items-center gap-3 p-3 rounded-xl hover:bg-red-500/10 text-red-400 mt-4 transition-all"
         >
           <span className="material-symbols-outlined">logout</span>
           Sign Out
