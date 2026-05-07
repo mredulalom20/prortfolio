@@ -269,7 +269,7 @@ function initAutoCarousel(track, interval) {
 <div class="relative group">
 <div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-75 group-hover:scale-90 transition-transform duration-700"></div>
 <div class="relative rounded-2xl overflow-hidden aspect-[4/5] border border-white/10 shadow-2xl">
-<img alt="Professional Portrait" class="w-full h-full object-cover" src="img/profile.jpg"/>
+<img id="homepage-hero-img" alt="Professional Portrait" class="w-full h-full object-cover" src="img/profile.jpg"/>
 </div>
 <div class="absolute -bottom-6 -left-6 bg-surface p-6 rounded-2xl border border-white/5 shadow-xl hidden md:block">
 <div class="flex items-center gap-4">
@@ -356,6 +356,79 @@ function initAutoCarousel(track, interval) {
 </div>
 </div>
 </section>
+
+<!-- About Me Hero Section -->
+<section class="py-24" id="about-hero">
+<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+  <div class="relative group">
+    <div class="absolute -inset-4 bg-primary/20 rounded-xl blur-2xl group-hover:bg-primary/30 transition-all duration-700"></div>
+    <div class="relative rounded-2xl overflow-hidden border border-white/10 aspect-[4/5] bg-surface" style="animation: aboutHeroFloat 6s ease-in-out infinite;">
+      <img id="about-hero-img" alt="Professional portrait of Mobarak" class="w-full h-full object-cover" src="img/profile.jpg"/>
+    </div>
+  </div>
+  <div class="space-y-6">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+      </span>
+      My Story &amp; Mission
+    </div>
+    <h2 class="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
+      Crafting Digital <br/><span class="text-primary">Masterpieces</span> That Scale.
+    </h2>
+    <p class="text-slate-400 text-lg leading-relaxed">
+      I am a multidisciplinary creator dedicated to blending strategic marketing with high-impact visual design. My mission is simple: to help visionary brands navigate the digital landscape and achieve explosive growth through creative excellence.
+    </p>
+    <div class="flex flex-wrap gap-6 pt-4">
+      <div class="flex items-center gap-2 text-slate-300">
+        <span class="material-symbols-outlined text-primary">location_on</span>
+        <span>Bangladesh | Remote</span>
+      </div>
+      <div class="flex items-center gap-2 text-slate-300">
+        <span class="material-symbols-outlined text-primary">verified</span>
+        <span>5+ Years Experience</span>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-4 pt-4">
+      <a href="#portfolio" class="bg-primary hover:bg-primary/90 text-background-dark font-bold py-4 px-8 rounded-xl text-lg transition-all flex items-center gap-2 shadow-lg shadow-primary/20">
+        View My Work
+        <span class="material-symbols-outlined">arrow_outward</span>
+      </a>
+      <a href="/about" class="border-2 border-slate-700 hover:border-primary text-slate-100 font-bold py-4 px-8 rounded-xl text-lg transition-all">
+        Read More
+      </a>
+    </div>
+  </div>
+</div>
+</section>
+<style>
+  @keyframes aboutHeroFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+</style>
+<script>
+(function(){
+  fetch('/api/site-settings')
+    .then(function(r){ return r.json(); })
+    .then(function(settings){
+      if(!Array.isArray(settings)) return;
+      settings.forEach(function(s){
+        if(s.key === 'hero_image' && s.value) {
+          var heroImg = document.getElementById('homepage-hero-img');
+          if(heroImg) heroImg.src = s.value;
+        }
+        if(s.key === 'about_hero_image' && s.value) {
+          var aboutImg = document.getElementById('about-hero-img');
+          if(aboutImg) aboutImg.src = s.value;
+        }
+      });
+    })
+    .catch(function(){});
+})();
+</script>
+
 <!-- About Section -->
 <div id="about">
 

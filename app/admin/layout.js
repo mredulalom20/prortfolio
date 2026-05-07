@@ -54,6 +54,7 @@ export default function AdminLayout({ children }) {
     { name: "Contacts",     href: "/admin/contacts",    icon: "inbox" },
     { name: "Social Links", href: "/admin/social",      icon: "share" },
     { name: "Media",        href: "/admin/media",       icon: "perm_media" },
+    { name: "Site Settings",href: "/admin/site-settings",icon: "settings" },
     { name: "Users",        href: "/admin/users",       icon: "manage_accounts" },
   ];
 

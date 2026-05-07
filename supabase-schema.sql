@@ -95,3 +95,16 @@ create table if not exists team_members (
   published boolean default true,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
+
+-- 9. Create Site Settings Table (key-value store for CMS-editable settings)
+create table if not exists site_settings (
+  key text primary key,
+  value text not null default '',
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Insert default hero image settings
+insert into site_settings (key, value) values
+  ('hero_image', 'img/profile.jpg'),
+  ('about_hero_image', 'img/profile.jpg')
+on conflict (key) do nothing;
