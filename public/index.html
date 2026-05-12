@@ -269,7 +269,7 @@ function initAutoCarousel(track, interval) {
 <div class="relative group">
 <div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-75 group-hover:scale-90 transition-transform duration-700"></div>
 <div class="relative rounded-2xl overflow-hidden aspect-[4/5] border border-white/10 shadow-2xl">
-<img id="homepage-hero-img" alt="Professional Portrait" class="w-full h-full object-cover" src="img/profile.jpg"/>
+<img id="homepage-hero-img" alt="Professional Portrait" class="w-full h-full object-cover" src="/img/profile.jpg"/>
 </div>
 <div class="absolute -bottom-6 -left-6 bg-surface p-6 rounded-2xl border border-white/5 shadow-xl hidden md:block">
 <div class="flex items-center gap-4">
@@ -363,7 +363,7 @@ function initAutoCarousel(track, interval) {
   <div class="relative group">
     <div class="absolute -inset-4 bg-primary/20 rounded-xl blur-2xl group-hover:bg-primary/30 transition-all duration-700"></div>
     <div class="relative rounded-2xl overflow-hidden border border-white/10 aspect-[4/5] bg-surface" style="animation: aboutHeroFloat 6s ease-in-out infinite;">
-      <img id="about-hero-img" alt="Professional portrait of Mobarak" class="w-full h-full object-cover" src="img/profile.jpg"/>
+      <img id="about-hero-img" alt="Professional portrait of Mobarak" class="w-full h-full object-cover" src="/img/profile.jpg"/>
     </div>
   </div>
   <div class="space-y-6">
@@ -454,47 +454,31 @@ function initAutoCarousel(track, interval) {
   </div>
 </section>
 
-<!-- Experience & Education -->
+<!-- Experience -->
 <section class="py-14">
   <div class="max-w-4xl mx-auto px-6">
     <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Journey</h2>
-    <h3 class="text-4xl md:text-5xl font-black mb-10">Experience &amp; Education</h3>
-    <div class="space-y-0 border-l-2 border-slate-800 ml-4">
-      <!-- Item 1 -->
-      <div class="relative pl-10 pb-12">
-        <div class="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-primary" style="animation: glowPulseHP 2s ease-in-out infinite;"></div>
-        <div class="bg-surface border border-white/5 p-8 rounded-2xl hover:border-primary/30 transition-all duration-300">
-          <span class="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-sm mb-3">2022 - Present</span>
-          <h4 class="text-2xl font-bold mt-1">Senior Meta Ads Specialist</h4>
-          <p class="text-slate-400 mt-3 leading-relaxed">Leading performance marketing strategies for global E-commerce brands, focusing on ROAS optimization and creative scaling.</p>
-        </div>
+    <h3 class="text-4xl md:text-5xl font-black mb-10">Experience</h3>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-surface border border-white/5 p-8 rounded-2xl hover:border-primary/30 transition-all duration-300">
+        <span class="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-sm mb-3">2020 - Present</span>
+        <h4 class="text-2xl font-bold mt-1">Meta Ads Specialist</h4>
+        <p class="text-slate-400 mt-3 leading-relaxed">Leading performance marketing strategies for global e-commerce brands, focusing on ROAS optimization and creative scaling.</p>
       </div>
-      <!-- Item 2 -->
-      <div class="relative pl-10 pb-12">
-        <div class="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-slate-700 border-2 border-slate-600"></div>
-        <div class="bg-surface border border-white/5 p-8 rounded-2xl hover:border-primary/30 transition-all duration-300">
-          <span class="inline-block px-3 py-1 rounded-full bg-slate-800 text-slate-400 font-bold text-sm mb-3">2020 - 2022</span>
-          <h4 class="text-2xl font-bold mt-1">Graphic Design Lead</h4>
-          <p class="text-slate-400 mt-3 leading-relaxed">Oversaw a creative team to deliver high-converting ad creatives and brand identity systems for tech startups.</p>
-        </div>
+      <div class="bg-surface border border-white/5 p-8 rounded-2xl hover:border-primary/30 transition-all duration-300">
+        <span class="inline-block px-3 py-1 rounded-full bg-slate-800 text-slate-400 font-bold text-sm mb-3">2024 - Present</span>
+        <h4 class="text-2xl font-bold mt-1">Graphic Design Lead</h4>
+        <p class="text-slate-400 mt-3 leading-relaxed">Oversaw a creative team to deliver high-converting ad creatives and brand identity systems for tech startups.</p>
       </div>
-      <!-- Item 3 -->
-      <div class="relative pl-10 pb-12">
-        <div class="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-slate-700 border-2 border-slate-600"></div>
-        <div class="bg-surface border border-white/5 p-8 rounded-2xl hover:border-primary/30 transition-all duration-300">
-          <span class="inline-block px-3 py-1 rounded-full bg-slate-800 text-slate-400 font-bold text-sm mb-3">2018 - 2020</span>
-          <h4 class="text-2xl font-bold mt-1">CMS Developer</h4>
-          <p class="text-slate-400 mt-3 leading-relaxed">Developing custom, SEO-optimized business websites and landing pages using Elementor and custom CSS.</p>
-        </div>
+      <div class="bg-surface border border-white/5 p-8 rounded-2xl hover:border-primary/30 transition-all duration-300">
+        <span class="inline-block px-3 py-1 rounded-full bg-slate-800 text-slate-400 font-bold text-sm mb-3">2021 - Present</span>
+        <h4 class="text-2xl font-bold mt-1">CMS Developer</h4>
+        <p class="text-slate-400 mt-3 leading-relaxed">Developing custom, SEO-optimized business websites and landing pages using Elementor and custom CSS.</p>
       </div>
-      <!-- Item 4 -->
-      <div class="relative pl-10">
-        <div class="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-slate-700 border-2 border-slate-800"></div>
-        <div class="bg-surface border border-white/5 p-8 rounded-2xl hover:border-primary/30 transition-all duration-300">
-          <span class="inline-block px-3 py-1 rounded-full bg-slate-800 text-slate-400 font-bold text-sm mb-3">2014 - 2018</span>
-          <h4 class="text-2xl font-bold mt-1">BSc in Computer Science</h4>
-          <p class="text-slate-400 mt-3 leading-relaxed">Focused on software engineering, UI/UX principles, and digital communication architecture.</p>
-        </div>
+      <div class="bg-surface border border-white/5 p-8 rounded-2xl hover:border-primary/30 transition-all duration-300">
+        <span class="inline-block px-3 py-1 rounded-full bg-slate-800 text-slate-400 font-bold text-sm mb-3">2021 - Present</span>
+        <h4 class="text-2xl font-bold mt-1">Worked with BD Local E-commerce Businesses &amp; Service Companies</h4>
+        <p class="text-slate-400 mt-3 leading-relaxed">Partnered with Bangladeshi local e-commerce businesses and service companies to deliver growth-focused marketing, creative, and web solutions.</p>
       </div>
     </div>
   </div>

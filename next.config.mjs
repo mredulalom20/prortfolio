@@ -19,12 +19,15 @@ const nextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
-        { source: '/', destination: '/api/home' },
-        { source: '/graphic-design', destination: '/graphic-design.html' },
-        { source: '/ui-design', destination: '/ui-design.html' },
-        { source: '/meta-ads', destination: '/meta-ads.html' },
-        { source: '/wordpress-dev', destination: '/wordpress-dev.html' },
-        { source: '/blog', destination: '/blog.html' },
+        { source: '/:slug.html', destination: '/api/page/:slug' },
+        { source: '/', destination: '/api/page/index' },
+        { source: '/about', destination: '/api/page/about' },
+        { source: '/graphic-design', destination: '/api/page/graphic-design' },
+        { source: '/ui-design', destination: '/api/page/ui-design' },
+        { source: '/meta-ads', destination: '/api/page/meta-ads' },
+        { source: '/wordpress-dev', destination: '/api/page/wordpress-dev' },
+        { source: '/blog', destination: '/api/page/blog' },
+        { source: '/seo', destination: '/api/page/seo' },
       ]
     };
   },
