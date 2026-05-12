@@ -1,11 +1,11 @@
-# Graph Report - E:\mobarok-portfolio  (2026-05-07)
+# Graph Report - E:\mobarok-portfolio  (2026-05-12)
 
 ## Corpus Check
-- 54 files · ~228,212 words
+- 58 files · ~143,150 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 121 nodes · 140 edges · 36 communities detected
+- 126 nodes · 145 edges · 37 communities detected
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
@@ -46,14 +46,15 @@
 - [[_COMMUNITY_Community 33|Community 33]]
 - [[_COMMUNITY_Community 34|Community 34]]
 - [[_COMMUNITY_Community 35|Community 35]]
+- [[_COMMUNITY_Community 36|Community 36]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `GET()` - 20 edges
+1. `GET()` - 23 edges
 2. `DELETE()` - 13 edges
 3. `POST()` - 12 edges
 4. `PATCH()` - 9 edges
-5. `createDbClient()` - 7 edges
-6. `PUT()` - 6 edges
+5. `PUT()` - 7 edges
+6. `createDbClient()` - 7 edges
 7. `generateMetadata()` - 6 edges
 8. `Home Page (index.html)` - 6 edges
 9. `UPLOAD_DIR()` - 5 edges
@@ -74,7 +75,7 @@
 ## Communities
 
 ### Community 0 - "Community 0"
-Cohesion: 0.19
+Cohesion: 0.16
 Nodes (7): DELETE(), GET(), PATCH(), POST(), PUT(), TRASH_DIR(), UPLOAD_DIR()
 
 ### Community 1 - "Community 1"
@@ -217,6 +218,10 @@ Nodes (0):
 Cohesion: 1.0
 Nodes (0): 
 
+### Community 36 - "Community 36"
+Cohesion: 1.0
+Nodes (0): 
+
 ## Knowledge Gaps
 - **6 isolated node(s):** `About Page`, `Graphic Design Service`, `UI/UX Design Service`, `Meta Ads Management`, `WordPress CMS Development` (+1 more)
   These have ≤1 connection - possible missing edges or undocumented components.
@@ -236,57 +241,59 @@ Nodes (0):
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 13`** (2 nodes): `page.js`, `ContactsAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 14`** (2 nodes): `page.js`, `ProductsAdmin()`
+- **Thin community `Community 14`** (2 nodes): `page.js`, `PagesAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 15`** (2 nodes): `page.js`, `ProjectManagement()`
+- **Thin community `Community 15`** (2 nodes): `page.js`, `ProductsAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 16`** (2 nodes): `page.js`, `ReviewsAdmin()`
+- **Thin community `Community 16`** (2 nodes): `page.js`, `ProjectManagement()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 17`** (2 nodes): `page.js`, `SocialAdmin()`
+- **Thin community `Community 17`** (2 nodes): `page.js`, `ReviewsAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 18`** (2 nodes): `page.js`, `TeamAdmin()`
+- **Thin community `Community 18`** (2 nodes): `page.js`, `SocialAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 19`** (2 nodes): `page.js`, `UsersAdmin()`
+- **Thin community `Community 19`** (2 nodes): `page.js`, `TeamAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 20`** (2 nodes): `Footer.js`, `Footer()`
+- **Thin community `Community 20`** (2 nodes): `page.js`, `UsersAdmin()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 21`** (2 nodes): `MobileCarousel.js`, `MobileCarousel()`
+- **Thin community `Community 21`** (2 nodes): `Footer.js`, `Footer()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 22`** (2 nodes): `Navbar.js`, `Navbar()`
+- **Thin community `Community 22`** (2 nodes): `MobileCarousel.js`, `MobileCarousel()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 23`** (2 nodes): `ProjectGrid.js`, `ProjectGrid()`
+- **Thin community `Community 23`** (2 nodes): `Navbar.js`, `Navbar()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 24`** (2 nodes): `RichTextEditor.js`, `RichTextEditor()`
+- **Thin community `Community 24`** (2 nodes): `ProjectGrid.js`, `ProjectGrid()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 25`** (2 nodes): `page.js`, `Login()`
+- **Thin community `Community 25`** (2 nodes): `RichTextEditor.js`, `RichTextEditor()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 26`** (1 nodes): `eslint.config.mjs`
+- **Thin community `Community 26`** (2 nodes): `page.js`, `Login()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 27`** (1 nodes): `fix-jsx.js`
+- **Thin community `Community 27`** (1 nodes): `eslint.config.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 28`** (1 nodes): `migrate.js`
+- **Thin community `Community 28`** (1 nodes): `fix-jsx.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 29`** (1 nodes): `next.config.mjs`
+- **Thin community `Community 29`** (1 nodes): `migrate.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 30`** (1 nodes): `postcss.config.mjs`
+- **Thin community `Community 30`** (1 nodes): `next.config.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 31`** (1 nodes): `supabase.js`
+- **Thin community `Community 31`** (1 nodes): `postcss.config.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 32`** (1 nodes): `supabaseClient.js`
+- **Thin community `Community 32`** (1 nodes): `supabase.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 33`** (1 nodes): `README.md`
+- **Thin community `Community 33`** (1 nodes): `supabaseClient.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 34`** (1 nodes): `AGENTS.md`
+- **Thin community `Community 34`** (1 nodes): `README.md`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 35`** (1 nodes): `CLAUDE.md`
+- **Thin community `Community 35`** (1 nodes): `AGENTS.md`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 36`** (1 nodes): `CLAUDE.md`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `DELETE()` connect `Community 0` to `Community 1`?**
-  _High betweenness centrality (0.063) - this node is a cross-community bridge._
+  _High betweenness centrality (0.065) - this node is a cross-community bridge._
 - **Why does `deleteRowById()` connect `Community 1` to `Community 0`?**
-  _High betweenness centrality (0.058) - this node is a cross-community bridge._
+  _High betweenness centrality (0.060) - this node is a cross-community bridge._
 - **What connects `About Page`, `Graphic Design Service`, `UI/UX Design Service` to the rest of the system?**
   _6 weakly-connected nodes found - possible documentation gaps or missing edges._

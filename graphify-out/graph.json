@@ -45,7 +45,7 @@
       "source_file": "E:\\mobarok-portfolio\\eslint.config.mjs",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_eslint_config_mjs",
-      "community": 26,
+      "community": 27,
       "norm_label": "eslint.config.mjs"
     },
     {
@@ -54,7 +54,7 @@
       "source_file": "fix-jsx.js",
       "source_location": "L1",
       "id": "fix_jsx_js",
-      "community": 27,
+      "community": 28,
       "norm_label": "fix-jsx.js"
     },
     {
@@ -63,16 +63,16 @@
       "source_file": "migrate.js",
       "source_location": "L1",
       "id": "migrate_js",
-      "community": 28,
+      "community": 29,
       "norm_label": "migrate.js"
     },
     {
       "label": "next.config.mjs",
       "file_type": "code",
-      "source_file": "next.config.mjs",
+      "source_file": "E:\\mobarok-portfolio\\next.config.mjs",
       "source_location": "L1",
-      "id": "next_config_mjs",
-      "community": 29,
+      "id": "e_mobarok_portfolio_next_config_mjs",
+      "community": 30,
       "norm_label": "next.config.mjs"
     },
     {
@@ -81,7 +81,7 @@
       "source_file": "postcss.config.mjs",
       "source_location": "L1",
       "id": "postcss_config_mjs",
-      "community": 30,
+      "community": 31,
       "norm_label": "postcss.config.mjs"
     },
     {
@@ -222,10 +222,28 @@
     {
       "label": "page.js",
       "file_type": "code",
+      "source_file": "E:\\mobarok-portfolio\\app\\admin\\pages\\page.js",
+      "source_location": "L1",
+      "id": "e_mobarok_portfolio_app_admin_pages_page_js",
+      "community": 14,
+      "norm_label": "page.js"
+    },
+    {
+      "label": "PagesAdmin()",
+      "file_type": "code",
+      "source_file": "E:\\mobarok-portfolio\\app\\admin\\pages\\page.js",
+      "source_location": "L16",
+      "id": "page_pagesadmin",
+      "community": 14,
+      "norm_label": "pagesadmin()"
+    },
+    {
+      "label": "page.js",
+      "file_type": "code",
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\products\\page.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_admin_products_page_js",
-      "community": 14,
+      "community": 15,
       "norm_label": "page.js"
     },
     {
@@ -234,7 +252,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\products\\page.js",
       "source_location": "L8",
       "id": "page_productsadmin",
-      "community": 14,
+      "community": 15,
       "norm_label": "productsadmin()"
     },
     {
@@ -243,7 +261,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\projects\\page.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_admin_projects_page_js",
-      "community": 15,
+      "community": 16,
       "norm_label": "page.js"
     },
     {
@@ -252,7 +270,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\projects\\page.js",
       "source_location": "L28",
       "id": "page_projectmanagement",
-      "community": 15,
+      "community": 16,
       "norm_label": "projectmanagement()"
     },
     {
@@ -288,7 +306,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\reviews\\page.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_admin_reviews_page_js",
-      "community": 16,
+      "community": 17,
       "norm_label": "page.js"
     },
     {
@@ -297,7 +315,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\reviews\\page.js",
       "source_location": "L7",
       "id": "page_reviewsadmin",
-      "community": 16,
+      "community": 17,
       "norm_label": "reviewsadmin()"
     },
     {
@@ -313,7 +331,7 @@
       "label": "SiteSettingsPage()",
       "file_type": "code",
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\site-settings\\page.js",
-      "source_location": "L20",
+      "source_location": "L50",
       "id": "page_sitesettingspage",
       "community": 3,
       "norm_label": "sitesettingspage()"
@@ -324,7 +342,7 @@
       "source_file": "app\\admin\\social\\page.js",
       "source_location": "L1",
       "id": "app_admin_social_page_js",
-      "community": 17,
+      "community": 18,
       "norm_label": "page.js"
     },
     {
@@ -333,7 +351,7 @@
       "source_file": "app\\admin\\social\\page.js",
       "source_location": "L12",
       "id": "page_socialadmin",
-      "community": 17,
+      "community": 18,
       "norm_label": "socialadmin()"
     },
     {
@@ -342,7 +360,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\team\\page.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_admin_team_page_js",
-      "community": 18,
+      "community": 19,
       "norm_label": "page.js"
     },
     {
@@ -351,7 +369,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\team\\page.js",
       "source_location": "L7",
       "id": "page_teamadmin",
-      "community": 18,
+      "community": 19,
       "norm_label": "teamadmin()"
     },
     {
@@ -360,7 +378,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\users\\page.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_admin_users_page_js",
-      "community": 19,
+      "community": 20,
       "norm_label": "page.js"
     },
     {
@@ -369,7 +387,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\users\\page.js",
       "source_location": "L5",
       "id": "page_usersadmin",
-      "community": 19,
+      "community": 20,
       "norm_label": "usersadmin()"
     },
     {
@@ -456,9 +474,9 @@
     {
       "label": "route.js",
       "file_type": "code",
-      "source_file": "app\\api\\home\\route.js",
+      "source_file": "E:\\mobarok-portfolio\\app\\api\\home\\route.js",
       "source_location": "L1",
-      "id": "app_api_home_route_js",
+      "id": "e_mobarok_portfolio_app_api_home_route_js",
       "community": 0,
       "norm_label": "route.js"
     },
@@ -513,6 +531,33 @@
       "source_file": "E:\\mobarok-portfolio\\app\\api\\media\\trash\\route.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_api_media_trash_route_js",
+      "community": 0,
+      "norm_label": "route.js"
+    },
+    {
+      "label": "route.js",
+      "file_type": "code",
+      "source_file": "E:\\mobarok-portfolio\\app\\api\\page\\route.js",
+      "source_location": "L1",
+      "id": "e_mobarok_portfolio_app_api_page_route_js",
+      "community": 0,
+      "norm_label": "route.js"
+    },
+    {
+      "label": "route.js",
+      "file_type": "code",
+      "source_file": "E:\\mobarok-portfolio\\app\\api\\page\\[slug]\\route.js",
+      "source_location": "L1",
+      "id": "e_mobarok_portfolio_app_api_page_slug_route_js",
+      "community": 0,
+      "norm_label": "route.js"
+    },
+    {
+      "label": "route.js",
+      "file_type": "code",
+      "source_file": "E:\\mobarok-portfolio\\app\\api\\pages\\route.js",
+      "source_location": "L1",
+      "id": "e_mobarok_portfolio_app_api_pages_route_js",
       "community": 0,
       "norm_label": "route.js"
     },
@@ -666,7 +711,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\components\\Footer.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_components_footer_js",
-      "community": 20,
+      "community": 21,
       "norm_label": "footer.js"
     },
     {
@@ -675,7 +720,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\components\\Footer.js",
       "source_location": "L3",
       "id": "footer_footer",
-      "community": 20,
+      "community": 21,
       "norm_label": "footer()"
     },
     {
@@ -684,7 +729,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\components\\MobileCarousel.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_components_mobilecarousel_js",
-      "community": 21,
+      "community": 22,
       "norm_label": "mobilecarousel.js"
     },
     {
@@ -693,7 +738,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\components\\MobileCarousel.js",
       "source_location": "L5",
       "id": "mobilecarousel_mobilecarousel",
-      "community": 21,
+      "community": 22,
       "norm_label": "mobilecarousel()"
     },
     {
@@ -702,7 +747,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\components\\Navbar.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_components_navbar_js",
-      "community": 22,
+      "community": 23,
       "norm_label": "navbar.js"
     },
     {
@@ -711,7 +756,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\components\\Navbar.js",
       "source_location": "L5",
       "id": "navbar_navbar",
-      "community": 22,
+      "community": 23,
       "norm_label": "navbar()"
     },
     {
@@ -720,7 +765,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\components\\ProjectGrid.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_components_projectgrid_js",
-      "community": 23,
+      "community": 24,
       "norm_label": "projectgrid.js"
     },
     {
@@ -729,7 +774,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\components\\ProjectGrid.js",
       "source_location": "L6",
       "id": "projectgrid_projectgrid",
-      "community": 23,
+      "community": 24,
       "norm_label": "projectgrid()"
     },
     {
@@ -738,7 +783,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\components\\RichTextEditor.js",
       "source_location": "L1",
       "id": "e_mobarok_portfolio_app_components_richtexteditor_js",
-      "community": 24,
+      "community": 25,
       "norm_label": "richtexteditor.js"
     },
     {
@@ -747,7 +792,7 @@
       "source_file": "E:\\mobarok-portfolio\\app\\components\\RichTextEditor.js",
       "source_location": "L8",
       "id": "richtexteditor_richtexteditor",
-      "community": 24,
+      "community": 25,
       "norm_label": "richtexteditor()"
     },
     {
@@ -756,7 +801,7 @@
       "source_file": "app\\login\\page.js",
       "source_location": "L1",
       "id": "app_login_page_js",
-      "community": 25,
+      "community": 26,
       "norm_label": "page.js"
     },
     {
@@ -765,7 +810,7 @@
       "source_file": "app\\login\\page.js",
       "source_location": "L7",
       "id": "page_login",
-      "community": 25,
+      "community": 26,
       "norm_label": "login()"
     },
     {
@@ -837,7 +882,7 @@
       "source_file": "lib\\supabase.js",
       "source_location": "L1",
       "id": "lib_supabase_js",
-      "community": 31,
+      "community": 32,
       "norm_label": "supabase.js"
     },
     {
@@ -846,7 +891,7 @@
       "source_file": "lib\\supabaseClient.js",
       "source_location": "L1",
       "id": "lib_supabaseclient_js",
-      "community": 32,
+      "community": 33,
       "norm_label": "supabaseclient.js"
     },
     {
@@ -1006,7 +1051,7 @@
       "label": "README.md",
       "file_type": "document",
       "source_file": "README.md",
-      "community": 33,
+      "community": 34,
       "norm_label": "readme.md",
       "id": "readme"
     },
@@ -1014,7 +1059,7 @@
       "label": "AGENTS.md",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "community": 34,
+      "community": 35,
       "norm_label": "agents.md",
       "id": "agents"
     },
@@ -1022,7 +1067,7 @@
       "label": "CLAUDE.md",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "community": 35,
+      "community": 36,
       "norm_label": "claude.md",
       "id": "claude"
     },
@@ -1231,6 +1276,18 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "E:\\mobarok-portfolio\\app\\admin\\pages\\page.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_src": "e_mobarok_portfolio_app_admin_pages_page_js",
+      "_tgt": "page_pagesadmin",
+      "source": "e_mobarok_portfolio_app_admin_pages_page_js",
+      "target": "page_pagesadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\products\\page.js",
       "source_location": "L8",
       "weight": 1.0,
@@ -1292,7 +1349,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "E:\\mobarok-portfolio\\app\\admin\\site-settings\\page.js",
-      "source_location": "L20",
+      "source_location": "L50",
       "weight": 1.0,
       "_src": "e_mobarok_portfolio_app_admin_site_settings_page_js",
       "_tgt": "page_sitesettingspage",
@@ -1399,13 +1456,13 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app\\api\\home\\route.js",
-      "source_location": "L5",
+      "source_file": "E:\\mobarok-portfolio\\app\\api\\home\\route.js",
+      "source_location": "L6",
       "weight": 1.0,
-      "_src": "app_api_home_route_js",
+      "_src": "e_mobarok_portfolio_app_api_home_route_js",
       "_tgt": "route_get",
       "source": "route_get",
-      "target": "app_api_home_route_js",
+      "target": "e_mobarok_portfolio_app_api_home_route_js",
       "confidence_score": 1.0
     },
     {
@@ -1466,6 +1523,42 @@
       "_tgt": "route_trash_dir",
       "source": "route_get",
       "target": "route_trash_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "E:\\mobarok-portfolio\\app\\api\\page\\route.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_src": "e_mobarok_portfolio_app_api_page_route_js",
+      "_tgt": "route_get",
+      "source": "route_get",
+      "target": "e_mobarok_portfolio_app_api_page_route_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "E:\\mobarok-portfolio\\app\\api\\page\\[slug]\\route.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_src": "e_mobarok_portfolio_app_api_page_slug_route_js",
+      "_tgt": "route_get",
+      "source": "route_get",
+      "target": "e_mobarok_portfolio_app_api_page_slug_route_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "E:\\mobarok-portfolio\\app\\api\\pages\\route.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_src": "e_mobarok_portfolio_app_api_pages_route_js",
+      "_tgt": "route_get",
+      "source": "route_get",
+      "target": "e_mobarok_portfolio_app_api_pages_route_js",
       "confidence_score": 1.0
     },
     {
@@ -1735,6 +1828,18 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "E:\\mobarok-portfolio\\app\\api\\pages\\route.js",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_src": "e_mobarok_portfolio_app_api_pages_route_js",
+      "_tgt": "route_put",
+      "source": "route_put",
+      "target": "e_mobarok_portfolio_app_api_pages_route_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "E:\\mobarok-portfolio\\app\\api\\products\\route.js",
       "source_location": "L33",
       "weight": 1.0,
@@ -1928,7 +2033,7 @@
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
-      "source_file": "E:\\mobarok-portfolio\\mcp\\cms-mcp-server.mjs",
+      "source_file": "mcp\\cms-mcp-server.mjs",
       "source_location": "L244",
       "weight": 1.0,
       "_src": "route_delete",
