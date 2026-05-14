@@ -26,7 +26,6 @@ const nextConfig = {
         { source: '/ui-design', destination: '/api/page/ui-design' },
         { source: '/meta-ads', destination: '/api/page/meta-ads' },
         { source: '/wordpress-dev', destination: '/api/page/wordpress-dev' },
-        { source: '/blog', destination: '/api/page/blog' },
         { source: '/seo', destination: '/api/page/seo' },
       ]
     };
