@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { parseJsonSafe, getUploadErrorMessage, getMaxUploadBytes, getFileTooLargeMessage } from "../../../lib/uploadClient";
 
 function Toast({ message, type }) {
   if (!message) return null;
@@ -83,6 +84,11 @@ export default function SiteSettingsPage() {
   const handleUpload = async (e, settingKey) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (file.size > getMaxUploadBytes()) {
+      showToast(getFileTooLargeMessage(), "error");
+      e.target.value = "";
+      return;
+    }
     setUploading(settingKey);
     try {
       const formData = new FormData();
@@ -91,10 +97,11 @@ export default function SiteSettingsPage() {
         method: "POST",
         body: formData,
       });
-      const uploadData = await uploadRes.json();
-      if (!uploadRes.ok) throw new Error(uploadData.error || "Upload failed");
+      const uploadData = await parseJsonSafe(uploadRes);
+      if (!uploadRes.ok) throw new Error(getUploadErrorMessage(uploadRes, uploadData));
 
-      const imageUrl = uploadData.url;
+      const imageUrl = uploadData?.url;
+      if (!imageUrl) throw new Error("Upload failed");
       const saveRes = await fetch("/api/site-settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

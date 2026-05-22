@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { parseJsonSafe, getUploadErrorMessage, getMaxUploadBytes, getFileTooLargeMessage } from "../../../lib/uploadClient";
 
 const categories = [
   "Graphic Design Projects",
@@ -96,20 +97,27 @@ export default function ProjectManagement() {
   const handleImageUpload = async (e, field, isArray = false) => {
     const file = e.target.files[0];
     if (!file) return;
+    if (file.size > getMaxUploadBytes()) {
+      setError(getFileTooLargeMessage());
+      e.target.value = "";
+      return;
+    }
     setUploading(true);
     const body = new FormData();
     body.append("file", file);
     try {
       const res  = await fetch("/api/upload", { method: "POST", body });
-      const data = await res.json();
-      if (res.ok) {
+      const data = await parseJsonSafe(res);
+      if (!res.ok) {
+        setError(getUploadErrorMessage(res, data));
+      } else if (!data?.url) {
+        setError("Image upload failed.");
+      } else {
         setFormData(prev =>
           isArray
             ? { ...prev, [field]: [...prev[field], data.url] }
             : { ...prev, [field]: data.url }
         );
-      } else {
-        setError(data?.error || "Image upload failed.");
       }
     } catch (e) {
       setError("Image upload failed. Check your connection.");

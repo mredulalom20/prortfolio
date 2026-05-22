@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { parseJsonSafe, getUploadErrorMessage, getMaxUploadBytes, getFileTooLargeMessage } from "../../../lib/uploadClient";
 
 function Toast({ message, type }) {
   if (!message) return null;
@@ -40,13 +41,23 @@ export default function MediaManager() {
   const handleUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    if (file.size > getMaxUploadBytes()) {
+      showToast(getFileTooLargeMessage(), "error");
+      e.target.value = "";
+      return;
+    }
     setLoading(true);
     const body = new FormData();
     body.append("file", file);
     try {
       const res = await fetch("/api/upload", { method: "POST", body });
-      if (res.ok) { await fetchMedia(); showToast("File uploaded!"); }
-      else        { showToast("Upload failed.", "error"); }
+      if (res.ok) {
+        await fetchMedia();
+        showToast("File uploaded!");
+      } else {
+        const data = await parseJsonSafe(res);
+        showToast(getUploadErrorMessage(res, data), "error");
+      }
     } catch { showToast("Upload failed.", "error"); }
     setLoading(false);
     e.target.value = "";

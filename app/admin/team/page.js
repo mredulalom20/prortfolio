@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { parseJsonSafe, getUploadErrorMessage, getMaxUploadBytes, getFileTooLargeMessage } from "../../../lib/uploadClient";
 
 const emptyForm = { name: "", role: "", photo_url: "", bio: "", published: true };
 
@@ -44,14 +45,28 @@ export default function TeamAdmin() {
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    if (file.size > getMaxUploadBytes()) {
+      setMsg(getFileTooLargeMessage());
+      e.target.value = "";
+      return;
+    }
     setUploading(true);
+    setMsg("");
     const body = new FormData();
     body.append("file", file);
     try {
       const res = await fetch("/api/upload", { method: "POST", body });
-      const data = await res.json();
-      if (res.ok) setForm(prev => ({ ...prev, photo_url: data.url }));
-    } catch (e) {}
+      const data = await parseJsonSafe(res);
+      if (!res.ok) {
+        setMsg(getUploadErrorMessage(res, data));
+      } else if (!data?.url) {
+        setMsg("Upload failed.");
+      } else {
+        setForm(prev => ({ ...prev, photo_url: data.url }));
+      }
+    } catch (e) {
+      setMsg("Upload failed.");
+    }
     setUploading(false);
   };
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { parseJsonSafe, getUploadErrorMessage, getMaxUploadBytes, getFileTooLargeMessage } from "../../../lib/uploadClient";
 import RichTextEditor from "../../components/RichTextEditor";
 
 const EMPTY_FORM = { title: "", slug: "", content: "", featuredImage: "", metaTitle: "", metaDescription: "", published: false };
@@ -10,6 +11,7 @@ export default function BlogManagement() {
   const [view, setView] = useState("list"); // 'list', 'create', 'edit'
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [loading, setLoading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
 
   const fetchBlogs = async () => {
     try {
@@ -58,13 +60,27 @@ export default function BlogManagement() {
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if(!file) return;
+    if (file.size > getMaxUploadBytes()) {
+      setUploadError(getFileTooLargeMessage());
+      e.target.value = "";
+      return;
+    }
+    setUploadError("");
     const body = new FormData();
     body.append("file", file);
     try {
       const res = await fetch("/api/upload", { method: "POST", body });
-      const data = await res.json();
-      if(res.ok) setFormData({ ...formData, featuredImage: data.url });
-    } catch(e) {}
+      const data = await parseJsonSafe(res);
+      if (!res.ok) {
+        setUploadError(getUploadErrorMessage(res, data));
+      } else if (!data?.url) {
+        setUploadError("Upload failed.");
+      } else {
+        setFormData({ ...formData, featuredImage: data.url });
+      }
+    } catch(e) {
+      setUploadError("Upload failed.");
+    }
   };
 
   if (view === "create" || view === "edit") {
@@ -99,6 +115,7 @@ export default function BlogManagement() {
               <input type="file" onChange={handleImageUpload} className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all cursor-pointer" />
               {formData.featuredImage && <img src={formData.featuredImage} alt="preview" className="h-12 w-12 rounded object-cover" />}
             </div>
+            {uploadError && <p className="text-sm text-red-400 font-bold">{uploadError}</p>}
           </div>
 
           <div className="space-y-2 pb-10">
