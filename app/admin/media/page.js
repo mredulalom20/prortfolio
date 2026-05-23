@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { parseJsonSafe, getUploadErrorMessage, getMaxUploadBytes, getFileTooLargeMessage } from "../../../lib/uploadClient";
+import { getMaxUploadBytes, getFileTooLargeMessage, uploadDirectToStorage } from "../../../lib/uploadClient";
 
 function Toast({ message, type }) {
   if (!message) return null;
@@ -47,24 +47,22 @@ export default function MediaManager() {
       return;
     }
     setLoading(true);
-    const body = new FormData();
-    body.append("file", file);
     try {
-      const res = await fetch("/api/upload", { method: "POST", body });
-      if (res.ok) {
+      const { url } = await uploadDirectToStorage(file);
+      if (url) {
         await fetchMedia();
         showToast("File uploaded!");
       } else {
-        const data = await parseJsonSafe(res);
-        showToast(getUploadErrorMessage(res, data), "error");
+        showToast("Upload failed.", "error");
       }
-    } catch { showToast("Upload failed.", "error"); }
+    } catch (e) { showToast(e?.message || "Upload failed.", "error"); }
     setLoading(false);
     e.target.value = "";
   };
 
   const copyToClipboard = (url) => {
-    navigator.clipboard.writeText(window.location.origin + url);
+    const fullUrl = /^https?:\/\//i.test(url) ? url : `${window.location.origin}${url}`;
+    navigator.clipboard.writeText(fullUrl);
     showToast("Link copied!");
   };
 

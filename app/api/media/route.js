@@ -1,29 +1,40 @@
 import { NextResponse } from "next/server";
-import { mkdir, readdir, stat, rename } from "fs/promises";
-import path from "path";
+import { supabaseAdmin } from "@/lib/supabase";
 
-const UPLOAD_DIR = () => path.join(process.cwd(), "public", "uploads");
-const TRASH_DIR  = () => path.join(process.cwd(), "public", "uploads", ".trash");
+const STORAGE_BUCKET = process.env.SUPABASE_STORAGE_BUCKET || process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || "uploads";
 
 /** GET — list active media (skips .trash sub-directory) */
 export async function GET() {
   try {
-    const uploadDir = UPLOAD_DIR();
-    await mkdir(uploadDir, { recursive: true });
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json({ error: "Supabase server credentials are missing." }, { status: 500 });
+    }
 
-    const entries = await readdir(uploadDir);
-    const files = await Promise.all(
-      entries.map(async (name) => {
-        const full = path.join(uploadDir, name);
-        const s = await stat(full);
-        if (!s.isFile()) return null; // skip .trash dir
-        return { name, url: `/uploads/${name}`, date: s.mtime.toISOString(), size: s.size };
+    const { data, error } = await supabaseAdmin
+      .storage
+      .from(STORAGE_BUCKET)
+      .list("", {
+        limit: 1000,
+        offset: 0,
+        sortBy: { column: "updated_at", order: "desc" },
+      });
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    const files = (data || [])
+      .filter((item) => item?.name && !item.name.startsWith(".trash") && item.metadata?.size !== undefined)
+      .map((item) => {
+        const { data: publicData } = supabaseAdmin.storage.from(STORAGE_BUCKET).getPublicUrl(item.name);
+        return {
+          name: item.name,
+          url: publicData?.publicUrl || "",
+          date: item.updated_at || item.created_at || new Date().toISOString(),
+          size: item.metadata?.size || 0,
+        };
       })
-    );
+      .filter((item) => item.url);
 
-    return NextResponse.json(
-      files.filter(Boolean).sort((a, b) => new Date(b.date) - new Date(a.date))
-    );
+    return NextResponse.json(files.sort((a, b) => new Date(b.date) - new Date(a.date)));
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
@@ -32,13 +43,16 @@ export async function GET() {
 /** DELETE — soft-delete (move file to .trash folder) */
 export async function DELETE(request) {
   try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json({ error: "Supabase server credentials are missing." }, { status: 500 });
+    }
+
     const { name } = await request.json();
     if (!name) return NextResponse.json({ error: "No filename provided" }, { status: 400 });
 
-    const trashDir = TRASH_DIR();
-    await mkdir(trashDir, { recursive: true });
+    const { error } = await supabaseAdmin.storage.from(STORAGE_BUCKET).move(name, `.trash/${name}`);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-    await rename(path.join(UPLOAD_DIR(), name), path.join(trashDir, name));
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

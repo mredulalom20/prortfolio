@@ -9,7 +9,7 @@
       "source_file": "add-service-column.js",
       "source_location": "L1",
       "id": "add_service_column_js",
-      "community": 13,
+      "community": 15,
       "norm_label": "add-service-column.js"
     },
     {
@@ -18,7 +18,7 @@
       "source_file": "add-service-column.js",
       "source_location": "L14",
       "id": "add_service_column_main",
-      "community": 13,
+      "community": 15,
       "norm_label": "main()"
     },
     {
@@ -27,7 +27,7 @@
       "source_file": "build-page.js",
       "source_location": "L1",
       "id": "build_page_js",
-      "community": 14,
+      "community": 16,
       "norm_label": "build-page.js"
     },
     {
@@ -36,7 +36,7 @@
       "source_file": "build-page.js",
       "source_location": "L13",
       "id": "build_page_jsxify",
-      "community": 14,
+      "community": 16,
       "norm_label": "jsxify()"
     },
     {
@@ -45,7 +45,7 @@
       "source_file": "eslint.config.mjs",
       "source_location": "L1",
       "id": "eslint_config_mjs",
-      "community": 37,
+      "community": 39,
       "norm_label": "eslint.config.mjs"
     },
     {
@@ -54,7 +54,7 @@
       "source_file": "fix-jsx.js",
       "source_location": "L1",
       "id": "fix_jsx_js",
-      "community": 38,
+      "community": 40,
       "norm_label": "fix-jsx.js"
     },
     {
@@ -63,7 +63,7 @@
       "source_file": "migrate.js",
       "source_location": "L1",
       "id": "migrate_js",
-      "community": 39,
+      "community": 41,
       "norm_label": "migrate.js"
     },
     {
@@ -72,7 +72,7 @@
       "source_file": "next.config.mjs",
       "source_location": "L1",
       "id": "next_config_mjs",
-      "community": 40,
+      "community": 42,
       "norm_label": "next.config.mjs"
     },
     {
@@ -81,7 +81,7 @@
       "source_file": "postcss.config.mjs",
       "source_location": "L1",
       "id": "postcss_config_mjs",
-      "community": 41,
+      "community": 43,
       "norm_label": "postcss.config.mjs"
     },
     {
@@ -90,7 +90,7 @@
       "source_file": "app\\layout.js",
       "source_location": "L1",
       "id": "app_layout_js",
-      "community": 15,
+      "community": 17,
       "norm_label": "layout.js"
     },
     {
@@ -99,7 +99,7 @@
       "source_file": "app\\layout.js",
       "source_location": "L12",
       "id": "layout_rootlayout",
-      "community": 15,
+      "community": 17,
       "norm_label": "rootlayout()"
     },
     {
@@ -108,7 +108,7 @@
       "source_file": "app\\Providers.js",
       "source_location": "L1",
       "id": "app_providers_js",
-      "community": 16,
+      "community": 18,
       "norm_label": "providers.js"
     },
     {
@@ -117,7 +117,7 @@
       "source_file": "app\\Providers.js",
       "source_location": "L3",
       "id": "providers_authprovider",
-      "community": 16,
+      "community": 18,
       "norm_label": "authprovider()"
     },
     {
@@ -126,7 +126,7 @@
       "source_file": "app\\admin\\layout.js",
       "source_location": "L1",
       "id": "app_admin_layout_js",
-      "community": 17,
+      "community": 19,
       "norm_label": "layout.js"
     },
     {
@@ -135,7 +135,7 @@
       "source_file": "app\\admin\\layout.js",
       "source_location": "L8",
       "id": "admin_layout_adminlayout",
-      "community": 17,
+      "community": 19,
       "norm_label": "adminlayout()"
     },
     {
@@ -144,7 +144,7 @@
       "source_file": "app\\admin\\page.js",
       "source_location": "L1",
       "id": "app_admin_page_js",
-      "community": 18,
+      "community": 20,
       "norm_label": "page.js"
     },
     {
@@ -153,7 +153,7 @@
       "source_file": "app\\admin\\page.js",
       "source_location": "L6",
       "id": "page_admindashboard",
-      "community": 18,
+      "community": 20,
       "norm_label": "admindashboard()"
     },
     {
@@ -162,7 +162,7 @@
       "source_file": "app\\admin\\blog\\page.js",
       "source_location": "L1",
       "id": "app_admin_blog_page_js",
-      "community": 19,
+      "community": 21,
       "norm_label": "page.js"
     },
     {
@@ -171,7 +171,7 @@
       "source_file": "app\\admin\\blog\\page.js",
       "source_location": "L9",
       "id": "blog_page_blogmanagement",
-      "community": 19,
+      "community": 21,
       "norm_label": "blogmanagement()"
     },
     {
@@ -180,7 +180,7 @@
       "source_file": "app\\admin\\contacts\\page.js",
       "source_location": "L1",
       "id": "app_admin_contacts_page_js",
-      "community": 20,
+      "community": 22,
       "norm_label": "page.js"
     },
     {
@@ -189,7 +189,7 @@
       "source_file": "app\\admin\\contacts\\page.js",
       "source_location": "L5",
       "id": "page_contactsadmin",
-      "community": 20,
+      "community": 22,
       "norm_label": "contactsadmin()"
     },
     {
@@ -225,7 +225,7 @@
       "source_file": "app\\admin\\pages\\page.js",
       "source_location": "L1",
       "id": "app_admin_pages_page_js",
-      "community": 21,
+      "community": 23,
       "norm_label": "page.js"
     },
     {
@@ -234,7 +234,7 @@
       "source_file": "app\\admin\\pages\\page.js",
       "source_location": "L16",
       "id": "pages_page_pagesadmin",
-      "community": 21,
+      "community": 23,
       "norm_label": "pagesadmin()"
     },
     {
@@ -243,7 +243,7 @@
       "source_file": "app\\admin\\products\\page.js",
       "source_location": "L1",
       "id": "app_admin_products_page_js",
-      "community": 22,
+      "community": 24,
       "norm_label": "page.js"
     },
     {
@@ -252,7 +252,7 @@
       "source_file": "app\\admin\\products\\page.js",
       "source_location": "L8",
       "id": "products_page_productsadmin",
-      "community": 22,
+      "community": 24,
       "norm_label": "productsadmin()"
     },
     {
@@ -261,7 +261,7 @@
       "source_file": "app\\admin\\projects\\page.js",
       "source_location": "L1",
       "id": "app_admin_projects_page_js",
-      "community": 23,
+      "community": 25,
       "norm_label": "page.js"
     },
     {
@@ -270,7 +270,7 @@
       "source_file": "app\\admin\\projects\\page.js",
       "source_location": "L29",
       "id": "projects_page_projectmanagement",
-      "community": 23,
+      "community": 25,
       "norm_label": "projectmanagement()"
     },
     {
@@ -315,7 +315,7 @@
       "source_file": "app\\admin\\reviews\\page.js",
       "source_location": "L1",
       "id": "app_admin_reviews_page_js",
-      "community": 24,
+      "community": 26,
       "norm_label": "page.js"
     },
     {
@@ -324,7 +324,7 @@
       "source_file": "app\\admin\\reviews\\page.js",
       "source_location": "L7",
       "id": "reviews_page_reviewsadmin",
-      "community": 24,
+      "community": 26,
       "norm_label": "reviewsadmin()"
     },
     {
@@ -360,7 +360,7 @@
       "source_file": "app\\admin\\social\\page.js",
       "source_location": "L1",
       "id": "app_admin_social_page_js",
-      "community": 25,
+      "community": 27,
       "norm_label": "page.js"
     },
     {
@@ -369,7 +369,7 @@
       "source_file": "app\\admin\\social\\page.js",
       "source_location": "L12",
       "id": "page_socialadmin",
-      "community": 25,
+      "community": 27,
       "norm_label": "socialadmin()"
     },
     {
@@ -378,7 +378,7 @@
       "source_file": "app\\admin\\team\\page.js",
       "source_location": "L1",
       "id": "app_admin_team_page_js",
-      "community": 26,
+      "community": 28,
       "norm_label": "page.js"
     },
     {
@@ -387,7 +387,7 @@
       "source_file": "app\\admin\\team\\page.js",
       "source_location": "L8",
       "id": "team_page_teamadmin",
-      "community": 26,
+      "community": 28,
       "norm_label": "teamadmin()"
     },
     {
@@ -396,7 +396,7 @@
       "source_file": "app\\admin\\users\\page.js",
       "source_location": "L1",
       "id": "app_admin_users_page_js",
-      "community": 27,
+      "community": 29,
       "norm_label": "page.js"
     },
     {
@@ -405,7 +405,7 @@
       "source_file": "app\\admin\\users\\page.js",
       "source_location": "L5",
       "id": "users_page_usersadmin",
-      "community": 27,
+      "community": 29,
       "norm_label": "usersadmin()"
     },
     {
@@ -495,7 +495,7 @@
       "source_file": "app\\api\\home\\route.js",
       "source_location": "L1",
       "id": "app_api_home_route_js",
-      "community": 28,
+      "community": 30,
       "norm_label": "route.js"
     },
     {
@@ -504,7 +504,7 @@
       "source_file": "app\\api\\home\\route.js",
       "source_location": "L6",
       "id": "home_route_get",
-      "community": 28,
+      "community": 30,
       "norm_label": "get()"
     },
     {
@@ -567,6 +567,33 @@
       "source_file": "app\\api\\media\\route.js",
       "source_location": "L1",
       "id": "app_api_media_route_js",
+      "community": 11,
+      "norm_label": "route.js"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app\\api\\media\\route.js",
+      "source_location": "L7",
+      "id": "media_route_get",
+      "community": 11,
+      "norm_label": "get()"
+    },
+    {
+      "label": "DELETE()",
+      "file_type": "code",
+      "source_file": "app\\api\\media\\route.js",
+      "source_location": "L44",
+      "id": "media_route_delete",
+      "community": 11,
+      "norm_label": "delete()"
+    },
+    {
+      "label": "route.js",
+      "file_type": "code",
+      "source_file": "app\\api\\media\\trash\\route.js",
+      "source_location": "L1",
+      "id": "app_api_media_trash_route_js",
       "community": 0,
       "norm_label": "route.js"
     },
@@ -591,19 +618,10 @@
     {
       "label": "route.js",
       "file_type": "code",
-      "source_file": "app\\api\\media\\trash\\route.js",
-      "source_location": "L1",
-      "id": "app_api_media_trash_route_js",
-      "community": 0,
-      "norm_label": "route.js"
-    },
-    {
-      "label": "route.js",
-      "file_type": "code",
       "source_file": "app\\api\\page\\route.js",
       "source_location": "L1",
       "id": "app_api_page_route_js",
-      "community": 29,
+      "community": 31,
       "norm_label": "route.js"
     },
     {
@@ -612,7 +630,7 @@
       "source_file": "app\\api\\page\\route.js",
       "source_location": "L8",
       "id": "page_route_get",
-      "community": 29,
+      "community": 31,
       "norm_label": "get()"
     },
     {
@@ -621,7 +639,7 @@
       "source_file": "app\\api\\page\\[slug]\\route.js",
       "source_location": "L1",
       "id": "app_api_page_slug_route_js",
-      "community": 30,
+      "community": 32,
       "norm_label": "route.js"
     },
     {
@@ -630,7 +648,7 @@
       "source_file": "app\\api\\page\\[slug]\\route.js",
       "source_location": "L8",
       "id": "slug_route_get",
-      "community": 30,
+      "community": 32,
       "norm_label": "get()"
     },
     {
@@ -639,7 +657,7 @@
       "source_file": "app\\api\\pages\\route.js",
       "source_location": "L1",
       "id": "app_api_pages_route_js",
-      "community": 11,
+      "community": 12,
       "norm_label": "route.js"
     },
     {
@@ -648,7 +666,7 @@
       "source_file": "app\\api\\pages\\route.js",
       "source_location": "L8",
       "id": "pages_route_get",
-      "community": 11,
+      "community": 12,
       "norm_label": "get()"
     },
     {
@@ -657,7 +675,7 @@
       "source_file": "app\\api\\pages\\route.js",
       "source_location": "L49",
       "id": "pages_route_put",
-      "community": 11,
+      "community": 12,
       "norm_label": "put()"
     },
     {
@@ -666,7 +684,7 @@
       "source_file": "app\\api\\products\\route.js",
       "source_location": "L1",
       "id": "app_api_products_route_js",
-      "community": 4,
+      "community": 5,
       "norm_label": "route.js"
     },
     {
@@ -675,7 +693,7 @@
       "source_file": "app\\api\\products\\route.js",
       "source_location": "L5",
       "id": "products_route_get",
-      "community": 4,
+      "community": 5,
       "norm_label": "get()"
     },
     {
@@ -684,7 +702,7 @@
       "source_file": "app\\api\\products\\route.js",
       "source_location": "L22",
       "id": "products_route_post",
-      "community": 4,
+      "community": 5,
       "norm_label": "post()"
     },
     {
@@ -693,7 +711,7 @@
       "source_file": "app\\api\\products\\route.js",
       "source_location": "L33",
       "id": "products_route_put",
-      "community": 4,
+      "community": 5,
       "norm_label": "put()"
     },
     {
@@ -702,7 +720,7 @@
       "source_file": "app\\api\\products\\route.js",
       "source_location": "L50",
       "id": "products_route_patch",
-      "community": 4,
+      "community": 5,
       "norm_label": "patch()"
     },
     {
@@ -711,7 +729,7 @@
       "source_file": "app\\api\\products\\route.js",
       "source_location": "L58",
       "id": "products_route_delete",
-      "community": 4,
+      "community": 5,
       "norm_label": "delete()"
     },
     {
@@ -805,12 +823,39 @@
       "norm_label": "post()"
     },
     {
+      "label": "route.js",
+      "file_type": "code",
+      "source_file": "app\\api\\upload\\sign\\route.js",
+      "source_location": "L1",
+      "id": "app_api_upload_sign_route_js",
+      "community": 13,
+      "norm_label": "route.js"
+    },
+    {
+      "label": "sanitizeFilename()",
+      "file_type": "code",
+      "source_file": "app\\api\\upload\\sign\\route.js",
+      "source_location": "L9",
+      "id": "sign_route_sanitizefilename",
+      "community": 13,
+      "norm_label": "sanitizefilename()"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "app\\api\\upload\\sign\\route.js",
+      "source_location": "L15",
+      "id": "sign_route_post",
+      "community": 13,
+      "norm_label": "post()"
+    },
+    {
       "label": "page.js",
       "file_type": "code",
       "source_file": "app\\blog\\page.js",
       "source_location": "L1",
       "id": "app_blog_page_js",
-      "community": 12,
+      "community": 14,
       "norm_label": "page.js"
     },
     {
@@ -819,7 +864,7 @@
       "source_file": "app\\blog\\page.js",
       "source_location": "L11",
       "id": "page_getblogs",
-      "community": 12,
+      "community": 14,
       "norm_label": "getblogs()"
     },
     {
@@ -828,7 +873,7 @@
       "source_file": "app\\blog\\page.js",
       "source_location": "L27",
       "id": "page_blogpage",
-      "community": 12,
+      "community": 14,
       "norm_label": "blogpage()"
     },
     {
@@ -873,7 +918,7 @@
       "source_file": "app\\components\\Footer.js",
       "source_location": "L1",
       "id": "app_components_footer_js",
-      "community": 31,
+      "community": 33,
       "norm_label": "footer.js"
     },
     {
@@ -882,7 +927,7 @@
       "source_file": "app\\components\\Footer.js",
       "source_location": "L3",
       "id": "components_footer_footer",
-      "community": 31,
+      "community": 33,
       "norm_label": "footer()"
     },
     {
@@ -891,7 +936,7 @@
       "source_file": "app\\components\\MobileCarousel.js",
       "source_location": "L1",
       "id": "app_components_mobilecarousel_js",
-      "community": 32,
+      "community": 34,
       "norm_label": "mobilecarousel.js"
     },
     {
@@ -900,7 +945,7 @@
       "source_file": "app\\components\\MobileCarousel.js",
       "source_location": "L5",
       "id": "mobilecarousel_mobilecarousel",
-      "community": 32,
+      "community": 34,
       "norm_label": "mobilecarousel()"
     },
     {
@@ -909,7 +954,7 @@
       "source_file": "app\\components\\Navbar.js",
       "source_location": "L1",
       "id": "app_components_navbar_js",
-      "community": 33,
+      "community": 35,
       "norm_label": "navbar.js"
     },
     {
@@ -918,7 +963,7 @@
       "source_file": "app\\components\\Navbar.js",
       "source_location": "L5",
       "id": "navbar_navbar",
-      "community": 33,
+      "community": 35,
       "norm_label": "navbar()"
     },
     {
@@ -927,7 +972,7 @@
       "source_file": "app\\components\\ProjectGrid.js",
       "source_location": "L1",
       "id": "app_components_projectgrid_js",
-      "community": 34,
+      "community": 36,
       "norm_label": "projectgrid.js"
     },
     {
@@ -936,7 +981,7 @@
       "source_file": "app\\components\\ProjectGrid.js",
       "source_location": "L6",
       "id": "projectgrid_projectgrid",
-      "community": 34,
+      "community": 36,
       "norm_label": "projectgrid()"
     },
     {
@@ -945,7 +990,7 @@
       "source_file": "app\\components\\RichTextEditor.js",
       "source_location": "L1",
       "id": "app_components_richtexteditor_js",
-      "community": 35,
+      "community": 37,
       "norm_label": "richtexteditor.js"
     },
     {
@@ -954,7 +999,7 @@
       "source_file": "app\\components\\RichTextEditor.js",
       "source_location": "L8",
       "id": "richtexteditor_richtexteditor",
-      "community": 35,
+      "community": 37,
       "norm_label": "richtexteditor()"
     },
     {
@@ -963,7 +1008,7 @@
       "source_file": "app\\login\\page.js",
       "source_location": "L1",
       "id": "app_login_page_js",
-      "community": 36,
+      "community": 38,
       "norm_label": "page.js"
     },
     {
@@ -972,7 +1017,7 @@
       "source_file": "app\\login\\page.js",
       "source_location": "L7",
       "id": "page_login",
-      "community": 36,
+      "community": 38,
       "norm_label": "login()"
     },
     {
@@ -1053,7 +1098,7 @@
       "source_file": "lib\\supabase.js",
       "source_location": "L1",
       "id": "lib_supabase_js",
-      "community": 42,
+      "community": 44,
       "norm_label": "supabase.js"
     },
     {
@@ -1062,7 +1107,7 @@
       "source_file": "lib\\supabaseClient.js",
       "source_location": "L1",
       "id": "lib_supabaseclient_js",
-      "community": 43,
+      "community": 45,
       "norm_label": "supabaseclient.js"
     },
     {
@@ -1071,53 +1116,71 @@
       "source_file": "lib\\uploadClient.js",
       "source_location": "L1",
       "id": "lib_uploadclient_js",
-      "community": 5,
+      "community": 3,
       "norm_label": "uploadclient.js"
     },
     {
       "label": "parseJsonSafe()",
       "file_type": "code",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L1",
+      "source_location": "L3",
       "id": "lib_uploadclient_parsejsonsafe",
-      "community": 5,
+      "community": 3,
       "norm_label": "parsejsonsafe()"
     },
     {
       "label": "getMaxUploadMb()",
       "file_type": "code",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L11",
+      "source_location": "L14",
       "id": "lib_uploadclient_getmaxuploadmb",
-      "community": 5,
+      "community": 3,
       "norm_label": "getmaxuploadmb()"
     },
     {
       "label": "getMaxUploadBytes()",
       "file_type": "code",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L17",
+      "source_location": "L20",
       "id": "lib_uploadclient_getmaxuploadbytes",
-      "community": 5,
+      "community": 3,
       "norm_label": "getmaxuploadbytes()"
+    },
+    {
+      "label": "getStorageBucket()",
+      "file_type": "code",
+      "source_file": "lib\\uploadClient.js",
+      "source_location": "L22",
+      "id": "lib_uploadclient_getstoragebucket",
+      "community": 3,
+      "norm_label": "getstoragebucket()"
     },
     {
       "label": "getFileTooLargeMessage()",
       "file_type": "code",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L19",
+      "source_location": "L24",
       "id": "lib_uploadclient_getfiletoolargemessage",
-      "community": 5,
+      "community": 3,
       "norm_label": "getfiletoolargemessage()"
     },
     {
       "label": "getUploadErrorMessage()",
       "file_type": "code",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L21",
+      "source_location": "L26",
       "id": "lib_uploadclient_getuploaderrormessage",
-      "community": 5,
+      "community": 3,
       "norm_label": "getuploaderrormessage()"
+    },
+    {
+      "label": "uploadDirectToStorage()",
+      "file_type": "code",
+      "source_file": "lib\\uploadClient.js",
+      "source_location": "L34",
+      "id": "lib_uploadclient_uploaddirecttostorage",
+      "community": 3,
+      "norm_label": "uploaddirecttostorage()"
     },
     {
       "label": "cms-mcp-server.mjs",
@@ -1276,7 +1339,7 @@
       "label": "README.md",
       "file_type": "document",
       "source_file": "README.md",
-      "community": 44,
+      "community": 46,
       "norm_label": "readme.md",
       "id": "readme"
     },
@@ -1284,7 +1347,7 @@
       "label": "AGENTS.md",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "community": 45,
+      "community": 47,
       "norm_label": "agents.md",
       "id": "agents"
     },
@@ -1292,7 +1355,7 @@
       "label": "CLAUDE.md",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "community": 46,
+      "community": 48,
       "norm_label": "claude.md",
       "id": "claude"
     },
@@ -1300,7 +1363,7 @@
       "label": "Home Page (index.html)",
       "file_type": "document",
       "source_file": "public/index.html",
-      "community": 3,
+      "community": 4,
       "norm_label": "home page (index.html)",
       "id": "index"
     },
@@ -1308,7 +1371,7 @@
       "label": "About Page",
       "file_type": "document",
       "source_file": "public/about.html",
-      "community": 3,
+      "community": 4,
       "norm_label": "about page",
       "id": "about"
     },
@@ -1316,7 +1379,7 @@
       "label": "Graphic Design Service",
       "file_type": "document",
       "source_file": "public/graphic-design.html",
-      "community": 3,
+      "community": 4,
       "norm_label": "graphic design service",
       "id": "graphic_design"
     },
@@ -1324,7 +1387,7 @@
       "label": "UI/UX Design Service",
       "file_type": "document",
       "source_file": "public/ui-design.html",
-      "community": 3,
+      "community": 4,
       "norm_label": "ui/ux design service",
       "id": "ui_design"
     },
@@ -1332,7 +1395,7 @@
       "label": "Meta Ads Management",
       "file_type": "document",
       "source_file": "public/meta-ads.html",
-      "community": 3,
+      "community": 4,
       "norm_label": "meta ads management",
       "id": "meta_ads"
     },
@@ -1340,7 +1403,7 @@
       "label": "WordPress CMS Development",
       "file_type": "document",
       "source_file": "public/wordpress-dev.html",
-      "community": 3,
+      "community": 4,
       "norm_label": "wordpress cms development",
       "id": "wordpress_dev"
     },
@@ -1348,7 +1411,7 @@
       "label": "Blog Page",
       "file_type": "document",
       "source_file": "public/blog.html",
-      "community": 3,
+      "community": 4,
       "norm_label": "blog page",
       "id": "blog_page"
     }
@@ -1681,30 +1744,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app\\api\\media\\route.js",
-      "source_location": "L9",
-      "weight": 1.0,
-      "_src": "app_api_media_route_js",
-      "_tgt": "route_get",
-      "source": "route_get",
-      "target": "app_api_media_route_js",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "source_file": "app\\api\\media\\route.js",
-      "source_location": "L11",
-      "weight": 1.0,
-      "_src": "route_get",
-      "_tgt": "route_upload_dir",
-      "source": "route_get",
-      "target": "route_upload_dir",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "app\\api\\media\\trash\\route.js",
       "source_location": "L9",
       "weight": 1.0,
@@ -1993,13 +2032,13 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app\\api\\media\\route.js",
-      "source_location": "L33",
+      "source_file": "app\\api\\media\\trash\\route.js",
+      "source_location": "L49",
       "weight": 1.0,
-      "_src": "app_api_media_route_js",
+      "_src": "app_api_media_trash_route_js",
       "_tgt": "route_delete",
       "source": "route_delete",
-      "target": "app_api_media_route_js",
+      "target": "app_api_media_trash_route_js",
       "confidence_score": 1.0
     },
     {
@@ -2012,30 +2051,6 @@
       "_tgt": "route_trash_dir",
       "source": "route_delete",
       "target": "route_trash_dir",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "source_file": "app\\api\\media\\route.js",
-      "source_location": "L41",
-      "weight": 1.0,
-      "_src": "route_delete",
-      "_tgt": "route_upload_dir",
-      "source": "route_delete",
-      "target": "route_upload_dir",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app\\api\\media\\trash\\route.js",
-      "source_location": "L49",
-      "weight": 1.0,
-      "_src": "app_api_media_trash_route_js",
-      "_tgt": "route_delete",
-      "source": "route_delete",
-      "target": "app_api_media_trash_route_js",
       "confidence_score": 1.0
     },
     {
@@ -2246,24 +2261,24 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app\\api\\media\\route.js",
-      "source_location": "L5",
+      "source_location": "L7",
       "weight": 1.0,
       "_src": "app_api_media_route_js",
-      "_tgt": "route_upload_dir",
+      "_tgt": "media_route_get",
       "source": "app_api_media_route_js",
-      "target": "route_upload_dir",
+      "target": "media_route_get",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app\\api\\media\\route.js",
-      "source_location": "L6",
+      "source_location": "L44",
       "weight": 1.0,
       "_src": "app_api_media_route_js",
-      "_tgt": "route_trash_dir",
+      "_tgt": "media_route_delete",
       "source": "app_api_media_route_js",
-      "target": "route_trash_dir",
+      "target": "media_route_delete",
       "confidence_score": 1.0
     },
     {
@@ -2274,8 +2289,8 @@
       "weight": 1.0,
       "_src": "app_api_media_trash_route_js",
       "_tgt": "route_upload_dir",
-      "source": "route_upload_dir",
-      "target": "app_api_media_trash_route_js",
+      "source": "app_api_media_trash_route_js",
+      "target": "route_upload_dir",
       "confidence_score": 1.0
     },
     {
@@ -2286,8 +2301,8 @@
       "weight": 1.0,
       "_src": "app_api_media_trash_route_js",
       "_tgt": "route_trash_dir",
-      "source": "route_trash_dir",
-      "target": "app_api_media_trash_route_js",
+      "source": "app_api_media_trash_route_js",
+      "target": "route_trash_dir",
       "confidence_score": 1.0
     },
     {
@@ -2426,7 +2441,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "app\\api\\upload\\route.js",
-      "source_location": "L32",
+      "source_location": "L36",
       "weight": 1.0,
       "_src": "upload_route_post",
       "_tgt": "upload_route_sanitizefilename",
@@ -2439,12 +2454,48 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "app\\api\\upload\\route.js",
-      "source_location": "L18",
+      "source_location": "L22",
       "weight": 1.0,
       "_src": "upload_route_post",
       "_tgt": "seo_route_get",
       "source": "upload_route_post",
       "target": "seo_route_get"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\upload\\sign\\route.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_src": "app_api_upload_sign_route_js",
+      "_tgt": "sign_route_sanitizefilename",
+      "source": "app_api_upload_sign_route_js",
+      "target": "sign_route_sanitizefilename",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\upload\\sign\\route.js",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_src": "app_api_upload_sign_route_js",
+      "_tgt": "sign_route_post",
+      "source": "app_api_upload_sign_route_js",
+      "target": "sign_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "app\\api\\upload\\sign\\route.js",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_src": "sign_route_post",
+      "_tgt": "sign_route_sanitizefilename",
+      "source": "sign_route_sanitizefilename",
+      "target": "sign_route_post",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -2750,7 +2801,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L1",
+      "source_location": "L3",
       "weight": 1.0,
       "_src": "lib_uploadclient_js",
       "_tgt": "lib_uploadclient_parsejsonsafe",
@@ -2762,7 +2813,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L11",
+      "source_location": "L14",
       "weight": 1.0,
       "_src": "lib_uploadclient_js",
       "_tgt": "lib_uploadclient_getmaxuploadmb",
@@ -2774,7 +2825,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L17",
+      "source_location": "L20",
       "weight": 1.0,
       "_src": "lib_uploadclient_js",
       "_tgt": "lib_uploadclient_getmaxuploadbytes",
@@ -2786,7 +2837,19 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L19",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_src": "lib_uploadclient_js",
+      "_tgt": "lib_uploadclient_getstoragebucket",
+      "source": "lib_uploadclient_js",
+      "target": "lib_uploadclient_getstoragebucket",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib\\uploadClient.js",
+      "source_location": "L24",
       "weight": 1.0,
       "_src": "lib_uploadclient_js",
       "_tgt": "lib_uploadclient_getfiletoolargemessage",
@@ -2798,7 +2861,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L21",
+      "source_location": "L26",
       "weight": 1.0,
       "_src": "lib_uploadclient_js",
       "_tgt": "lib_uploadclient_getuploaderrormessage",
@@ -2807,10 +2870,34 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib\\uploadClient.js",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_src": "lib_uploadclient_js",
+      "_tgt": "lib_uploadclient_uploaddirecttostorage",
+      "source": "lib_uploadclient_js",
+      "target": "lib_uploadclient_uploaddirecttostorage",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L17",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_src": "lib_uploadclient_uploaddirecttostorage",
+      "_tgt": "lib_uploadclient_parsejsonsafe",
+      "source": "lib_uploadclient_parsejsonsafe",
+      "target": "lib_uploadclient_uploaddirecttostorage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "lib\\uploadClient.js",
+      "source_location": "L20",
       "weight": 1.0,
       "_src": "lib_uploadclient_getmaxuploadbytes",
       "_tgt": "lib_uploadclient_getmaxuploadmb",
@@ -2822,7 +2909,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L19",
+      "source_location": "L24",
       "weight": 1.0,
       "_src": "lib_uploadclient_getfiletoolargemessage",
       "_tgt": "lib_uploadclient_getmaxuploadmb",
@@ -2834,12 +2921,36 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "lib\\uploadClient.js",
-      "source_location": "L24",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_src": "lib_uploadclient_uploaddirecttostorage",
+      "_tgt": "lib_uploadclient_getstoragebucket",
+      "source": "lib_uploadclient_getstoragebucket",
+      "target": "lib_uploadclient_uploaddirecttostorage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "lib\\uploadClient.js",
+      "source_location": "L29",
       "weight": 1.0,
       "_src": "lib_uploadclient_getuploaderrormessage",
       "_tgt": "lib_uploadclient_getfiletoolargemessage",
       "source": "lib_uploadclient_getfiletoolargemessage",
       "target": "lib_uploadclient_getuploaderrormessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "lib\\uploadClient.js",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_src": "lib_uploadclient_uploaddirecttostorage",
+      "_tgt": "lib_uploadclient_getuploaderrormessage",
+      "source": "lib_uploadclient_getuploaderrormessage",
+      "target": "lib_uploadclient_uploaddirecttostorage",
       "confidence_score": 1.0
     },
     {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { parseJsonSafe, getUploadErrorMessage, getMaxUploadBytes, getFileTooLargeMessage } from "../../../lib/uploadClient";
+import { getMaxUploadBytes, getFileTooLargeMessage, uploadDirectToStorage } from "../../../lib/uploadClient";
 import RichTextEditor from "../../components/RichTextEditor";
 
 const EMPTY_FORM = { title: "", slug: "", content: "", featuredImage: "", metaTitle: "", metaDescription: "", published: false };
@@ -66,20 +66,11 @@ export default function BlogManagement() {
       return;
     }
     setUploadError("");
-    const body = new FormData();
-    body.append("file", file);
     try {
-      const res = await fetch("/api/upload", { method: "POST", body });
-      const data = await parseJsonSafe(res);
-      if (!res.ok) {
-        setUploadError(getUploadErrorMessage(res, data));
-      } else if (!data?.url) {
-        setUploadError("Upload failed.");
-      } else {
-        setFormData({ ...formData, featuredImage: data.url });
-      }
+      const { url } = await uploadDirectToStorage(file);
+      setFormData({ ...formData, featuredImage: url });
     } catch(e) {
-      setUploadError("Upload failed.");
+      setUploadError(e?.message || "Upload failed.");
     }
   };
 

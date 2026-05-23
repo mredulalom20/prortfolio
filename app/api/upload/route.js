@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
+import { supabaseAdmin } from "@/lib/supabase";
 
 const DEFAULT_MAX_UPLOAD_MB = 10;
 const MAX_UPLOAD_MB = Number(process.env.UPLOAD_MAX_MB || DEFAULT_MAX_UPLOAD_MB);
 const MAX_UPLOAD_BYTES = Math.max(1, MAX_UPLOAD_MB) * 1024 * 1024;
+const STORAGE_BUCKET = process.env.SUPABASE_STORAGE_BUCKET || process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || "uploads";
 
 const sanitizeFilename = (name) => {
   const base = String(name || "upload").split(/[\\/]/).pop();
@@ -14,6 +14,10 @@ const sanitizeFilename = (name) => {
 
 export async function POST(request) {
   try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json({ error: "Supabase server credentials are missing." }, { status: 500 });
+    }
+
     const formData = await request.formData();
     const file = formData.get("file");
 
@@ -32,14 +36,26 @@ export async function POST(request) {
     const safeName = sanitizeFilename(file.name);
     const filename = `${Date.now()}_${safeName}`;
 
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
-    await mkdir(uploadDir, { recursive: true });
-    await writeFile(path.join(uploadDir, filename), buffer);
+    const { error: uploadError } = await supabaseAdmin
+      .storage
+      .from(STORAGE_BUCKET)
+      .upload(filename, buffer, {
+        contentType: file.type || "application/octet-stream",
+        upsert: false,
+      });
 
-    return NextResponse.json({ 
-      message: "Success", 
-      status: 201, 
-      url: `/uploads/${filename}` 
+    if (uploadError) {
+      return NextResponse.json({ error: uploadError.message }, { status: 500 });
+    }
+
+    const { data: publicData } = supabaseAdmin.storage.from(STORAGE_BUCKET).getPublicUrl(filename);
+    const url = publicData?.publicUrl;
+
+    return NextResponse.json({
+      message: "Success",
+      status: 201,
+      url,
+      name: filename,
     });
   } catch (error) {
     console.log("Error occurred ", error);
