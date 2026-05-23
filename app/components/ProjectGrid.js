@@ -34,7 +34,7 @@ export default function ProjectGrid({ initialProjects }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {filteredProjects.map(project => (
-          <div key={project.id} className="preview-card group relative aspect-[4/3] lg:aspect-[12/5] bg-[#1A1A1A] rounded overflow-hidden border border-white/5 hover:border-[#C6A75E]/30 transition-colors duration-500 hover:shadow-[0_0_30px_rgba(198,167,94,0.05)]">
+          <div key={project.id} className="preview-card group relative aspect-square bg-[#1A1A1A] rounded overflow-hidden border border-white/5 hover:border-[#C6A75E]/30 transition-colors duration-500 hover:shadow-[0_0_30px_rgba(198,167,94,0.05)]">
             <img 
               alt={project.title} 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale contrast-125 group-hover:grayscale-0" 

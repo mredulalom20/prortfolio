@@ -74,7 +74,11 @@
             user-select: none;
             pointer-events: none;
             opacity: 0.07;
-            filter: blur(3px) grayscale(1) sepia(1) saturate(3) hue-rotate(5deg);
+            filter: blur(3px);
+            color: #C6A75E;
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.08em;
             transition: opacity 0.3s;
         }
         .no-scrollbar {
@@ -87,63 +91,42 @@
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300">
-<!-- Glassmorphism Navbar -->
 <nav class="fixed top-0 left-0 right-0 z-50 glass-nav">
 <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-<a href="/" class="flex items-center gap-2 group cursor-pointer">
-<div class="size-10 bg-primary rounded-lg flex items-center justify-center">
-<span class="text-background-dark font-black text-xl">M</span>
+<a href="/" class="flex items-center gap-2 group cursor-pointer"><div class="size-10 bg-[#C6A75E] rounded-lg flex items-center justify-center"><span class="text-background-dark font-black text-xl">M</span></div><h2 class="text-xl font-extrabold tracking-tight dark:text-white">MHR</h2></a>
+<div class="hidden md:flex items-center gap-12 font-light tracking-wide">
+<a class="text-xs uppercase tracking-widest text-[#EDEDED] border-b border-[#C6A75E] pb-1" href="/">Home</a>
+<a class="text-xs uppercase tracking-widest text-[#888888] hover:text-[#EDEDED] transition-colors" href="/#about-hero">About</a>
+<div class="dropdown relative"><button class="text-xs uppercase tracking-widest text-[#888888] hover:text-[#EDEDED] transition-colors flex items-center gap-1">Services <span class="material-symbols-outlined text-sm">expand_more</span></button><div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 pt-6 w-56"><div class="bg-[#121212] border border-white/5 rounded shadow-2xl p-2 font-light">
+<a href="/graphic-design" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-[#C6A75E] text-lg">brush</span><span class="text-xs uppercase tracking-widest text-[#888888]">Graphic Design</span></a>
+<a href="/ui-design" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-[#C6A75E] text-lg">layers</span><span class="text-xs uppercase tracking-widest text-[#888888]">UI/UX Design</span></a>
+<a href="/meta-ads" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-[#C6A75E] text-lg">ads_click</span><span class="text-xs uppercase tracking-widest text-[#888888]">Meta Ads</span></a>
+<a href="/wordpress-dev" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-[#C6A75E] text-lg">terminal</span><span class="text-xs uppercase tracking-widest text-[#888888]">CMS Dev</span></a>
+<a href="/seo" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-[#C6A75E] text-lg">query_stats</span><span class="text-xs uppercase tracking-widest text-[#888888]">SEO Service</span></a>
+</div></div></div>
+<a class="text-xs uppercase tracking-widest text-[#888888] hover:text-[#EDEDED] transition-colors" href="/#portfolio">Portfolio</a>
+<a class="text-xs uppercase tracking-widest text-[#888888] hover:text-[#EDEDED] transition-colors" href="/#testimonials">Testimonials</a>
+<a class="text-xs uppercase tracking-widest text-[#888888] hover:text-[#EDEDED] transition-colors" href="/blog">Blog</a>
+<a class="text-xs uppercase tracking-widest text-[#888888] hover:text-[#EDEDED] transition-colors" href="/#contact">Contact</a>
 </div>
-<h2 class="text-xl font-extrabold tracking-tight dark:text-white">MHR</h2>
-</a>
-<div class="hidden md:flex items-center gap-10">
-<a class="nav-link text-sm font-medium text-primary border-b-2 border-primary pb-1" href="#home" data-nav="home">Home</a>
-<a class="nav-link text-sm font-medium hover:text-primary transition-colors" href="#about-hero" data-nav="about-hero">About</a>
-<div class="dropdown relative">
-<button class="nav-link text-sm font-medium hover:text-primary transition-colors flex items-center gap-1" data-nav="services">Services <span class="material-symbols-outlined text-base">expand_more</span></button>
-<div class="dropdown-menu absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56">
-<div class="bg-surface border border-white/10 rounded-xl shadow-2xl shadow-black/40 overflow-hidden p-2">
-<a href="/graphic-design" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">brush</span><span class="text-sm font-medium">Graphic Design</span></a>
-<a href="/ui-design" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">layers</span><span class="text-sm font-medium">UI/UX Design</span></a>
-<a href="/meta-ads" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">ads_click</span><span class="text-sm font-medium">Meta Ads</span></a>
-<a href="/wordpress-dev" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"><span class="material-symbols-outlined text-primary text-xl">terminal</span><span class="text-sm font-medium">CMS Dev</span></a>
-</div>
-</div>
-</div>
-<a class="text-sm font-medium hover:text-primary transition-colors" href="/blog">Blog</a>
-<a class="nav-link text-sm font-medium hover:text-primary transition-colors" href="#portfolio" data-nav="portfolio">Portfolio</a>
-<a class="nav-link text-sm font-medium hover:text-primary transition-colors" href="#testimonials" data-nav="testimonials">Testimonials</a>
-<a class="nav-link text-sm font-medium hover:text-primary transition-colors" href="#contact" data-nav="contact">Contact</a>
-</div>
-<div class="flex items-center gap-4">
-<a href="#contact" class="hidden sm:block bg-primary hover:bg-primary/90 text-background-dark font-bold py-2.5 px-6 rounded-lg text-sm transition-all shadow-lg shadow-primary/20">
-                Hire Me
-</a>
-<button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 p-2">
-<span class="w-6 h-0.5 bg-white transition-all" id="bar1"></span>
-<span class="w-6 h-0.5 bg-white transition-all" id="bar2"></span>
-<span class="w-6 h-0.5 bg-white transition-all" id="bar3"></span>
-</button>
-</div>
+<div class="flex items-center gap-4"><a href="/#contact" class="hidden sm:flex items-center justify-center border border-[#C6A75E] text-[#EDEDED] hover:bg-[#C6A75E]/5 transition-colors font-medium text-xs tracking-widest uppercase px-6 py-2 h-10 rounded">Hire Me</a><button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 p-2"><span id="bar1" class="w-6 h-px bg-white transition-all"></span><span id="bar2" class="w-6 h-px bg-white transition-all"></span><span id="bar3" class="w-6 h-px bg-white transition-all"></span></button></div>
 </div>
 </nav>
-<!-- Mobile Menu Overlay -->
-<div id="mobileMenu" style="transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)" class="fixed inset-0 z-40 bg-background-dark/95 backdrop-blur-xl pt-24 px-8">
-<div class="flex flex-col gap-6 text-2xl font-bold">
-<a class="text-primary py-2 border-b border-white/5" href="#home">Home</a>
-<a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="#about-hero">About</a>
-<div class="py-2 border-b border-white/5">
-<span class="hover:text-primary">Services</span>
-<div class="flex flex-col gap-2 mt-3 ml-4 text-lg">
-<a class="hover:text-primary transition-colors flex items-center gap-2" href="/graphic-design"><span class="material-symbols-outlined text-primary text-xl">brush</span> Graphic Design</a>
-<a class="hover:text-primary transition-colors flex items-center gap-2" href="/ui-design"><span class="material-symbols-outlined text-primary text-xl">layers</span> UI/UX Design</a>
-<a class="hover:text-primary transition-colors flex items-center gap-2" href="/meta-ads"><span class="material-symbols-outlined text-primary text-xl">ads_click</span> Meta Ads</a>
-<a class="hover:text-primary transition-colors flex items-center gap-2" href="/wordpress-dev"><span class="material-symbols-outlined text-primary text-xl">terminal</span> CMS Dev</a>
-</div>
-</div>
-<a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="#portfolio">Portfolio</a>
-<a class="hover:text-primary transition-colors py-2 border-b border-white/5" href="#contact">Contact</a>
-<a href="#contact" class="bg-primary text-background-dark font-bold py-4 px-8 rounded-xl text-lg text-center mt-4 shadow-lg shadow-primary/20">Hire Me</a>
+<div id="mobileMenu" style="transform:translateX(100%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1)" class="fixed inset-0 z-40 bg-[#121212] pt-24 px-8 border-l border-white/5">
+<div class="flex flex-col gap-8 text-xl font-light tracking-wide">
+<a class="text-[#EDEDED] pb-2 border-b border-white/5 uppercase text-sm tracking-widest" href="/#home">Home</a>
+<a class="text-[#888888] hover:text-[#EDEDED] transition-colors pb-2 border-b border-white/5 uppercase text-sm tracking-widest" href="/#about-hero">About</a>
+<div class="pb-2 border-b border-white/5"><span class="text-[#888888] hover:text-[#EDEDED] transition-colors uppercase text-sm tracking-widest">Services</span><div class="flex flex-col gap-4 mt-6 ml-4 text-sm font-light">
+<a class="text-[#888888] hover:text-white transition-colors flex items-center gap-3" href="/graphic-design"><span class="material-symbols-outlined text-base">brush</span> Graphic Design</a>
+<a class="text-[#888888] hover:text-white transition-colors flex items-center gap-3" href="/ui-design"><span class="material-symbols-outlined text-base">layers</span> UI/UX Design</a>
+<a class="text-[#888888] hover:text-white transition-colors flex items-center gap-3" href="/meta-ads"><span class="material-symbols-outlined text-base">ads_click</span> Meta Ads</a>
+<a class="text-[#888888] hover:text-white transition-colors flex items-center gap-3" href="/wordpress-dev"><span class="material-symbols-outlined text-base">terminal</span> CMS Dev</a>
+<a class="text-[#888888] hover:text-white transition-colors flex items-center gap-3" href="/seo"><span class="material-symbols-outlined text-base">query_stats</span> SEO Service</a>
+</div></div>
+<a class="text-[#888888] hover:text-[#EDEDED] transition-colors pb-2 border-b border-white/5 uppercase text-sm tracking-widest" href="/#portfolio">Portfolio</a>
+<a class="text-[#888888] hover:text-[#EDEDED] transition-colors pb-2 border-b border-white/5 uppercase text-sm tracking-widest" href="/blog">Blog</a>
+<a class="text-[#888888] hover:text-[#EDEDED] transition-colors pb-2 border-b border-white/5 uppercase text-sm tracking-widest" href="/#contact">Contact</a>
+<a href="/#contact" class="border border-[#C6A75E] text-[#EDEDED] hover:bg-[#C6A75E]/5 py-4 px-8 rounded text-sm text-center tracking-widest uppercase mt-4">Hire Me</a>
 </div>
 </div>
 <script>
@@ -222,20 +205,13 @@ function initAutoCarousel(track, interval) {
 <!-- Hero Section -->
 <section class="relative min-h-screen pt-32 pb-10 overflow-hidden flex items-center" id="home">
 <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
-    <!-- Meta / Facebook Ads -->
-    <img class="floating-logo animate-float-2" src="https://cdn.simpleicons.org/meta/C6A75E" style="top:12%;left:4%;width:100px;" alt="Meta" />
-    <!-- Photoshop -->
-    <img class="floating-logo animate-float-3" src="https://cdn.simpleicons.org/photoshop/C6A75E" style="top:58%;left:3%;width:90px;animation-delay:-3s;" alt="Photoshop" />
-    <!-- Illustrator -->
-    <img class="floating-logo animate-float-1" src="https://cdn.simpleicons.org/illustrator/C6A75E" style="top:22%;right:8%;width:95px;animation-delay:-6s;" alt="Illustrator" />
-    <!-- WordPress -->
-    <img class="floating-logo animate-float-2" src="https://cdn.simpleicons.org/wordpress/C6A75E" style="top:75%;right:12%;width:110px;animation-delay:-5s;" alt="WordPress" />
-    <!-- Shopify -->
-    <img class="floating-logo animate-float-3" src="https://cdn.simpleicons.org/shopify/C6A75E" style="top:42%;left:44%;width:85px;animation-delay:-10s;" alt="Shopify" />
-    <!-- Figma -->
-    <img class="floating-logo animate-float-1" src="https://cdn.simpleicons.org/figma/C6A75E" style="top:68%;left:28%;width:70px;animation-delay:-2s;" alt="Figma" />
-    <!-- InDesign -->
-    <img class="floating-logo animate-float-2" src="https://cdn.simpleicons.org/indesign/C6A75E" style="top:8%;right:38%;width:90px;animation-delay:-8s;" alt="InDesign" />
+    <span class="floating-logo animate-float-2" style="top:12%;left:4%;">M</span>
+    <span class="floating-logo animate-float-3" style="top:58%;left:3%;animation-delay:-3s;">Ps</span>
+    <span class="floating-logo animate-float-1" style="top:22%;right:8%;animation-delay:-6s;">Ai</span>
+    <span class="floating-logo animate-float-2" style="top:75%;right:12%;animation-delay:-5s;">W</span>
+    <span class="floating-logo animate-float-3" style="top:42%;left:44%;animation-delay:-10s;">S</span>
+    <span class="floating-logo animate-float-1" style="top:68%;left:28%;animation-delay:-2s;">F</span>
+    <span class="floating-logo animate-float-2" style="top:8%;right:38%;animation-delay:-8s;">Id</span>
 </div>
 <div class="absolute top-0 right-0 w-1/2 h-full hero-glow pointer-events-none z-0"></div>
 <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10 relative">
@@ -617,9 +593,9 @@ function initAutoCarousel(track, interval) {
 </div>
 </div>
 <div class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 lg:grid lg:grid-cols-3 lg:overflow-visible" id="portfolio-grid">
-<div class="animate-pulse bg-surface rounded-2xl aspect-[4/3] lg:aspect-[12/5] border border-white/5 min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 snap-center flex-shrink-0"></div>
-<div class="animate-pulse bg-surface rounded-2xl aspect-[4/3] lg:aspect-[12/5] border border-white/5 min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 snap-center flex-shrink-0"></div>
-<div class="animate-pulse bg-surface rounded-2xl aspect-[4/3] lg:aspect-[12/5] border border-white/5 min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 snap-center flex-shrink-0"></div>
+<div class="animate-pulse bg-surface rounded-2xl aspect-square border border-white/5 min-w-[75vw] sm:min-w-[45vw] md:min-w-[30vw] lg:min-w-0 snap-center flex-shrink-0"></div>
+<div class="animate-pulse bg-surface rounded-2xl aspect-square border border-white/5 min-w-[75vw] sm:min-w-[45vw] md:min-w-[30vw] lg:min-w-0 snap-center flex-shrink-0"></div>
+<div class="animate-pulse bg-surface rounded-2xl aspect-square border border-white/5 min-w-[75vw] sm:min-w-[45vw] md:min-w-[30vw] lg:min-w-0 snap-center flex-shrink-0"></div>
 </div>
 </div>
 </section>
@@ -627,6 +603,10 @@ function initAutoCarousel(track, interval) {
 (function(){
   let allProjects = [];
   let activeFilter = 'all';
+
+  function isBlockedAssetUrl(url) {
+    return /(^|\.)fbcdn\.net\//i.test(url) || /(^|\.)facebook\.com\//i.test(url) || /(^|\.)scontent\./i.test(url);
+  }
 
   function renderProjects(projects) {
     const grid = document.getElementById('portfolio-grid');
@@ -641,7 +621,7 @@ function initAutoCarousel(track, interval) {
 
     grid.innerHTML = filtered.map(p => {
       const images = Array.isArray(p.images) ? p.images : [];
-      const img = images[0] || p.thumbnail || '';
+      const img = [p.thumbnail, ...images].find(url => url && !isBlockedAssetUrl(url)) || '';
       const imgHtml = img
         ? `<img src="${img}" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"/>`
         : `<div class="w-full h-full bg-primary/5 flex items-center justify-center"><span class="material-symbols-outlined text-primary/30 text-6xl">image</span></div>`;
@@ -651,7 +631,7 @@ function initAutoCarousel(track, interval) {
       const services = Array.isArray(p.service) && p.service.length > 0
         ? `<span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">${p.service.join(' · ')}</span>`
         : `<span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">${p.category}</span>`;
-      return `<div data-carousel-card class="preview-card group relative aspect-[4/3] lg:aspect-[12/5] bg-surface rounded-2xl overflow-hidden border border-white/5 hover:border-primary/30 transition-colors duration-300 min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 flex-shrink-0 snap-center">
+      return `<div data-carousel-card class="preview-card group relative aspect-square bg-surface rounded-2xl overflow-hidden border border-white/5 hover:border-primary/30 transition-colors duration-300 min-w-[75vw] sm:min-w-[45vw] md:min-w-[30vw] lg:min-w-0 flex-shrink-0 snap-center">
         ${imgHtml}
         <div class="absolute inset-0 bg-background-dark/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm">
           ${services}
@@ -666,6 +646,8 @@ function initAutoCarousel(track, interval) {
   }
 
   // Fetch all projects once
+  window.isBlockedAssetUrl = isBlockedAssetUrl;
+
   fetch('/api/projects')
     .then(r => r.json())
     .then(data => {
@@ -758,11 +740,13 @@ function initAutoCarousel(track, interval) {
       grid.innerHTML = '<p class="text-muted text-center col-span-full py-10">No team members yet.</p>';
       return;
     }
-    grid.innerHTML = members.map(member => `
+    grid.innerHTML = members.map(member => {
+      const photoUrl = member.photo_url && !window.isBlockedAssetUrl?.(member.photo_url) ? member.photo_url : '';
+      return `
       <a href="/team/${member.id}" class="bg-surface border border-white/5 rounded-2xl overflow-hidden group hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 block no-underline">
         <div class="aspect-[4/5] bg-primary/5 overflow-hidden relative">
-          ${member.photo_url
-            ? `<img src="${member.photo_url}" alt="${member.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>`
+          ${photoUrl
+            ? `<img src="${photoUrl}" alt="${member.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>`
             : `<div class="w-full h-full flex items-center justify-center text-primary text-6xl font-black">${member.name?.charAt(0) || '?'}</div>`
           }
           <div class="absolute inset-0 bg-background-dark/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -778,7 +762,8 @@ function initAutoCarousel(track, interval) {
           <p class="text-muted text-sm leading-relaxed line-clamp-2">${member.bio || ''}</p>
         </div>
       </a>
-    `).join('');
+    `;
+    }).join('');
   } catch(e) {
     document.getElementById('team-grid').innerHTML = '<p class="text-muted text-center col-span-full">Could not load team.</p>';
   }
@@ -951,25 +936,24 @@ document.getElementById('contactForm').addEventListener('submit', async function
                 </div>
                 <p class="text-slate-400 max-w-sm mb-6">A results-driven designer specialized in building digital experiences that matter.</p>
                 <div class="flex gap-3 flex-wrap" id="footer-social-icons">
-                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/facebook/C6A75E" class="w-5 h-5" alt="fb"/></a>
-                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/instagram/C6A75E" class="w-5 h-5" alt="ig"/></a>
-                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><svg class="w-5 h-5" fill="#C6A75E" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/behance/C6A75E" class="w-5 h-5" alt="be"/></a>
-                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30" href="#"><img src="https://cdn.simpleicons.org/pinterest/C6A75E" class="w-5 h-5" alt="pi"/></a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30 text-primary font-bold" href="#">f</a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30 text-primary font-bold" href="#">ig</a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30 text-primary font-bold" href="#">in</a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30 text-primary font-bold" href="#">be</a>
+                    <a class="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-30 text-primary font-bold" href="#">p</a>
                 </div>
                 <script>
                 (function(){
                   const platforms = ["facebook","instagram","linkedin","behance","pinterest"];
-                  const linkedinSvg = '<svg class="w-5 h-5" fill="#C6A75E" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>';
+                  const labels = { facebook: 'f', instagram: 'ig', linkedin: 'in', behance: 'be', pinterest: 'p' };
                   const icons = document.getElementById('footer-social-icons');
                   if(!icons) return;
                   fetch('/api/social').then(r=>r.json()).then(data=>{
                     const links = platforms.map(p=>({key:p,url:data[p]||''}));
                     icons.innerHTML = links.map(({key,url})=>{
                       const active = url && url.length > 0;
-                      const iconHtml = key === 'linkedin' ? linkedinSvg : `<img src="https://cdn.simpleicons.org/${key}/C6A75E" class="w-5 h-5" alt="${key}"/>`;
-                      return `<a href="${active?url:'#'}" ${active?'target="_blank" rel="noopener noreferrer"':''} title="${key}" class="w-11 h-11 rounded-full flex items-center justify-center border transition-all duration-300 ${active?'bg-primary/10 border-primary/30 hover:bg-primary hover:scale-110 cursor-pointer':'bg-white/5 border-white/10 opacity-30 cursor-default'}">
-                        ${iconHtml}
+                      return `<a href="${active?url:'#'}" ${active?'target="_blank" rel="noopener noreferrer"':''} title="${key}" class="w-11 h-11 rounded-full flex items-center justify-center border transition-all duration-300 text-primary font-bold uppercase ${active?'bg-primary/10 border-primary/30 hover:bg-primary hover:text-background-dark hover:scale-110 cursor-pointer':'bg-white/5 border-white/10 opacity-30 cursor-default'}">
+                        ${labels[key]}
                       </a>`;
                     }).join('');
                   }).catch(()=>{});

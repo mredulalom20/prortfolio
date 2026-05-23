@@ -85,7 +85,7 @@ export default async function ProjectCaseStudyPage({ params }) {
 
           {heroImage && (
             <div className="mb-12 overflow-hidden rounded-3xl border border-white/5 bg-surface">
-              <img src={heroImage} alt={project.title} className="w-full max-h-[640px] object-cover" />
+              <img src={heroImage} alt={project.title} className="w-full object-contain max-h-[70vh]" />
             </div>
           )}
 
