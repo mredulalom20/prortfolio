@@ -12,6 +12,7 @@ export default function BlogManagement() {
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [loading, setLoading] = useState(false);
   const [uploadError, setUploadError] = useState("");
+  const [saveError, setSaveError] = useState("");
 
   const fetchBlogs = async () => {
     try {
@@ -30,6 +31,7 @@ export default function BlogManagement() {
   const handleSave = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setSaveError("");
     try {
       const isEdit = view === "edit";
       const res = await fetch("/api/blogs", {
@@ -37,12 +39,15 @@ export default function BlogManagement() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });
+      const result = await res.json().catch(() => ({}));
       if(res.ok) {
         setView("list");
         setFormData(EMPTY_FORM);
+      } else {
+        setSaveError(result.error || "Failed to save blog post.");
       }
     } catch(e) {
-      console.error(e);
+      setSaveError(e?.message || "Failed to save blog post.");
     }
     setLoading(false);
   };
@@ -130,6 +135,8 @@ export default function BlogManagement() {
             <input type="checkbox" id="published" checked={formData.published} onChange={e => setFormData({...formData, published: e.target.checked})} className="w-4 h-4 rounded text-primary focus:ring-primary focus:ring-offset-background-dark bg-slate-900 border-white/20" />
             <label htmlFor="published" className="text-sm font-bold text-slate-300">Publish Post</label>
           </div>
+
+          {saveError && <p className="text-sm text-red-400 font-bold">{saveError}</p>}
 
           <button disabled={loading} type="submit" className="bg-primary hover:bg-primary/90 text-background-dark font-black py-3 px-8 rounded-xl transition-all disabled:opacity-50">
             {loading ? "Saving..." : view === "edit" ? "Update Blog Post" : "Save Blog Post"}

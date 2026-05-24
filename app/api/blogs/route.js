@@ -83,11 +83,57 @@ export async function GET(request) {
   }
 }
 
+function normalizeBlogPayload(body) {
+  const title = String(body.title ?? "").trim();
+  const slug = String(body.slug ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+
+  return {
+    title,
+    slug,
+    content: body.content ?? "",
+    featuredImage: body.featuredImage ?? "",
+    metaTitle: body.metaTitle ?? "",
+    metaDescription: body.metaDescription ?? "",
+    published: Boolean(body.published),
+  };
+}
+
+function blogSaveError(error) {
+  const message = error?.message ?? "Failed to save blog post.";
+  if (error?.code === "23505" || message.toLowerCase().includes("duplicate")) {
+    return {
+      message: "A blog post with this slug already exists. Change the slug and try again.",
+      status: 409,
+    };
+  }
+  return { message, status: 500 };
+}
+
+const MAX_BLOG_CONTENT_LENGTH = 200000;
+
+function validateBlog(fields) {
+  if (!fields.title) return "Title is required.";
+  if (!fields.slug) return "Slug is required. Use English letters or numbers in the slug.";
+  if (String(fields.content).includes("data:image/")) return "Images must be uploaded first. Use the editor image button instead of pasting raw image files.";
+  if (String(fields.content).length > MAX_BLOG_CONTENT_LENGTH) return "Blog content is too large. Upload images instead of pasting them directly.";
+  return "";
+}
+
 export async function POST(req) {
   try {
-    const body = await req.json();
-    const { data, error } = await supabaseAdmin.from("blogs").insert([body]).select().single();
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    const fields = normalizeBlogPayload(await req.json());
+    const validationError = validateBlog(fields);
+    if (validationError) return NextResponse.json({ error: validationError }, { status: 400 });
+
+    const { data, error } = await supabaseAdmin.from("blogs").insert([fields]).select().single();
+    if (error) {
+      const { message, status } = blogSaveError(error);
+      return NextResponse.json({ error: message }, { status });
+    }
     return NextResponse.json(data, { status: 201 });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });
@@ -97,17 +143,23 @@ export async function POST(req) {
 export async function PUT(req) {
   try {
     const body = await req.json();
-    const { id, created_at, ...fields } = body;
-    if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    if (!body.id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
+
+    const fields = normalizeBlogPayload(body);
+    const validationError = validateBlog(fields);
+    if (validationError) return NextResponse.json({ error: validationError }, { status: 400 });
 
     const { data, error } = await supabaseAdmin
       .from("blogs")
       .update(fields)
-      .eq("id", id)
+      .eq("id", body.id)
       .select()
       .single();
 
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error) {
+      const { message, status } = blogSaveError(error);
+      return NextResponse.json({ error: message }, { status });
+    }
     return NextResponse.json(data);
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });

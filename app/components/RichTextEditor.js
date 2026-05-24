@@ -1,20 +1,59 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { getFileTooLargeMessage, getMaxUploadBytes, uploadDirectToStorage } from "../../lib/uploadClient";
 import "react-quill-new/dist/quill.snow.css";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 export default function RichTextEditor({ value, onChange }) {
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["link", "image"],
-      ["clean"],
-    ],
-  };
+  const editorRef = useRef(null);
+  const [uploadError, setUploadError] = useState("");
+
+  const insertImage = useCallback(async (file) => {
+    if (!file) return;
+    if (file.size > getMaxUploadBytes()) {
+      setUploadError(getFileTooLargeMessage());
+      return;
+    }
+
+    setUploadError("");
+    try {
+      const { url } = await uploadDirectToStorage(file);
+      const editor = editorRef.current?.getEditor();
+      const range = editor?.getSelection(true);
+      editor?.insertEmbed(range?.index ?? editor.getLength(), "image", url, "user");
+    } catch (e) {
+      setUploadError(e?.message || "Image upload failed.");
+    }
+  }, []);
+
+  const handleImage = useCallback(() => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = () => insertImage(input.files?.[0]);
+    input.click();
+  }, [insertImage]);
+
+  const modules = useMemo(() => ({
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link", "image"],
+        ["clean"],
+      ],
+      handlers: {
+        image: handleImage,
+      },
+    },
+    clipboard: {
+      matchVisual: false,
+    },
+  }), [handleImage]);
 
   const formats = [
     "header",
@@ -31,12 +70,20 @@ export default function RichTextEditor({ value, onChange }) {
   return (
     <div className="rich-text-editor bg-white text-black rounded-lg overflow-hidden">
       <ReactQuill
+        ref={editorRef}
         theme="snow"
         value={value}
         onChange={onChange}
         modules={modules}
         formats={formats}
+        onPaste={(e) => {
+          const image = Array.from(e.clipboardData?.files || []).find((file) => file.type.startsWith("image/"));
+          if (!image) return;
+          e.preventDefault();
+          insertImage(image);
+        }}
       />
+      {uploadError && <p className="bg-white px-4 py-2 text-sm font-bold text-red-600">{uploadError}</p>}
       <style jsx global>{`
         .rich-text-editor .ql-toolbar {
           display: flex;

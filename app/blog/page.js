@@ -2,23 +2,36 @@ import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import MobileCarousel from "../components/MobileCarousel";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export const metadata = {
   title: "Blog | MHR",
   description: "Insights on Meta Ads, web design, and digital marketing by Mobarak Hossain Rinku.",
 };
 
+export const dynamic = "force-dynamic";
+
 async function getBlogs() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/blogs?published=eq.true&order=created_at.desc`, {
-      headers: {
-        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-      },
-      next: { revalidate: 60 },
-    });
-    if (!res.ok) return [];
-    return res.json();
+    let { data, error } = await supabaseAdmin
+      .from("blogs")
+      .select("*")
+      .eq("published", true)
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false });
+
+    if (error && error.message?.includes("deleted_at")) {
+      const result = await supabaseAdmin
+        .from("blogs")
+        .select("*")
+        .eq("published", true)
+        .order("created_at", { ascending: false });
+      data = result.data;
+      error = result.error;
+    }
+
+    if (error) return [];
+    return data ?? [];
   } catch {
     return [];
   }

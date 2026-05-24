@@ -1,11 +1,11 @@
 # Graph Report - E:\mobarok-portfolio  (2026-05-24)
 
 ## Corpus Check
-- 61 files · ~217,443 words
+- 61 files · ~218,306 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 139 nodes · 160 edges · 39 communities detected
+- 142 nodes · 169 edges · 39 communities detected
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
@@ -52,10 +52,10 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `GET()` - 22 edges
-2. `POST()` - 14 edges
+2. `POST()` - 17 edges
 3. `DELETE()` - 12 edges
-4. `PATCH()` - 9 edges
-5. `PUT()` - 7 edges
+4. `PUT()` - 10 edges
+5. `PATCH()` - 9 edges
 6. `createDbClient()` - 7 edges
 7. `generateMetadata()` - 6 edges
 8. `Home Page (index.html)` - 6 edges
@@ -71,14 +71,14 @@
   E:\mobarok-portfolio\app\api\team\route.js → E:\mobarok-portfolio\app\api\media\trash\route.js
 - `GET()` --calls--> `TRASH_DIR()`  [EXTRACTED]
   E:\mobarok-portfolio\app\seo\route.js → E:\mobarok-portfolio\app\api\media\trash\route.js
-- `DELETE()` --calls--> `TRASH_DIR()`  [EXTRACTED]
-  E:\mobarok-portfolio\app\api\team\route.js → E:\mobarok-portfolio\app\api\media\trash\route.js
+- `POST()` --calls--> `normalizeBlogPayload()`  [EXTRACTED]
+  E:\mobarok-portfolio\app\api\upload\sign\route.js → E:\mobarok-portfolio\app\api\blogs\route.js
 
 ## Communities
 
 ### Community 0 - "Community 0"
-Cohesion: 0.14
-Nodes (8): DELETE(), GET(), PATCH(), POST(), PUT(), sanitizeFilename(), TRASH_DIR(), UPLOAD_DIR()
+Cohesion: 0.13
+Nodes (11): blogSaveError(), DELETE(), GET(), normalizeBlogPayload(), PATCH(), POST(), PUT(), sanitizeFilename() (+3 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.19
@@ -302,10 +302,10 @@ Nodes (0):
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `DELETE()` connect `Community 0` to `Community 1`?**
-  _High betweenness centrality (0.056) - this node is a cross-community bridge._
+  _High betweenness centrality (0.060) - this node is a cross-community bridge._
 - **Why does `deleteRowById()` connect `Community 1` to `Community 0`?**
-  _High betweenness centrality (0.052) - this node is a cross-community bridge._
+  _High betweenness centrality (0.055) - this node is a cross-community bridge._
 - **What connects `About Page`, `Graphic Design Service`, `UI/UX Design Service` to the rest of the system?**
   _6 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.14 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.13 - nodes in this community are weakly interconnected._

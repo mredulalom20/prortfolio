@@ -1,19 +1,35 @@
 import { notFound } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { supabaseAdmin } from "@/lib/supabase";
+
+export const dynamic = "force-dynamic";
 
 async function getBlog(slug) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/blogs?slug=eq.${slug}&published=eq.true&limit=1`, {
-      headers: {
-        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-      },
-      next: { revalidate: 60 },
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data[0] || null;
+    let { data, error } = await supabaseAdmin
+      .from("blogs")
+      .select("*")
+      .eq("slug", slug)
+      .eq("published", true)
+      .is("deleted_at", null)
+      .limit(1)
+      .maybeSingle();
+
+    if (error && error.message?.includes("deleted_at")) {
+      const result = await supabaseAdmin
+        .from("blogs")
+        .select("*")
+        .eq("slug", slug)
+        .eq("published", true)
+        .limit(1)
+        .maybeSingle();
+      data = result.data;
+      error = result.error;
+    }
+
+    if (error) return null;
+    return data;
   } catch {
     return null;
   }
