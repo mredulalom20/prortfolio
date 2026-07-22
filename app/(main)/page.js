@@ -2,9 +2,11 @@ import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabase";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
+import MobileCarousel from "../components/MobileCarousel";
 import Navbar from "../components/Navbar";
 import ProjectGrid from "../components/ProjectGrid";
 import SmartImage from "../components/SmartImage";
+import TestimonialsCarousel from "../components/TestimonialsCarousel";
 
 export const dynamic = "force-dynamic";
 
@@ -43,6 +45,58 @@ async function getSettings() {
     return Object.fromEntries((data || []).map((item) => [item.key, item.value]));
   } catch {
     return {};
+  }
+}
+
+async function getReviews() {
+  try {
+    let { data, error } = await supabaseAdmin
+      .from("reviews")
+      .select("*")
+      .eq("published", true)
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false });
+
+    if (error && error.message?.includes("deleted_at")) {
+      const fallback = await supabaseAdmin
+        .from("reviews")
+        .select("*")
+        .eq("published", true)
+        .order("created_at", { ascending: false });
+      data = fallback.data;
+      error = fallback.error;
+    }
+
+    if (error) return [];
+    return data ?? [];
+  } catch {
+    return [];
+  }
+}
+
+async function getTeamMembers() {
+  try {
+    let { data, error } = await supabaseAdmin
+      .from("team_members")
+      .select("*")
+      .eq("published", true)
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false });
+
+    if (error && error.message?.includes("deleted_at")) {
+      const fallback = await supabaseAdmin
+        .from("team_members")
+        .select("*")
+        .eq("published", true)
+        .order("created_at", { ascending: false });
+      data = fallback.data;
+      error = fallback.error;
+    }
+
+    if (error) return [];
+    return data ?? [];
+  } catch {
+    return [];
   }
 }
 
@@ -97,7 +151,12 @@ const floatingLogos = [
 ];
 
 export default async function Home() {
-  const [projects, settings] = await Promise.all([getProjects(), getSettings()]);
+  const [projects, settings, reviews, teamMembers] = await Promise.all([
+    getProjects(),
+    getSettings(),
+    getReviews(),
+    getTeamMembers(),
+  ]);
   const heroImage = settings.hero_image || "/img/profile.jpg";
   const aboutImage = settings.about_hero_image || heroImage;
 
@@ -243,6 +302,52 @@ export default async function Home() {
           </div>
         </section>
 
+        {reviews.length > 0 && (
+          <section className="bg-slate-900/50 py-24" id="testimonials">
+            <div className="mx-auto max-w-7xl px-6">
+              <div className="mb-16 text-center">
+                <h2 className="mb-3 text-sm font-bold uppercase tracking-widest text-primary">Testimonials</h2>
+                <h3 className="text-4xl font-black text-white md:text-5xl">What Clients Say</h3>
+              </div>
+              <TestimonialsCarousel reviews={reviews} />
+            </div>
+          </section>
+        )}
+
+        {teamMembers.length > 0 && (
+          <section className="py-24" id="team">
+            <div className="mx-auto max-w-7xl px-6">
+              <div className="mb-16 text-center">
+                <h2 className="mb-3 text-sm font-bold uppercase tracking-widest text-primary">Team</h2>
+                <h3 className="text-4xl font-black text-white md:text-5xl">Meet the Team</h3>
+              </div>
+              <MobileCarousel className="no-scrollbar mx-auto flex max-w-7xl gap-4 overflow-x-auto snap-x snap-mandatory pb-2 lg:grid lg:grid-cols-3 lg:overflow-visible" interval={3200}>
+                {teamMembers.slice(0, 4).map((member) => (
+                  <Link key={member.id} data-carousel-card href={`/team/${member.id}`} className="group grid min-w-10/12 snap-center grid-cols-[45%_55%] overflow-hidden rounded-xl border border-white/5 bg-surface transition-all hover:-translate-y-1 hover:border-primary/40 hover:no-underline lg:min-w-0">
+                    <div className="min-h-36 overflow-hidden bg-background-dark sm:min-h-44">
+                      {member.photo_url ? (
+                        <SmartImage src={member.photo_url} alt={member.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center text-4xl font-black text-primary sm:text-5xl">
+                          {member.name?.charAt(0)}
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex min-h-36 flex-col justify-center p-3 sm:min-h-44 sm:p-4">
+                      <h4 className="text-lg font-black text-white transition-colors group-hover:text-primary sm:text-xl">{member.name}</h4>
+                      <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-primary sm:text-xs">{member.role}</p>
+                      {member.bio && <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-muted sm:mt-3 sm:text-sm">{member.bio}</p>}
+                      <span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-primary opacity-0 transition-opacity group-hover:opacity-100 sm:text-xs">
+                        View Details <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </MobileCarousel>
+            </div>
+          </section>
+        )}
+
         <section className="py-14" id="contact">
           <div className="mx-auto max-w-7xl px-6">
             <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
@@ -251,7 +356,7 @@ export default async function Home() {
                 <h3 className="mb-8 text-5xl font-black text-white">Let&apos;s build something great.</h3>
                 <p className="mb-12 max-w-md text-lg leading-relaxed text-muted">Ready to scale your business or start a new creative project? Reach out and let&apos;s discuss how I can help you achieve your goals.</p>
                 <div className="space-y-8">
-                  <div className="flex items-center gap-6"><div className="flex size-14 items-center justify-center rounded-xl border border-white/5 bg-surface text-primary"><span className="material-symbols-outlined">mail</span></div><div><p className="mb-1 text-xs font-bold uppercase tracking-widest text-muted">Email</p><p className="text-lg font-bold text-white">mhrinku.me@gmail.com</p></div></div>
+                  <div className="flex items-center gap-6"><div className="flex size-14 items-center justify-center rounded-xl border border-white/5 bg-surface text-primary"><span className="material-symbols-outlined">mail</span></div><div><p className="mb-1 text-xs font-bold uppercase tracking-widest text-muted">Email</p><p className="text-lg font-bold text-white">contact@mhrinku.com</p></div></div>
                   <div className="flex items-center gap-6"><div className="flex size-14 items-center justify-center rounded-xl border border-white/5 bg-surface text-primary"><span className="material-symbols-outlined">location_on</span></div><div><p className="mb-1 text-xs font-bold uppercase tracking-widest text-muted">Location</p><p className="text-lg font-bold text-white">Dhaka, Bangladesh</p></div></div>
                 </div>
               </div>
