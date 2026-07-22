@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
+import SmartImage from "../../components/SmartImage";
 
 const CATEGORIES = ["WordPress Plugin", "WordPress Theme", "Shopify Theme", "Other"];
 const emptyForm = { title: "", description: "", category: "WordPress Plugin", cover_url: "", action_url: "", action_type: "visit", badge: "", published: true };
@@ -13,7 +15,7 @@ export default function ProductsAdmin() {
   const [msg, setMsg] = useState("");
 
   const fetchProducts = async () => {
-    const res = await fetch("/api/products?admin=1");
+    const res = await adminFetch("/api/products?admin=1");
     const data = await res.json();
     setProducts(Array.isArray(data) ? data : []);
   };
@@ -25,7 +27,7 @@ export default function ProductsAdmin() {
     setLoading(true);
     setMsg("");
     const isEdit = view === "edit";
-    const res = await fetch("/api/products", {
+    const res = await adminFetch("/api/products", {
       method: isEdit ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -42,13 +44,13 @@ export default function ProductsAdmin() {
   };
 
   const handleToggle = async (id, published) => {
-    await fetch("/api/products", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, published: !published }) });
+    await adminFetch("/api/products", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, published: !published }) });
     fetchProducts();
   };
 
   const handleDelete = async (id) => {
     if (!confirm("Delete this product?")) return;
-    await fetch("/api/products", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
+    await adminFetch("/api/products", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
     fetchProducts();
   };
 
@@ -158,7 +160,7 @@ export default function ProductsAdmin() {
               {products.map(p => (
                 <div key={p.id} className="flex items-center gap-4 p-5 hover:bg-white/5 transition-all">
                   {p.cover_url
-                    ? <img src={p.cover_url} alt={p.title} className="w-16 h-12 rounded-lg object-cover border border-white/10 flex-shrink-0" />
+                    ? <SmartImage src={p.cover_url} alt={p.title} className="w-16 h-12 rounded-lg object-cover border border-white/10 flex-shrink-0" />
                     : <div className="w-16 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                         <span className="material-symbols-outlined text-primary">extension</span>
                       </div>

@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
 import { getMaxUploadBytes, getFileTooLargeMessage, uploadDirectToStorage } from "../../../lib/uploadClient";
 import RichTextEditor from "../../components/RichTextEditor";
+import SmartImage from "../../components/SmartImage";
 
 const EMPTY_FORM = { title: "", slug: "", content: "", featuredImage: "", metaTitle: "", metaDescription: "", published: false };
 
@@ -16,7 +18,7 @@ export default function BlogManagement() {
 
   const fetchBlogs = async () => {
     try {
-      const res = await fetch("/api/blogs?admin=1");
+      const res = await adminFetch("/api/blogs?admin=1");
       if (res.ok) {
         const data = await res.json();
         setBlogs(Array.isArray(data) ? data : []);
@@ -34,7 +36,7 @@ export default function BlogManagement() {
     setSaveError("");
     try {
       const isEdit = view === "edit";
-      const res = await fetch("/api/blogs", {
+      const res = await adminFetch("/api/blogs", {
         method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
@@ -54,7 +56,7 @@ export default function BlogManagement() {
 
   const handleDelete = async (id) => {
     if (!confirm("Delete this blog post?")) return;
-    await fetch("/api/blogs", {
+    await adminFetch("/api/blogs", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id })
@@ -109,7 +111,7 @@ export default function BlogManagement() {
             <label className="text-sm font-bold text-slate-300">Featured Image</label>
             <div className="flex items-center gap-4">
               <input type="file" onChange={handleImageUpload} className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all cursor-pointer" />
-              {formData.featuredImage && <img src={formData.featuredImage} alt="preview" className="h-12 w-12 rounded object-cover" />}
+              {formData.featuredImage && <SmartImage src={formData.featuredImage} alt="preview" className="h-12 w-12 rounded object-cover" />}
             </div>
             {uploadError && <p className="text-sm text-red-400 font-bold">{uploadError}</p>}
           </div>

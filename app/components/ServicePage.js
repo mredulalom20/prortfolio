@@ -1,0 +1,220 @@
+import Link from "next/link";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import SmartImage from "./SmartImage";
+import { supabaseAdmin } from "@/lib/supabase";
+
+async function getProjects(service) {
+  if (!service) return [];
+
+  try {
+    let query = supabaseAdmin
+      .from("projects")
+      .select("*")
+      .contains("service", [service])
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false });
+
+    let { data, error } = await query;
+
+    if (error && error.message?.includes("deleted_at")) {
+      const result = await supabaseAdmin
+        .from("projects")
+        .select("*")
+        .contains("service", [service])
+        .order("created_at", { ascending: false });
+      data = result.data;
+      error = result.error;
+    }
+
+    if (error) return [];
+    return data ?? [];
+  } catch {
+    return [];
+  }
+}
+
+async function getSetting(key) {
+  if (!key) return "";
+
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("site_settings")
+      .select("value")
+      .eq("key", key)
+      .maybeSingle();
+
+    if (error) return "";
+    return data?.value || "";
+  } catch {
+    return "";
+  }
+}
+
+function SectionLabel({ eyebrow, title, description }) {
+  return (
+    <div className="mb-12 text-center">
+      <p className="mb-3 text-sm font-bold uppercase tracking-[0.3em] text-primary">{eyebrow}</p>
+      <h2 className="text-4xl font-black tracking-tight text-white md:text-5xl">{title}</h2>
+      {description && <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-400">{description}</p>}
+    </div>
+  );
+}
+
+function ProjectCard({ project, fallbackIcon }) {
+  const image = project.thumbnail || (Array.isArray(project.images) ? project.images[0] : "");
+  const href = project.externalLink || `/projects/${project.id}`;
+  const external = Boolean(project.externalLink);
+
+  return (
+    <article className="group overflow-hidden rounded-2xl border border-white/5 bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-primary/30">
+      <div className="aspect-[4/3] overflow-hidden bg-primary/5">
+        {image ? (
+          <SmartImage src={image} alt={project.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        ) : (
+          <div className="flex h-full items-center justify-center text-primary/40">
+            <span className="material-symbols-outlined text-6xl">{fallbackIcon}</span>
+          </div>
+        )}
+      </div>
+      <div className="p-6">
+        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-primary">{project.category}</p>
+        <h3 className="text-2xl font-bold text-white">{project.title}</h3>
+        {project.description && <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-400">{project.description}</p>}
+        <Link
+          href={href}
+          target={external ? "_blank" : undefined}
+          rel={external ? "noopener noreferrer" : undefined}
+          className="mt-6 inline-flex items-center gap-2 rounded-lg border border-primary px-5 py-2 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-primary/10"
+        >
+          View Project <span className="material-symbols-outlined text-base">arrow_forward</span>
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+export default async function ServicePage({ config }) {
+  const [projects, settingImage] = await Promise.all([
+    getProjects(config.service),
+    getSetting(config.imageSettingKey),
+  ]);
+  const heroImage = settingImage || config.heroImage;
+
+  return (
+    <>
+      <Navbar />
+      <main className="min-h-screen bg-background-dark pt-28 text-slate-100">
+        <section className="relative overflow-hidden py-20">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(198,167,94,0.14),transparent_45%)]" />
+          <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2">
+            <div>
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary">
+                <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" /><span className="relative inline-flex h-2 w-2 rounded-full bg-primary" /></span>
+                {config.eyebrow}
+              </div>
+              <h1 className="text-5xl font-black tracking-tighter text-white md:text-7xl">{config.title}</h1>
+              <p className="mt-6 max-w-xl text-xl leading-relaxed text-slate-400">{config.description}</p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link href="/#contact" className="inline-flex items-center gap-2 rounded-xl bg-[#C6A75E] px-7 py-4 font-bold text-background-dark transition-transform hover:-translate-y-0.5">
+                  Start Your Project <span className="material-symbols-outlined">arrow_outward</span>
+                </Link>
+                <Link href="/#portfolio" className="rounded-xl border border-slate-700 px-7 py-4 font-bold text-white transition-colors hover:border-primary">
+                  See Work
+                </Link>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute -inset-4 rounded-3xl bg-primary/20 blur-3xl" />
+              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-surface shadow-2xl">
+                {heroImage ? (
+                  <SmartImage src={heroImage} alt={config.title} className="aspect-[4/3] h-full w-full object-cover" />
+                ) : (
+                  <div className="flex aspect-[4/3] items-center justify-center text-primary/40">
+                    <span className="material-symbols-outlined text-8xl">{config.icon}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-slate-900/50 py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <SectionLabel eyebrow="What I Do" title={config.overviewTitle} description={config.overview} />
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {config.features.map((feature) => (
+                <div key={feature.title} className="rounded-2xl border border-white/5 bg-surface p-6 transition-colors hover:border-primary/30">
+                  <div className="mb-5 flex size-14 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <span className="material-symbols-outlined text-3xl">{feature.icon}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white">{feature.title}</h3>
+                  <p className="mt-3 leading-relaxed text-slate-400">{feature.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <SectionLabel eyebrow="Workflow" title="Process Built For Results" description="A direct, collaborative workflow keeps work focused from first idea to launch." />
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {config.process.map((step, index) => (
+                <div key={step.title} className="rounded-2xl border border-white/5 bg-surface p-7">
+                  <p className="mb-6 text-5xl font-black text-white/5">{String(index + 1).padStart(2, "0")}</p>
+                  <h3 className="text-xl font-bold text-white">{step.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-400">{step.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-slate-900/50 py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <SectionLabel eyebrow="Portfolio" title={config.portfolioTitle} description="Recent work connected to this service." />
+            {projects.length > 0 ? (
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {projects.map((project) => <ProjectCard key={project.id} project={project} fallbackIcon={config.icon} />)}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-dashed border-white/10 bg-surface/50 py-16 text-center text-slate-500">
+                No projects published for this service yet.
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className="py-20">
+          <div className="mx-auto max-w-4xl px-6">
+            <SectionLabel eyebrow="FAQ" title="Common Questions" />
+            <div className="space-y-4">
+              {config.faq.map((item) => (
+                <div key={item.q} className="rounded-2xl border border-white/5 bg-surface p-6">
+                  <h3 className="text-lg font-bold text-white">{item.q}</h3>
+                  <p className="mt-3 leading-relaxed text-slate-400">{item.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-6 pb-20">
+          <div className="overflow-hidden rounded-3xl bg-[#C6A75E] p-10 text-background-dark md:p-14">
+            <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+              <div>
+                <h2 className="text-3xl font-black md:text-4xl">Ready to build something better?</h2>
+                <p className="mt-3 max-w-2xl font-medium text-background-dark/75">Tell me about your goals and I’ll help shape a practical plan.</p>
+              </div>
+              <Link href="/#contact" className="inline-flex items-center justify-center rounded-xl bg-background-dark px-8 py-4 font-bold text-white">
+                Contact Me
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
+}

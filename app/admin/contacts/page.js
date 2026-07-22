@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
 
 export default function ContactsAdmin() {
   const [contacts, setContacts] = useState([]);
@@ -9,7 +10,7 @@ export default function ContactsAdmin() {
 
   const fetchContacts = async () => {
     setLoading(true);
-    const res = await fetch("/api/contacts");
+    const res = await adminFetch("/api/contacts");
     const data = await res.json();
     setContacts(Array.isArray(data) ? data : []);
     setLoading(false);
@@ -18,7 +19,7 @@ export default function ContactsAdmin() {
   useEffect(() => { fetchContacts(); }, []);
 
   const handleRead = async (id, read) => {
-    await fetch("/api/contacts", {
+    await adminFetch("/api/contacts", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, read: !read }),
@@ -29,7 +30,7 @@ export default function ContactsAdmin() {
 
   const handleDelete = async (id) => {
     if (!confirm("Delete this message?")) return;
-    await fetch("/api/contacts", {
+    await adminFetch("/api/contacts", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),

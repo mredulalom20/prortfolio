@@ -1,8 +1,12 @@
+import { requireAdmin } from "@/lib/adminAuth";
 import { supabaseAdmin } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
 // GET all contact submissions
-export async function GET() {
+export async function GET(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const { data, error } = await supabaseAdmin
     .from("contacts")
     .select("*")
@@ -28,6 +32,9 @@ export async function POST(req) {
 
 // PATCH mark as read/unread
 export async function PATCH(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const { id, read } = await req.json();
   const { data, error } = await supabaseAdmin
     .from("contacts")
@@ -40,6 +47,9 @@ export async function PATCH(req) {
 
 // DELETE a contact
 export async function DELETE(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const { id } = await req.json();
   const { error } = await supabaseAdmin.from("contacts").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

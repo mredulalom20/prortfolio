@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
+import SmartImage from "../../components/SmartImage";
 
 /* ── type config ── */
 const TYPE_CONFIG = {
@@ -58,8 +60,8 @@ export default function RecycleBin() {
     setFetching(true);
     try {
       const [dbRes, mediaRes] = await Promise.all([
-        fetch("/api/recycle-bin"),
-        fetch("/api/media/trash"),
+        adminFetch("/api/recycle-bin"),
+        adminFetch("/api/media/trash"),
       ]);
       const db    = await dbRes.json();
       const media = await mediaRes.json();
@@ -77,7 +79,7 @@ export default function RecycleBin() {
   /* ── DB restore ── */
   const restoreDb = async (item) => {
     try {
-      const res = await fetch("/api/recycle-bin", {
+      const res = await adminFetch("/api/recycle-bin", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: item.id, type: item._type }),
@@ -94,7 +96,7 @@ export default function RecycleBin() {
       onConfirm: async () => {
         setConfirm(null);
         try {
-          const res = await fetch("/api/recycle-bin", {
+          const res = await adminFetch("/api/recycle-bin", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: item.id, type: item._type }),
@@ -109,7 +111,7 @@ export default function RecycleBin() {
   /* ── Media restore ── */
   const restoreMedia = async (item) => {
     try {
-      const res = await fetch("/api/media/trash", {
+      const res = await adminFetch("/api/media/trash", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: item.name }),
@@ -126,7 +128,7 @@ export default function RecycleBin() {
       onConfirm: async () => {
         setConfirm(null);
         try {
-          const res = await fetch("/api/media/trash", {
+          const res = await adminFetch("/api/media/trash", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name: item.name }),
@@ -148,14 +150,14 @@ export default function RecycleBin() {
         setConfirm(null);
         await Promise.all([
           ...dbItems.map((item) =>
-            fetch("/api/recycle-bin", {
+            adminFetch("/api/recycle-bin", {
               method: "DELETE",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ id: item.id, type: item._type }),
             })
           ),
           ...mediaItems.map((item) =>
-            fetch("/api/media/trash", {
+            adminFetch("/api/media/trash", {
               method: "DELETE",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ name: item.name }),
@@ -200,7 +202,7 @@ export default function RecycleBin() {
         {/* thumbnail / icon */}
         {isMedia ? (
           <div className="w-16 h-16 rounded-xl overflow-hidden border border-white/5 flex-shrink-0 bg-slate-900">
-            <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
+            <SmartImage src={item.url} alt={item.name} className="w-full h-full object-cover" />
           </div>
         ) : (
           <div className={`w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 ${TYPE_CONFIG[item._type]?.bg || "bg-white/5"}`}>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
 
 export default function UsersAdmin() {
   const [invitations, setInvitations] = useState([]);
@@ -14,7 +15,7 @@ export default function UsersAdmin() {
 
   const fetchInvitations = async () => {
     setLoading(true);
-    const res = await fetch("/api/invitations");
+    const res = await adminFetch("/api/invitations");
     const data = await res.json();
     setInvitations(Array.isArray(data) ? data : []);
     setLoading(false);
@@ -28,7 +29,7 @@ export default function UsersAdmin() {
     setError("");
     setSuccess("");
 
-    const res = await fetch("/api/invitations", {
+    const res = await adminFetch("/api/invitations", {
       method: editingId ? "PATCH" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: editingId, email, note }),
@@ -57,7 +58,7 @@ export default function UsersAdmin() {
 
   const handleRevoke = async (id, invEmail) => {
     if (!confirm(`Remove ${invEmail} from the invite list?`)) return;
-    await fetch("/api/invitations", {
+    await adminFetch("/api/invitations", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),

@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
 import { getMaxUploadBytes, getFileTooLargeMessage, uploadDirectToStorage } from "../../../lib/uploadClient";
+import SmartImage from "../../components/SmartImage";
 
 const emptyForm = { name: "", role: "", photo_url: "", bio: "", published: true };
 
@@ -14,7 +16,7 @@ export default function TeamAdmin() {
   const [msg, setMsg] = useState("");
 
   const fetchMembers = async () => {
-    const res = await fetch("/api/team?admin=1");
+    const res = await adminFetch("/api/team?admin=1");
     const data = await res.json();
     setMembers(Array.isArray(data) ? data : []);
   };
@@ -26,7 +28,7 @@ export default function TeamAdmin() {
     setLoading(true);
     setMsg("");
     const isEdit = view === "edit";
-    const res = await fetch("/api/team", {
+    const res = await adminFetch("/api/team", {
       method: isEdit ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -62,7 +64,7 @@ export default function TeamAdmin() {
   };
 
   const handleToggle = async (id, published) => {
-    await fetch("/api/team", {
+    await adminFetch("/api/team", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, published: !published }),
@@ -72,7 +74,7 @@ export default function TeamAdmin() {
 
   const handleDelete = async (id) => {
     if (!confirm("Delete this team member?")) return;
-    await fetch("/api/team", {
+    await adminFetch("/api/team", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
@@ -121,7 +123,7 @@ export default function TeamAdmin() {
             </label>
             {form.photo_url && (
               <div className="mt-3 flex items-center gap-3">
-                <img src={form.photo_url} alt="preview" className="w-16 h-16 rounded-xl object-cover border border-white/10" />
+                <SmartImage src={form.photo_url} alt="preview" className="w-16 h-16 rounded-xl object-cover border border-white/10" />
                 <button type="button" onClick={() => setForm({...form, photo_url: ""})} className="text-red-400 text-sm font-bold hover:text-white">Remove</button>
               </div>
             )}
@@ -158,7 +160,7 @@ export default function TeamAdmin() {
               {members.map(member => (
                 <div key={member.id} className="flex items-center gap-4 p-5 hover:bg-white/5 transition-all">
                   {member.photo_url ? (
-                    <img src={member.photo_url} alt={member.name} className="w-14 h-14 rounded-xl object-cover border border-white/10" />
+                    <SmartImage src={member.photo_url} alt={member.name} className="w-14 h-14 rounded-xl object-cover border border-white/10" />
                   ) : (
                     <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black">{member.name?.charAt(0)}</div>
                   )}

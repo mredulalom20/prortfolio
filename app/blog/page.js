@@ -2,6 +2,7 @@ import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import MobileCarousel from "../components/MobileCarousel";
+import SmartImage from "../components/SmartImage";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export const metadata = {
@@ -56,7 +57,7 @@ export default async function BlogPage() {
                 <Link key={blog.id} href={`/blog/${blog.slug}`} className="blog-card group block bg-surface border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-all min-w-[85vw] sm:min-w-[60vw] md:min-w-[40vw] lg:min-w-0 flex-shrink-0 snap-center" data-carousel-card>
                   {blog.featuredImage && (
                     <div className="aspect-[4/3] lg:aspect-[12/5] overflow-hidden">
-                      <img
+                      <SmartImage
                         src={blog.featuredImage}
                         alt={blog.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

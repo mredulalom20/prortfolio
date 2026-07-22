@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/adminAuth";
 import { supabaseAdmin } from "@/lib/supabase";
 
 const SAMPLE_BLOGS = [
@@ -49,6 +50,10 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const admin = searchParams.get("admin") === "1";
+    if (admin) {
+      const auth = await requireAdmin(request);
+      if (!auth.ok) return auth.response;
+    }
     const { data: existing } = await supabaseAdmin.from("blogs").select("id").limit(1);
     if (!existing || existing.length === 0) {
       await supabaseAdmin.from("blogs").insert(SAMPLE_BLOGS);
@@ -124,6 +129,9 @@ function validateBlog(fields) {
 }
 
 export async function POST(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   try {
     const fields = normalizeBlogPayload(await req.json());
     const validationError = validateBlog(fields);
@@ -141,6 +149,9 @@ export async function POST(req) {
 }
 
 export async function PUT(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await req.json();
     if (!body.id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
@@ -167,17 +178,26 @@ export async function PUT(req) {
 }
 
 export async function DELETE(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   try {
     const { id } = await req.json();
     if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
 
-    // Soft-delete: stamp deleted_at instead of removing the row
+    // Try soft-delete first; fall back to hard delete if column missing
     const { error } = await supabaseAdmin
       .from("blogs")
       .update({ deleted_at: new Date().toISOString() })
       .eq("id", id);
 
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error && error.message?.includes("deleted_at")) {
+      const { error: delErr } = await supabaseAdmin.from("blogs").delete().eq("id", id);
+      if (delErr) return NextResponse.json({ error: delErr.message }, { status: 500 });
+    } else if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
     return NextResponse.json({ success: true });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });

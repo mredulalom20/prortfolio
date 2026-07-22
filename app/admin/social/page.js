@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
+import SmartImage from "../../components/SmartImage";
 
 const PLATFORMS = [
   { key: "facebook",  label: "Facebook",  icon: "https://cdn.simpleicons.org/facebook/C6A75E",  placeholder: "https://facebook.com/yourpage" },
@@ -15,7 +17,7 @@ export default function SocialAdmin() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    fetch("/api/social").then(r => r.json()).then(data => {
+    adminFetch("/api/social?admin=1").then(r => r.json()).then(data => {
       setLinks(prev => ({ ...prev, ...data }));
     });
   }, []);
@@ -23,7 +25,7 @@ export default function SocialAdmin() {
   const handleSave = async (e) => {
     e.preventDefault();
     setLoading(true); setSaved(false);
-    const res = await fetch("/api/social", {
+    const res = await adminFetch("/api/social", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(links),
@@ -49,7 +51,7 @@ export default function SocialAdmin() {
               className={`w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 border ${links[p.key] ? 'border-primary/30 bg-primary/10 hover:bg-primary hover:scale-110' : 'border-white/10 bg-white/5 opacity-40'}`}
               title={p.label}
             >
-              <img src={p.icon} alt={p.label} className="w-5 h-5" />
+              <SmartImage src={p.icon} alt={p.label} className="w-5 h-5" />
             </a>
           ))}
         </div>
@@ -60,7 +62,7 @@ export default function SocialAdmin() {
         {PLATFORMS.map(p => (
           <div key={p.key}>
             <label className="flex items-center gap-3 text-sm font-bold mb-2">
-              <img src={p.icon} alt={p.label} className="w-5 h-5 opacity-80" />
+              <SmartImage src={p.icon} alt={p.label} className="w-5 h-5 opacity-80" />
               {p.label}
             </label>
             <input

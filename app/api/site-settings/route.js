@@ -1,3 +1,4 @@
+import { requireAdmin } from "@/lib/adminAuth";
 import { supabaseAdmin } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
@@ -27,6 +28,9 @@ export async function GET(request) {
 
 // PUT /api/site-settings – upsert a setting { key, value }
 export async function PUT(request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   const body = await request.json();
   const { key, value } = body;
 

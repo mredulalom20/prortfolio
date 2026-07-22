@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
+import SmartImage from "../../components/SmartImage";
 
 const emptyForm = { name: "", role: "", message: "", avatar_url: "", published: true };
 
@@ -12,7 +14,7 @@ export default function ReviewsAdmin() {
   const [msg, setMsg] = useState("");
 
   const fetchReviews = async () => {
-    const res = await fetch("/api/reviews");
+    const res = await adminFetch("/api/reviews?admin=1");
     const data = await res.json();
     setReviews(Array.isArray(data) ? data : []);
   };
@@ -24,7 +26,7 @@ export default function ReviewsAdmin() {
     setLoading(true);
     setMsg("");
     const isEdit = view === "edit";
-    const res = await fetch("/api/reviews", {
+    const res = await adminFetch("/api/reviews", {
       method: isEdit ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -42,7 +44,7 @@ export default function ReviewsAdmin() {
 
   const handleDelete = async (id) => {
     if (!confirm("Delete this review?")) return;
-    await fetch("/api/reviews", {
+    await adminFetch("/api/reviews", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
@@ -51,7 +53,7 @@ export default function ReviewsAdmin() {
   };
 
   const handleTogglePublish = async (id, published) => {
-    await fetch("/api/reviews", {
+    await adminFetch("/api/reviews", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, published: !published }),
@@ -168,7 +170,7 @@ export default function ReviewsAdmin() {
                   <tr key={r.id} className="hover:bg-white/5 transition-colors">
                     <td className="p-4 font-bold text-white flex items-center gap-3">
                       {r.avatar_url ? (
-                        <img src={r.avatar_url} alt={r.name} className="w-9 h-9 rounded-full object-cover border-2 border-primary/30" />
+                        <SmartImage src={r.avatar_url} alt={r.name} className="w-9 h-9 rounded-full object-cover border-2 border-primary/30" />
                       ) : (
                         <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center text-primary font-black">
                           {r.name?.charAt(0)}

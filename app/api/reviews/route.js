@@ -1,19 +1,33 @@
+import { requireAdmin } from "@/lib/adminAuth";
 import { supabaseAdmin } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  let { data, error } = await supabaseAdmin
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const admin = searchParams.get("admin") === "1";
+  if (admin) {
+    const auth = await requireAdmin(request);
+    if (!auth.ok) return auth.response;
+  }
+
+  let query = supabaseAdmin
     .from("reviews")
     .select("*")
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
 
+  if (!admin) query = query.eq("published", true);
+
+  let { data, error } = await query;
+
   // Graceful fallback if deleted_at column doesn't exist yet
   if (error && error.message?.includes("deleted_at")) {
-    const result = await supabaseAdmin
+    let fallback = supabaseAdmin
       .from("reviews")
       .select("*")
       .order("created_at", { ascending: false });
+    if (!admin) fallback = fallback.eq("published", true);
+    const result = await fallback;
     if (result.error) return NextResponse.json({ error: result.error.message }, { status: 500 });
     data = result.data;
     error = null;
@@ -23,7 +37,11 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
+
 export async function POST(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const body = await req.json();
   const { name, role, message, avatar_url, published } = body;
   const { data, error } = await supabaseAdmin
@@ -35,6 +53,9 @@ export async function POST(req) {
 }
 
 export async function PUT(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const body = await req.json();
   const { id, created_at, ...fields } = body;
   if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
@@ -51,6 +72,9 @@ export async function PUT(req) {
 }
 
 export async function DELETE(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const { id } = await req.json();
   if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
 
@@ -71,6 +95,9 @@ export async function DELETE(req) {
 }
 
 export async function PATCH(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const { id, published } = await req.json();
   if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
   const { data, error } = await supabaseAdmin

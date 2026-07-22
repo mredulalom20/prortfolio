@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import SmartImage from "../../components/SmartImage";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
@@ -62,7 +63,7 @@ export default async function BlogPostPage({ params }) {
       <main className="min-h-screen bg-background-dark pt-32 pb-20">
         {blog.featuredImage && (
           <div className="w-full aspect-[4/3] lg:aspect-[12/5] overflow-hidden mb-12">
-            <img src={blog.featuredImage} alt={blog.title} className="w-full h-full object-cover" />
+            <SmartImage src={blog.featuredImage} alt={blog.title} className="w-full h-full object-cover" />
           </div>
         )}
         <div className="max-w-3xl mx-auto px-6">

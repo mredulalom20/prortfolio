@@ -1,14 +1,30 @@
 const fs = require('fs');
 
-let html = fs.readFileSync('index.html', 'utf-8');
+let html = fs.readFileSync('public/index.html', 'utf-8');
 
 const heroStart = html.indexOf('<!-- Hero Section -->');
 const portfolioStart = html.indexOf('<!-- Portfolio Section -->');
-const statsStart = html.indexOf('<!-- Stats Section -->');
+const statsStart = html.indexOf('<!-- Contact Section -->');
 const footerStart = html.indexOf('<!-- Footer -->');
 
 let heroAndServices = html.substring(heroStart, portfolioStart);
 let statsAndContact = html.substring(statsStart, footerStart);
+
+function toStyleObject(style) {
+  const entries = style
+    .split(';')
+    .map(rule => rule.trim())
+    .filter(Boolean)
+    .map(rule => {
+      const colon = rule.indexOf(':');
+      if (colon === -1) return null;
+      const key = rule.slice(0, colon).trim().replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+      const value = rule.slice(colon + 1).trim();
+      return `${JSON.stringify(key)}: ${JSON.stringify(value)}`;
+    })
+    .filter(Boolean);
+  return `style={{${entries.join(', ')}}}`;
+}
 
 function jsxify(content) {
   content = content.replace(/class="/g, 'className="');
@@ -17,28 +33,45 @@ function jsxify(content) {
   content = content.replace(/viewBox="/g, 'viewBox="');
   content = content.replace(/fill-rule="/g, 'fillRule="');
   content = content.replace(/clip-rule="/g, 'clipRule="');
+  content = content.replace(/style="([^"]*)"/g, (_, style) => toStyleObject(style));
   content = content.replace(/<!--(.*?)-->/g, '{/*$1*/}');
-  content = content.replace(/<img([^>]*)>/g, '<img$1 />');
-  content = content.replace(/<input([^>]*)>/g, '<input$1 />');
+  content = content.replace(/<img([^>]*)>/g, (m, a) => `<img${a.replace(/\s*\/$/, '')} />`);
+  content = content.replace(/<input([^>]*)>/g, (m, a) => `<input${a.replace(/\s*\/$/, '')} />`);
   content = content.replace(/<br>/g, '<br />');
   content = content.replace(/<hr>/g, '<hr />');
+  content = content.replace(/<(style|script)>([\s\S]*?)<\/(style|script)>/g, (_, tag, body) =>
+    `<${tag} dangerouslySetInnerHTML={{__html: ${JSON.stringify(body)}}} />`
+  );
   return content;
 }
 
 const finalJsx = `import Link from "next/link";
-import connectMongo from "@/lib/mongodb";
-import Project from "@/models/Project";
+import { supabaseAdmin } from "../../lib/supabase";
 import ProjectGrid from "../components/ProjectGrid";
+import Navbar from "../components/Navbar";
 
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  await connectMongo();
-  let projects = await Project.find({}).sort({ createdAt: -1 });
-  projects = JSON.parse(JSON.stringify(projects));
+  let { data: projects, error } = await supabaseAdmin
+    .from("projects")
+    .select("*")
+    .is("deleted_at", null)
+    .order("created_at", { ascending: false });
+
+  if (error && error.message?.includes("deleted_at")) {
+    const fallback = await supabaseAdmin
+      .from("projects")
+      .select("*")
+      .order("created_at", { ascending: false });
+    projects = fallback.data || [];
+  } else if (error) {
+    projects = [];
+  }
 
   return (
     <>
+      <Navbar />
       ${jsxify(heroAndServices)}
 
       {/* Portfolio Section */}

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import SmartImage from "../../components/SmartImage";
 
 async function getProject(id) {
   try {
@@ -85,7 +86,7 @@ export default async function ProjectCaseStudyPage({ params }) {
 
           {heroImage && (
             <div className="mb-12 overflow-hidden rounded-3xl border border-white/5 bg-surface">
-              <img src={heroImage} alt={project.title} className="w-full object-contain max-h-[70vh]" />
+              <SmartImage src={heroImage} alt={project.title} className="w-full object-contain max-h-[70vh]" />
             </div>
           )}
 
@@ -93,7 +94,7 @@ export default async function ProjectCaseStudyPage({ params }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {images.slice(1).map((image, index) => (
                 <div key={`${image}-${index}`} className="overflow-hidden rounded-2xl border border-white/5 bg-surface">
-                  <img src={image} alt={`${project.title} preview ${index + 2}`} className="w-full h-full object-cover" />
+                  <SmartImage src={image} alt={`${project.title} preview ${index + 2}`} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>

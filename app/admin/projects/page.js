@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
 import { getMaxUploadBytes, getFileTooLargeMessage, uploadDirectToStorage } from "../../../lib/uploadClient";
+import SmartImage from "../../components/SmartImage";
 
 const categories = [
   "Graphic Design Projects",
@@ -37,7 +39,7 @@ export default function ProjectManagement() {
 
   const fetchProjects = async () => {
     try {
-      const res  = await fetch("/api/projects");
+      const res  = await adminFetch("/api/projects");
       const data = await res.json();
       setProjects(Array.isArray(data) ? data : []);
     } catch (e) {}
@@ -55,7 +57,7 @@ export default function ProjectManagement() {
     setSuccess("");
     try {
       const isEdit = view === "edit";
-      const res = await fetch("/api/projects", {
+      const res = await adminFetch("/api/projects", {
         method:  isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify(formData),
@@ -77,7 +79,7 @@ export default function ProjectManagement() {
   const handleDelete = async (id) => {
     if (!confirm("Delete this project? This cannot be undone.")) return;
     try {
-      const res = await fetch("/api/projects", {
+      const res = await adminFetch("/api/projects", {
         method:  "DELETE",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify({ id }),
@@ -271,7 +273,7 @@ export default function ProjectManagement() {
                     <div className="flex gap-2 flex-wrap">
                       {formData.images.map((img, i) => (
                         <div key={i} className="relative group">
-                          <img src={img} className="h-16 w-16 object-cover rounded-lg shadow border border-white/20" alt="" />
+                          <SmartImage src={img} className="h-16 w-16 object-cover rounded-lg shadow border border-white/20" alt="" />
                           <button
                             type="button"
                             onClick={() => setFormData({ ...formData, images: formData.images.filter((_, idx) => idx !== i) })}
@@ -299,7 +301,7 @@ export default function ProjectManagement() {
                 </label>
                 {formData.thumbnail && (
                   <div className="relative group w-fit mt-2">
-                    <img src={formData.thumbnail} alt="preview" className="h-20 rounded-lg object-cover border border-white/20" />
+                    <SmartImage src={formData.thumbnail} alt="preview" className="h-20 rounded-lg object-cover border border-white/20" />
                     <button
                       type="button"
                       onClick={() => setFormData({ ...formData, thumbnail: "" })}
@@ -421,7 +423,7 @@ export default function ProjectManagement() {
                 <tr key={p.id} className="hover:bg-white/5 transition-colors">
                   <td className="px-6 py-4">
                     {thumb
-                      ? <img src={thumb} alt={p.title} className="w-12 h-12 rounded-lg object-cover border border-white/10" />
+                      ? <SmartImage src={thumb} alt={p.title} className="w-12 h-12 rounded-lg object-cover border border-white/10" />
                       : <div className="w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-600">
                           <span className="material-symbols-outlined text-xl">image</span>
                         </div>

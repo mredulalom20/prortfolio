@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
 import { getMaxUploadBytes, getFileTooLargeMessage, uploadDirectToStorage } from "../../../lib/uploadClient";
+import SmartImage from "../../components/SmartImage";
 
 function Toast({ message, type }) {
   if (!message) return null;
@@ -29,7 +31,7 @@ export default function MediaManager() {
   const fetchMedia = useCallback(async () => {
     setFetching(true);
     try {
-      const res  = await fetch("/api/media");
+      const res  = await adminFetch("/api/media");
       const data = await res.json();
       setMediaItems(Array.isArray(data) ? data : []);
     } catch { setMediaItems([]); }
@@ -69,7 +71,7 @@ export default function MediaManager() {
   const handleDelete = async (item) => {
     if (!confirm(`Move "${item.name}" to the Recycle Bin?`)) return;
     try {
-      const res = await fetch("/api/media", {
+      const res = await adminFetch("/api/media", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: item.name }),
@@ -102,7 +104,7 @@ export default function MediaManager() {
           {mediaItems.map((item, i) => (
             <div key={i} className="bg-surface rounded-xl border border-white/5 overflow-hidden group relative">
               <div className="aspect-square bg-slate-900 border-b border-white/5 relative overflow-hidden">
-                <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
+                <SmartImage src={item.url} alt={item.name} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-background-dark/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <button onClick={() => copyToClipboard(item.url)} className="p-2 bg-white/10 rounded-lg hover:bg-primary hover:text-background-dark transition-colors" title="Copy link">
                     <span className="material-symbols-outlined text-xl">link</span>

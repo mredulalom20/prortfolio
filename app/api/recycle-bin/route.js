@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/adminAuth";
 import { supabaseAdmin } from "@/lib/supabase";
 
 const TABLES = {
@@ -9,7 +10,10 @@ const TABLES = {
 };
 
 /** GET — list every soft-deleted item across all tables */
-export async function GET() {
+export async function GET(request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const results = await Promise.all(
       Object.entries(TABLES).map(async ([type, { table, labelField }]) => {
@@ -41,6 +45,9 @@ export async function GET() {
 
 /** PATCH — restore an item (clear deleted_at) */
 export async function PATCH(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   try {
     const { id, type } = await req.json();
     if (!id || !type) return NextResponse.json({ error: "id and type required" }, { status: 400 });
@@ -62,6 +69,9 @@ export async function PATCH(req) {
 
 /** DELETE — permanently delete an item */
 export async function DELETE(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   try {
     const { id, type } = await req.json();
     if (!id || !type) return NextResponse.json({ error: "id and type required" }, { status: 400 });

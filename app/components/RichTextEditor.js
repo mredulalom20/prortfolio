@@ -1,15 +1,43 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getFileTooLargeMessage, getMaxUploadBytes, uploadDirectToStorage } from "../../lib/uploadClient";
-import "react-quill-new/dist/quill.snow.css";
 
-const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
+const TOOLBAR_BUTTONS = [
+  { label: "B", title: "Bold", command: "bold", className: "font-black" },
+  { label: "I", title: "Italic", command: "italic", className: "italic" },
+  { label: "U", title: "Underline", command: "underline", className: "underline" },
+  { label: "H2", title: "Heading 2", block: "h2" },
+  { label: "H3", title: "Heading 3", block: "h3" },
+  { label: "Quote", title: "Blockquote", block: "blockquote" },
+  { label: "• List", title: "Bullet List", command: "insertUnorderedList" },
+  { label: "1. List", title: "Numbered List", command: "insertOrderedList" },
+];
 
 export default function RichTextEditor({ value, onChange }) {
   const editorRef = useRef(null);
+  const fileInputRef = useRef(null);
   const [uploadError, setUploadError] = useState("");
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    if (!editor || document.activeElement === editor || editor.innerHTML === (value || "")) return;
+    editor.innerHTML = value || "";
+  }, [value]);
+
+  const emitChange = useCallback(() => {
+    onChange(editorRef.current?.innerHTML || "");
+  }, [onChange]);
+
+  const runCommand = useCallback((command, detail = null) => {
+    editorRef.current?.focus();
+    document.execCommand(command, false, detail);
+    emitChange();
+  }, [emitChange]);
+
+  const setBlock = useCallback((tag) => {
+    runCommand("formatBlock", tag);
+  }, [runCommand]);
 
   const insertImage = useCallback(async (file) => {
     if (!file) return;
@@ -21,125 +49,55 @@ export default function RichTextEditor({ value, onChange }) {
     setUploadError("");
     try {
       const { url } = await uploadDirectToStorage(file);
-      const editor = editorRef.current?.getEditor();
-      const range = editor?.getSelection(true);
-      editor?.insertEmbed(range?.index ?? editor.getLength(), "image", url, "user");
+      runCommand("insertImage", url);
     } catch (e) {
       setUploadError(e?.message || "Image upload failed.");
     }
-  }, []);
+  }, [runCommand]);
 
-  const handleImage = useCallback(() => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = () => insertImage(input.files?.[0]);
-    input.click();
+  const addLink = useCallback(() => {
+    const url = window.prompt("Enter URL");
+    if (!url) return;
+    runCommand("createLink", url);
+  }, [runCommand]);
+
+  const handlePaste = useCallback((e) => {
+    const image = Array.from(e.clipboardData?.files || []).find((file) => file.type.startsWith("image/"));
+    if (!image) return;
+    e.preventDefault();
+    insertImage(image);
   }, [insertImage]);
 
-  const modules = useMemo(() => ({
-    toolbar: {
-      container: [
-        [{ header: [1, 2, 3, false] }],
-        ["bold", "italic", "underline", "strike", "blockquote"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["link", "image"],
-        ["clean"],
-      ],
-      handlers: {
-        image: handleImage,
-      },
-    },
-    clipboard: {
-      matchVisual: false,
-    },
-  }), [handleImage]);
-
-  const formats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "link",
-    "image",
-  ];
-
   return (
-    <div className="rich-text-editor bg-white text-black rounded-lg overflow-hidden">
-      <ReactQuill
+    <div className="rich-text-editor overflow-hidden rounded-lg bg-white text-black">
+      <div className="flex flex-wrap gap-1 border border-slate-300 bg-slate-50 p-2">
+        {TOOLBAR_BUTTONS.map((button) => (
+          <button
+            key={button.title}
+            type="button"
+            title={button.title}
+            onClick={() => button.block ? setBlock(button.block) : runCommand(button.command)}
+            className={`rounded border border-slate-300 px-2 py-1 text-sm text-slate-900 hover:bg-slate-200 ${button.className || ""}`}
+          >
+            {button.label}
+          </button>
+        ))}
+        <button type="button" onClick={addLink} className="rounded border border-slate-300 px-2 py-1 text-sm text-slate-900 hover:bg-slate-200">Link</button>
+        <button type="button" onClick={() => fileInputRef.current?.click()} className="rounded border border-slate-300 px-2 py-1 text-sm text-slate-900 hover:bg-slate-200">Image</button>
+        <button type="button" onClick={() => runCommand("removeFormat")} className="rounded border border-slate-300 px-2 py-1 text-sm text-slate-900 hover:bg-slate-200">Clear</button>
+        <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => insertImage(e.target.files?.[0])} />
+      </div>
+
+      <div
         ref={editorRef}
-        theme="snow"
-        value={value}
-        onChange={onChange}
-        modules={modules}
-        formats={formats}
-        onPaste={(e) => {
-          const image = Array.from(e.clipboardData?.files || []).find((file) => file.type.startsWith("image/"));
-          if (!image) return;
-          e.preventDefault();
-          insertImage(image);
-        }}
+        contentEditable
+        suppressContentEditableWarning
+        onInput={emitChange}
+        onPaste={handlePaste}
+        className="prose min-h-72 max-w-none border-x border-b border-slate-300 p-4 text-slate-950 outline-none focus:ring-2 focus:ring-primary/40"
       />
+
       {uploadError && <p className="bg-white px-4 py-2 text-sm font-bold text-red-600">{uploadError}</p>}
-      <style jsx global>{`
-        .rich-text-editor .ql-toolbar {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.25rem;
-          background: #f8fafc;
-          border-color: #cbd5e1;
-          color: #111827;
-        }
-
-        .rich-text-editor .ql-toolbar .ql-formats {
-          display: flex;
-          align-items: center;
-          margin-right: 0.25rem;
-        }
-
-        .rich-text-editor .ql-toolbar button,
-        .rich-text-editor .ql-toolbar .ql-picker-label,
-        .rich-text-editor .ql-toolbar .ql-picker-item {
-          color: #111827;
-        }
-
-        .rich-text-editor .ql-snow.ql-toolbar button .ql-stroke,
-        .rich-text-editor .ql-snow .ql-toolbar button .ql-stroke,
-        .rich-text-editor .ql-snow .ql-picker .ql-stroke {
-          stroke: #111827;
-        }
-
-        .rich-text-editor .ql-snow.ql-toolbar button .ql-fill,
-        .rich-text-editor .ql-snow .ql-toolbar button .ql-fill,
-        .rich-text-editor .ql-snow .ql-picker .ql-fill {
-          fill: #111827;
-        }
-
-        .rich-text-editor .ql-container {
-          border-color: #cbd5e1;
-          font-size: 1rem;
-          min-height: 18rem;
-        }
-
-        .rich-text-editor .ql-editor {
-          line-height: 1.7;
-          min-height: 18rem;
-        }
-
-        .rich-text-editor .ql-editor p {
-          margin-bottom: 1rem;
-        }
-
-        .rich-text-editor .ql-editor img {
-          display: block;
-          height: auto;
-          margin: 1.25rem 0;
-          max-width: 100%;
-        }
-      `}</style>
     </div>
   );
 }

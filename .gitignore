@@ -20,6 +20,9 @@
 # production
 /build
 
+# local uploaded trash
+/public/uploads/.trash/
+
 # misc
 .DS_Store
 *.pem

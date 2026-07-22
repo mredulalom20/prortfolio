@@ -1,4 +1,7 @@
 import { supabaseAdmin } from "@/lib/supabase";
+import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar";
+import SmartImage from "../../components/SmartImage";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -35,27 +38,17 @@ export default async function TeamMemberPage({ params }) {
 
   return (
     <div className="min-h-screen bg-[#121212] text-slate-100 font-sans">
-      {/* ── Navbar ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#121212]/80 backdrop-blur-lg border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="size-10 bg-[#C6A75E] rounded-lg flex items-center justify-center">
-              <span className="text-[#121212] font-black text-xl">M</span>
-            </div>
-            <span className="text-xl font-extrabold tracking-tight">MHR</span>
-          </Link>
+      <Navbar />
+
+      <main className="pt-32 pb-24">
+        <div className="max-w-5xl mx-auto px-6">
           <Link
             href="/#team"
-            className="flex items-center gap-1.5 text-sm font-bold text-slate-400 hover:text-[#C6A75E] transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-400 hover:text-[#C6A75E] transition-colors mb-10"
           >
             <span className="material-symbols-outlined text-base">arrow_back</span>
             Back to Team
           </Link>
-        </div>
-      </nav>
-
-      <main className="pt-32 pb-24">
-        <div className="max-w-5xl mx-auto px-6">
 
           {/* ── Hero ── */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
@@ -65,7 +58,7 @@ export default async function TeamMemberPage({ params }) {
               <div className="absolute -inset-4 bg-[#C6A75E]/15 rounded-2xl blur-2xl group-hover:bg-[#C6A75E]/25 transition-all duration-700" />
               <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl aspect-[4/5] bg-[#1A1A1A]">
                 {member.photo_url ? (
-                  <img
+                  <SmartImage
                     src={member.photo_url}
                     alt={member.name}
                     className="w-full h-full object-cover"
@@ -194,7 +187,7 @@ export default async function TeamMemberPage({ params }) {
                   Want to work with us?
                 </h3>
                 <p className="text-[#121212]/70 text-lg font-medium">
-                  Let's build something great together.
+                  Let&apos;s build something great together.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 shrink-0">
@@ -217,17 +210,7 @@ export default async function TeamMemberPage({ params }) {
         </div>
       </main>
 
-      {/* ── Footer ── */}
-      <footer className="border-t border-white/5 py-8 text-center">
-        <p className="text-slate-500 text-sm">
-          © {new Date().getFullYear()} Mobarak Hossain Rinku. All rights reserved.
-        </p>
-      </footer>
-
-      <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet"
-      />
+      <Footer />
     </div>
   );
 }

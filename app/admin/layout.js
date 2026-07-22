@@ -5,6 +5,8 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { supabaseBrowser } from "@/lib/supabaseClient";
 
+const isAdminUser = (nextUser) => nextUser?.user_metadata?.role === "admin";
+
 export default function AdminLayout({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,21 +19,23 @@ export default function AdminLayout({ children }) {
     supabaseBrowser.auth.getSession().then(({ data }) => {
       if (!active) return;
       const nextUser = data.session?.user || null;
-      setUser(nextUser);
+      setUser(isAdminUser(nextUser) ? nextUser : null);
       setLoading(false);
 
       if (!nextUser) {
         router.push("/login");
-      } else if (nextUser.user_metadata?.role && nextUser.user_metadata.role !== "admin") {
+      } else if (!isAdminUser(nextUser)) {
         router.push("/");
       }
     });
 
     const { data: listener } = supabaseBrowser.auth.onAuthStateChange((_event, session) => {
       const nextUser = session?.user || null;
-      setUser(nextUser);
+      setUser(isAdminUser(nextUser) ? nextUser : null);
       if (!nextUser) {
         router.push("/login");
+      } else if (!isAdminUser(nextUser)) {
+        router.push("/");
       }
     });
 

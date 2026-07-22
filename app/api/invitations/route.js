@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/adminAuth";
 import { supabaseAdmin } from "@/lib/supabase";
 
 // GET - list all invitations
-export async function GET() {
+export async function GET(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const { data, error } = await supabaseAdmin
     .from("invitations")
     .select("*")
@@ -14,6 +18,9 @@ export async function GET() {
 
 // POST - add an email to the invite list
 export async function POST(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const { email, note } = await req.json();
   if (!email) return NextResponse.json({ error: "Email is required" }, { status: 400 });
 
@@ -32,6 +39,9 @@ export async function POST(req) {
 }
 
 export async function PATCH(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const { id, email, note } = await req.json();
   if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
   if (!email) return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -53,6 +63,9 @@ export async function PATCH(req) {
 
 // DELETE - remove an email from the invite list
 export async function DELETE(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const { id } = await req.json();
   if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
 

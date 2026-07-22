@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/adminAuth";
 import { supabaseAdmin } from "@/lib/supabase";
 
 const PLATFORMS = ["facebook", "instagram", "linkedin", "behance", "pinterest"];
@@ -18,6 +19,9 @@ export async function GET() {
 
 // POST upsert all social links at once
 export async function POST(req) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   const body = await req.json(); // { facebook: "url", instagram: "url", ... }
   const rows = Object.entries(body)
     .filter(([k]) => PLATFORMS.includes(k))

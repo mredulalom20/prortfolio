@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
 import { getMaxUploadBytes, getFileTooLargeMessage, uploadDirectToStorage } from "../../../lib/uploadClient";
+import SmartImage from "../../components/SmartImage";
 
 function Toast({ message, type }) {
   if (!message) return null;
@@ -63,7 +65,7 @@ export default function SiteSettingsPage() {
   const fetchSettings = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/site-settings");
+      const res = await adminFetch("/api/site-settings?admin=1");
       const data = await res.json();
       if (Array.isArray(data)) {
         const map = {};
@@ -93,7 +95,7 @@ export default function SiteSettingsPage() {
     try {
       const { url: imageUrl } = await uploadDirectToStorage(file);
       if (!imageUrl) throw new Error("Upload failed");
-      const saveRes = await fetch("/api/site-settings", {
+      const saveRes = await adminFetch("/api/site-settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: settingKey, value: imageUrl }),
@@ -112,7 +114,7 @@ export default function SiteSettingsPage() {
   const handleSaveUrl = async (settingKey) => {
     setSaving(settingKey);
     try {
-      const res = await fetch("/api/site-settings", {
+      const res = await adminFetch("/api/site-settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: settingKey, value: settings[settingKey] || "" }),
@@ -159,7 +161,7 @@ export default function SiteSettingsPage() {
             {/* Preview */}
             {settings[item.key] && (
               <div className="mb-6 relative inline-block">
-                <img
+                <SmartImage
                   src={settings[item.key]}
                   alt={`${item.label} preview`}
                   className="w-48 h-60 object-cover rounded-xl border border-white/10"

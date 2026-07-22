@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { adminFetch } from "../../../lib/adminFetch";
 
 const PAGES = [
   { label: "Homepage", slug: "index", path: "/" },
@@ -9,7 +10,7 @@ const PAGES = [
   { label: "UI/UX Design", slug: "ui-design", path: "/ui-design" },
   { label: "Meta Ads", slug: "meta-ads", path: "/meta-ads" },
   { label: "CMS Dev", slug: "wordpress-dev", path: "/wordpress-dev" },
-  { label: "Blog Landing", slug: "blog", path: "/blog" },
+  { label: "Blog Static Landing", slug: "blog", path: "/blog.html" },
   { label: "SEO", slug: "seo", path: "/seo" },
 ];
 
@@ -25,7 +26,7 @@ export default function PagesAdmin() {
     setLoading(true);
     setMessage("");
     try {
-      const res = await fetch(`/api/pages?slug=${slug}`);
+      const res = await adminFetch(`/api/pages?slug=${slug}`);
       const data = await res.json();
       if (!res.ok) {
         setMessage(data?.error || "Failed to load page.");
@@ -52,7 +53,7 @@ export default function PagesAdmin() {
     setSaving(true);
     setMessage("");
     try {
-      const res = await fetch("/api/pages", {
+      const res = await adminFetch("/api/pages", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ slug: selected, html: content }),

@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Mobarak Portfolio
 
-## Getting Started
+Next.js portfolio/CMS app for Mobarak Hossain Rinku.
 
-First, run the development server:
+## Scripts
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # local development
+npm run build    # production build
+npm run start    # serve production build
+npm run lint     # ESLint
+npm run mcp:cms  # local CMS MCP server
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Required environment
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Create `.env.local` with:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+SUPABASE_STORAGE_BUCKET=uploads
+NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET=uploads
+UPLOAD_MAX_MB=10
+NEXT_PUBLIC_UPLOAD_MAX_MB=10
+```
 
-## Learn More
+## Auth model
 
-To learn more about Next.js, take a look at the following resources:
+Admin UI uses Supabase Auth. Admin API routes require a Supabase access token with `user_metadata.role === "admin"`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Public routes can read published content and submit contact messages. Admin-only routes require authenticated admin access for private reads, writes, deletes, upload signing, media management, recycle bin actions, and page CMS editing.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## CMS pages
 
-## Deploy on Vercel
+Static/CMS HTML pages are served through rewrites in `next.config.mjs` and loaded from:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `site_settings.page_html_<slug>` when CMS content exists
+- `public/<slug>.html` fallback files
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Shared page loading logic lives in `lib/pageHtml.js`.
+
+## Production checklist
+
+Before deploy:
+
+```bash
+npm run lint
+npm run build
+npm audit --omit=dev
+```
+
+Also verify:
+
+- signed-out admin API mutations return 401/403
+- public blog/project/team routes still render
+- contact form still submits
+- signed-in admin can create/update/delete CMS content
