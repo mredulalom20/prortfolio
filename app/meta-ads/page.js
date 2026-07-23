@@ -2,8 +2,8 @@ import ServicePage from "../components/ServicePage";
 import { servicePageConfigs } from "../components/servicePageConfigs";
 
 export const metadata = {
-  title: "Meta Ads Management | Mobarak Hossain Rinku",
-  description: "Facebook and Instagram ad campaign strategy, creative testing, and optimization.",
+  title: "Ads Expert | Mobarak Hossain Rinku",
+  description: "Paid advertising strategy and campaign management across Meta, Google Ads, and TikTok Ads.",
 };
 
 export const dynamic = "force-dynamic";

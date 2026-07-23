@@ -8,10 +8,10 @@ const PAGES = [
   { label: "About Page", slug: "about", path: "/about" },
   { label: "Graphic Design", slug: "graphic-design", path: "/graphic-design" },
   { label: "UI/UX Design", slug: "ui-design", path: "/ui-design" },
-  { label: "Meta Ads", slug: "meta-ads", path: "/meta-ads" },
-  { label: "CMS Dev", slug: "wordpress-dev", path: "/wordpress-dev" },
+  { label: "Ads Expert", slug: "meta-ads", path: "/meta-ads" },
+  { label: "Web Design", slug: "wordpress-dev", path: "/wordpress-dev" },
   { label: "Blog Static Landing", slug: "blog", path: "/blog.html" },
-  { label: "SEO", slug: "seo", path: "/seo" },
+  { label: "SEO Static Landing", slug: "seo", path: "/seo.html" },
 ];
 
 export default function PagesAdmin() {
@@ -77,7 +77,7 @@ export default function PagesAdmin() {
   return (
     <div className="max-w-5xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-black text-white mb-2">Pages CMS</h1>
+        <h1 className="text-3xl font-black text-white mb-2">Pages Editor</h1>
         <p className="text-slate-400">
           Edit full HTML for each public page. Saved content overrides the file in
           public/.

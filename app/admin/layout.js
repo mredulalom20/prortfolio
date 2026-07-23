@@ -53,6 +53,7 @@ export default function AdminLayout({ children }) {
     { name: "Blog Posts",   href: "/admin/blog",        icon: "article" },
     { name: "Projects",     href: "/admin/projects",    icon: "folder" },
     { name: "Products",     href: "/admin/products",    icon: "extension" },
+    { name: "Certificates", href: "/admin/services",    icon: "workspace_premium" },
     { name: "Reviews",      href: "/admin/reviews",     icon: "format_quote" },
     { name: "Our Team",     href: "/admin/team",        icon: "groups" },
     { name: "Contacts",     href: "/admin/contacts",    icon: "inbox" },

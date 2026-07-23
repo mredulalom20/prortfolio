@@ -111,14 +111,14 @@ const services = [
   {
     href: "/wordpress-dev",
     icon: "terminal",
-    title: "CMS Web Design",
-    text: "Custom, high-performance website development focused on speed, security, and conversion.",
+    title: "Web Design",
+    text: "Custom, high-performance website design focused on speed, security, and conversion.",
     bullets: ["WordPress / Shopify Dev", "E-commerce Solutions", "Speed Optimization"],
   },
   {
     href: "/meta-ads",
     icon: "ads_click",
-    title: "Meta Ads Management",
+    title: "Ads Management",
     text: "Data-driven ad campaigns designed to maximize ROI through precise targeting and optimization.",
     bullets: ["Campaign Strategy", "Retargeting Funnels", "Performance Analytics"],
   },
@@ -135,7 +135,7 @@ const skills = [
   ["Graphic Design", 95, "palette"],
   ["Meta Ads Strategy", 90, "ads_click"],
   ["UI/UX Design", 87, "layers"],
-  ["CMS Development", 88, "code"],
+  ["Web Design", 88, "code"],
   ["Brand Strategy", 85, "analytics"],
   ["Shopify / E-commerce", 82, "shopping_cart"],
 ];
@@ -187,7 +187,7 @@ export default async function Home() {
                 Mobarak Hossain <span className="text-primary">Rinku.</span>
               </h1>
               <p className="mb-8 max-w-xl text-xl font-medium leading-relaxed text-slate-400 md:text-2xl">
-                Graphic Designer <span className="text-primary/50">|</span> CMS Developer <span className="text-primary/50">|</span> Meta Ads Manager.
+                Graphic Designer <span className="text-primary/50">|</span> Web Designer <span className="text-primary/50">|</span> Meta Ads Manager.
               </p>
               <p className="mb-10 max-w-lg text-lg text-muted">
                 Results-driven design and marketing that scales your business. I bridge the gap between aesthetics and performance.
@@ -209,7 +209,7 @@ export default async function Home() {
               <div className="absolute -bottom-6 -left-6 hidden rounded-2xl border border-white/5 bg-surface p-6 shadow-xl md:block">
                 <div className="flex items-center gap-4">
                   <div className="rounded-lg bg-primary/20 p-3 text-primary"><span className="material-symbols-outlined text-3xl">verified</span></div>
-                  <div><p className="text-2xl font-black text-white">5+ Years</p><p className="text-sm font-bold uppercase tracking-wider text-muted">Experience</p></div>
+                  <div><p className="text-2xl font-black text-white">2+ Years</p><p className="text-sm font-bold uppercase tracking-wider text-muted">Experience</p></div>
                 </div>
               </div>
             </div>
@@ -223,15 +223,15 @@ export default async function Home() {
               <h3 className="text-4xl font-black md:text-5xl">My Specialized Services</h3>
             </div>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {services.map((service) => (
-                <Link key={service.href} href={service.href} className="service-card group flex cursor-pointer flex-col gap-6 rounded-2xl border border-white/5 bg-surface p-8 transition-all duration-300 hover:no-underline">
+              {services.map((service, index) => (
+                <Link key={service.href} href={service.href} style={{ animationDelay: `${index * 120}ms` }} className="service-card service-card-animate group flex h-full cursor-pointer flex-col gap-6 rounded-2xl border border-white/5 bg-surface p-8 transition-all duration-300 hover:no-underline">
                   <div className="flex size-14 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:border group-hover:border-primary group-hover:bg-[#C6A75E] group-hover:text-background-dark">
                     <span className="material-symbols-outlined text-4xl">{service.icon}</span>
                   </div>
-                  <div>
+                  <div className="flex flex-1 flex-col">
                     <h4 className="mb-4 text-2xl font-bold transition-colors group-hover:text-primary">{service.title}</h4>
-                    <p className="mb-6 leading-relaxed text-muted">{service.text}</p>
-                    <ul className="space-y-3 text-sm font-medium">
+                    <p className="leading-relaxed text-muted">{service.text}</p>
+                    <ul className="mt-auto space-y-3 pt-6 text-sm font-medium">
                       {service.bullets.map((bullet) => (
                         <li key={bullet} className="flex items-center gap-2"><span className="material-symbols-outlined text-lg text-primary">check_circle</span>{bullet}</li>
                       ))}
@@ -261,15 +261,18 @@ export default async function Home() {
               <p className="text-lg leading-relaxed text-slate-400">I am a multidisciplinary creator dedicated to blending strategic marketing with high-impact visual design.</p>
               <div className="flex flex-wrap gap-6 pt-4 text-slate-300">
                 <div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary">location_on</span><span>Bangladesh | Remote</span></div>
-                <div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary">verified</span><span>5+ Years Experience</span></div>
+                <div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary">verified</span><span>2+ Years Experience</span></div>
               </div>
+              <Link href="/about" className="inline-flex items-center gap-2 rounded-xl border border-primary px-7 py-4 font-bold text-white transition-colors hover:bg-primary/10">
+                More About Me <span className="material-symbols-outlined">arrow_forward</span>
+              </Link>
             </div>
           </div>
         </section>
 
         <section className="border-y border-primary/10 bg-primary/5 py-12">
           <div className="mx-auto grid max-w-7xl grid-cols-2 gap-12 px-6 text-center md:grid-cols-4">
-            {[["5+", "Years Experience"], ["150+", "Projects Delivered"], ["98%", "Client Satisfaction"], ["12M+", "Reach Managed"]].map(([value, label]) => (
+            {[["2+", "Years Experience"], ["150+", "Projects Delivered"], ["98%", "Client Satisfaction"], ["12M+", "Reach Managed"]].map(([value, label]) => (
               <div key={label}><p className="mb-2 text-5xl font-black text-white">{value}</p><p className="text-xs font-bold uppercase tracking-widest text-primary">{label}</p></div>
             ))}
           </div>

@@ -42,7 +42,7 @@ export default function MobileCarousel({ children, className = "", interval = 32
     };
 
     const start = () => {
-      if (reducedMotionQuery.matches || !mobileQuery.matches || timer) return;
+      if (reducedMotionQuery.matches || !shouldAutoplay() || timer) return;
       timer = window.setInterval(scrollNext, interval);
     };
 

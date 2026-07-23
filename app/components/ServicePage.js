@@ -51,6 +51,24 @@ async function getSetting(key) {
   }
 }
 
+async function getCertificates(service) {
+  if (!service) return [];
+
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("service_certifications")
+      .select("*")
+      .eq("service", service)
+      .order("sort_order", { ascending: true })
+      .order("created_at", { ascending: true });
+
+    if (error) return [];
+    return data ?? [];
+  } catch {
+    return [];
+  }
+}
+
 function SectionLabel({ eyebrow, title, description }) {
   return (
     <div className="mb-12 text-center">
@@ -61,10 +79,65 @@ function SectionLabel({ eyebrow, title, description }) {
   );
 }
 
+function ToolsSection({
+  tools,
+  eyebrow = "Tools",
+  title = "Tools I Use",
+  description = "Core platforms used for web design builds and e-commerce experiences.",
+}) {
+  if (!tools?.length) return null;
+
+  return (
+    <section className="py-20">
+      <div className="mx-auto max-w-7xl px-6">
+        <SectionLabel eyebrow={eyebrow} title={title} description={description} />
+        <div className="grid gap-6 md:grid-cols-2">
+          {tools.map((tool) => (
+            <div key={tool.name} className="flex items-center gap-6 rounded-2xl border border-white/5 bg-surface p-7 transition-colors hover:border-primary/30">
+              <div className="flex size-20 shrink-0 items-center justify-center rounded-2xl bg-primary/10 p-4">
+                <SmartImage src={tool.logo} alt={`${tool.name} logo`} width={56} height={56} className="h-14 w-14 object-contain" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-white">{tool.name}</h3>
+                <p className="mt-2 leading-relaxed text-slate-400">{tool.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CertificatesSection({ certificates }) {
+  if (!certificates?.length) return null;
+
+  return (
+    <section className="bg-slate-900/50 py-20">
+      <div className="mx-auto max-w-7xl px-6">
+        <SectionLabel eyebrow="Qualifications" title="Certifications & Qualifications" description="Relevant certifications and proof of training connected to this service." />
+        <div className="grid justify-items-center gap-8 md:grid-cols-2 xl:grid-cols-3">
+          {certificates.map((certificate) => (
+            <article key={certificate.id} className="w-full max-w-[500px] overflow-hidden rounded-2xl border border-white/5 bg-surface transition-colors hover:border-primary/30">
+              <div className="aspect-square overflow-hidden bg-primary/5">
+                <SmartImage src={certificate.image} alt={certificate.title} width={500} height={500} className="h-full w-full object-cover" />
+              </div>
+              <div className="p-5 text-center">
+                <h3 className="text-lg font-bold text-white">{certificate.title}</h3>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ProjectCard({ project, fallbackIcon }) {
   const image = project.thumbnail || (Array.isArray(project.images) ? project.images[0] : "");
   const href = project.externalLink || `/projects/${project.id}`;
   const external = Boolean(project.externalLink);
+  const displayCategory = project.category === "CMS Projects" || project.category === "Web Development Projects" ? "Web Design Projects" : project.category;
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-white/5 bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-primary/30">
@@ -78,7 +151,7 @@ function ProjectCard({ project, fallbackIcon }) {
         )}
       </div>
       <div className="p-6">
-        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-primary">{project.category}</p>
+        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-primary">{displayCategory}</p>
         <h3 className="text-2xl font-bold text-white">{project.title}</h3>
         {project.description && <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-400">{project.description}</p>}
         <Link
@@ -95,9 +168,10 @@ function ProjectCard({ project, fallbackIcon }) {
 }
 
 export default async function ServicePage({ config }) {
-  const [projects, settingImage] = await Promise.all([
+  const [projects, settingImage, certificates] = await Promise.all([
     getProjects(config.service),
     getSetting(config.imageSettingKey),
+    getCertificates(config.service),
   ]);
   const heroImage = settingImage || config.heroImage;
 
@@ -155,6 +229,10 @@ export default async function ServicePage({ config }) {
             </div>
           </div>
         </section>
+
+        <ToolsSection tools={config.tools} title={config.toolsTitle} description={config.toolsDescription} />
+
+        <CertificatesSection certificates={certificates} />
 
         <section className="py-20">
           <div className="mx-auto max-w-7xl px-6">

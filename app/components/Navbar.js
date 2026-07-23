@@ -6,8 +6,8 @@ import Link from "next/link";
 const serviceLinks = [
   { href: "/graphic-design", glyph: "✦", label: "Graphic Design" },
   { href: "/ui-design", glyph: "▣", label: "UI/UX Design" },
-  { href: "/meta-ads", glyph: "◉", label: "Meta Ads" },
-  { href: "/wordpress-dev", glyph: "⌘", label: "CMS Dev" },
+  { href: "/meta-ads", glyph: "◉", label: "Ads Expert" },
+  { href: "/wordpress-dev", glyph: "⌘", label: "Web Design" },
   { href: "/seo", glyph: "⌁", label: "SEO Service" },
 ];
 
