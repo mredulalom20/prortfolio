@@ -13,7 +13,7 @@ export default function ProjectGrid({ initialProjects }) {
   const filteredProjects = initialProjects.filter(p => {
     if (filter === "All") return true;
     if (filter === "Design") return p.category.includes("Design");
-    if (filter === "WordPress") return p.category.includes("WordPress") || p.category.includes("CMS");
+    if (filter === "WordPress") return p.category.includes("WordPress") || p.category.includes("Web Design") || p.category.includes("Web Development") || p.category.includes("CMS");
     if (filter === "Ads") return p.category.includes("Ads");
     if (filter === "SEO") return Array.isArray(p.service) && p.service.includes("seo");
     return true;

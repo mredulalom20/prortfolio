@@ -9,7 +9,7 @@ const categories = [
   "Graphic Design Projects",
   "Meta Ads / Marketing Proof",
   "UI/UX Design",
-  "CMS Projects",
+  "Web Design Projects",
   "WordPress Plugins & Themes",
   "Landing Page Bundles"
 ];
@@ -18,7 +18,7 @@ const services = [
   { label: "Graphic Design", value: "graphic-design", icon: "brush" },
   { label: "UI/UX Design",   value: "ui-design",      icon: "layers" },
   { label: "Meta Ads",       value: "meta-ads",        icon: "ads_click" },
-  { label: "CMS Dev",        value: "wordpress-dev",   icon: "terminal" },
+  { label: "Web Design", value: "wordpress-dev",   icon: "terminal" },
   { label: "SEO",            value: "seo",             icon: "query_stats" },
 ];
 
@@ -27,6 +27,9 @@ const EMPTY_FORM = {
   thumbnail: "", images: [], externalLink: "",
   additionalFields: {}, service: []
 };
+
+const getDisplayCategory = (category) =>
+  category === "CMS Projects" || category === "Web Development Projects" ? "Web Design Projects" : category;
 
 export default function ProjectManagement() {
   const [projects, setProjects]   = useState([]);
@@ -289,7 +292,7 @@ export default function ProjectManagement() {
 
             {/* Thumbnail for non-gallery categories */}
             {(formData.category === "Meta Ads / Marketing Proof" ||
-              formData.category === "CMS Projects" ||
+              formData.category === "Web Design Projects" ||
               formData.category === "WordPress Plugins & Themes" ||
               formData.category === "Landing Page Bundles") && (
               <div className="space-y-2 mb-4">
@@ -326,8 +329,8 @@ export default function ProjectManagement() {
               </div>
             )}
 
-            {/* CMS sub-category + live URL */}
-            {formData.category === "CMS Projects" && (
+            {/* Web development sub-category + live URL */}
+            {formData.category === "Web Design Projects" && (
               <>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-300">Sub Category</label>
@@ -432,7 +435,7 @@ export default function ProjectManagement() {
                   <td className="px-6 py-4 font-bold text-white">{p.title}</td>
                   <td className="px-6 py-4">
                     <span className="px-2 py-1 rounded-full text-xs font-bold bg-white/10 text-white">
-                      {p.category}
+                      {getDisplayCategory(p.category)}
                     </span>
                   </td>
                   <td className="px-6 py-4">

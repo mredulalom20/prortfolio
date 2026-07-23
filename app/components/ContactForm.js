@@ -74,7 +74,7 @@ export default function ContactForm() {
           onChange={(event) => updateField("service", event.target.value)}
         >
           <option>Graphic Design</option>
-          <option>CMS Development</option>
+          <option>Web Design</option>
           <option>Meta Ads Management</option>
           <option>SEO</option>
           <option>Full Package</option>
