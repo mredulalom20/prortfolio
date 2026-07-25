@@ -75,7 +75,7 @@ export default function ContactForm() {
         >
           <option>Graphic Design</option>
           <option>Web Design</option>
-          <option>Meta Ads Management</option>
+          <option>Ads Management</option>
           <option>SEO</option>
           <option>Full Package</option>
         </select>

@@ -133,7 +133,7 @@ const services = [
 
 const skills = [
   ["Graphic Design", 95, "palette"],
-  ["Meta Ads Strategy", 90, "ads_click"],
+  ["Ads Strategy", 90, "ads_click"],
   ["UI/UX Design", 87, "layers"],
   ["Web Design", 88, "code"],
   ["Brand Strategy", 85, "analytics"],
@@ -187,7 +187,7 @@ export default async function Home() {
                 Mobarak Hossain <span className="text-primary">Rinku.</span>
               </h1>
               <p className="mb-8 max-w-xl text-xl font-medium leading-relaxed text-slate-400 md:text-2xl">
-                Graphic Designer <span className="text-primary/50">|</span> Web Designer <span className="text-primary/50">|</span> Meta Ads Manager.
+                Graphic Designer <span className="text-primary/50">|</span> Web Designer <span className="text-primary/50">|</span> Ads Manager.
               </p>
               <p className="mb-10 max-w-lg text-lg text-muted">
                 Results-driven design and marketing that scales your business. I bridge the gap between aesthetics and performance.

@@ -65,9 +65,11 @@ export default async function BlogPage() {
                     </div>
                   )}
                   <div className="p-6">
-                    <p className="text-xs text-muted uppercase tracking-widest mb-3">
-                      {new Date(blog.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-                    </p>
+                    {blog.created_at && (
+                      <p className="text-xs text-muted uppercase tracking-widest mb-3">
+                        {new Date(blog.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                      </p>
+                    )}
                     <h2 className="text-xl font-bold text-white group-hover:text-primary transition-colors leading-snug">{blog.title}</h2>
                     {blog.metaDescription && (
                       <p className="text-muted text-sm mt-3 line-clamp-2">{blog.metaDescription}</p>

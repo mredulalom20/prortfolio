@@ -15,6 +15,20 @@ export const servicePageConfigs = {
       { icon: "campaign", title: "Marketing Collateral", text: "Flyers, brochures, social posts, and sales assets built for campaign consistency." },
       { icon: "palette", title: "Creative Direction", text: "A clear visual system that keeps every brand touchpoint aligned." },
     ],
+    toolsTitle: "Apps That I Use",
+    toolsDescription: "Core design apps used to create polished graphics, brand assets, and marketing visuals.",
+    tools: [
+      {
+        name: "Adobe Photoshop",
+        logo: "/icons/photoshop.svg",
+        text: "Photo editing, social media graphics, ad creatives, and polished marketing visuals.",
+      },
+      {
+        name: "Adobe Illustrator",
+        logo: "/icons/illustrator.svg",
+        text: "Vector logos, icons, illustrations, brand marks, and scalable design assets.",
+      },
+    ],
     process: [
       { title: "Discovery", text: "Understand audience, goals, offers, and visual references." },
       { title: "Concept", text: "Explore creative directions and define the core visual language." },

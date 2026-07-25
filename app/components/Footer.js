@@ -126,7 +126,7 @@ export default async function Footer() {
               </li>
               <li className="flex gap-3">
                 <span className="material-symbols-outlined text-lg text-primary">mail</span>
-                <a className="hover:text-primary transition-colors" href="mailto:mhrinku.me@gmail.com">mhrinku.me@gmail.com</a>
+                <a className="hover:text-primary transition-colors" href="mailto:contact@mhrinku.com">contact@mhrinku.com</a>
               </li>
               <li className="flex gap-3">
                 <span className="material-symbols-outlined text-lg text-primary">location_on</span>
