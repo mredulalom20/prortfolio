@@ -110,7 +110,9 @@ insert into site_settings (key, value) values
   ('graphic_design_image', ''),
   ('meta_ads_image', ''),
   ('gtm_container_id', ''),
-  ('google_site_verification', '')
+  ('google_site_verification', ''),
+  ('robots_txt_override', ''),
+  ('sitemap_xml_override', '')
 on conflict (key) do nothing;
 
 -- 10. CMS Upgrade Additive Migration

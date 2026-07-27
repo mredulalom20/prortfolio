@@ -260,6 +260,47 @@ export default function SiteSettingsPage() {
 
         <div className="bg-surface border border-white/5 rounded-2xl p-8">
           <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary">account_tree</span>
+            Sitemap & Robots
+          </h2>
+          <p className="text-slate-400 text-sm mb-6">Leave these blank to use the auto-generated sitemap and robots.txt files.</p>
+
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-bold text-slate-300">robots.txt Override</label>
+              <textarea
+                value={settings.robots_txt_override || ""}
+                onChange={(e) => setSettings((prev) => ({ ...prev, robots_txt_override: e.target.value }))}
+                rows={7}
+                placeholder={`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api\nSitemap: https://mhrinku.com/sitemap.xml`}
+                className="mt-2 w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white text-sm font-mono focus:outline-none focus:border-primary/50"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-bold text-slate-300">sitemap.xml Override</label>
+              <textarea
+                value={settings.sitemap_xml_override || ""}
+                onChange={(e) => setSettings((prev) => ({ ...prev, sitemap_xml_override: e.target.value }))}
+                rows={10}
+                placeholder="Leave blank for automatic sitemap generation. Paste full XML only if you need a manual sitemap."
+                className="mt-2 w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white text-sm font-mono focus:outline-none focus:border-primary/50"
+              />
+            </div>
+            <button
+              onClick={() => handleSaveSettings([
+                ["robots_txt_override", settings.robots_txt_override || ""],
+                ["sitemap_xml_override", settings.sitemap_xml_override || ""],
+              ], "seo_files")}
+              disabled={saving === "seo_files"}
+              className="bg-primary hover:bg-primary/90 text-background-dark font-bold px-6 py-3 rounded-xl text-sm transition-all disabled:opacity-50"
+            >
+              {saving === "seo_files" ? "Saving..." : "Save Sitemap & Robots"}
+            </button>
+          </div>
+        </div>
+
+        <div className="bg-surface border border-white/5 rounded-2xl p-8">
+          <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
             <span className="material-symbols-outlined text-primary">smart_display</span>
             About Page Video
           </h2>
