@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import SmartImage from "../../components/SmartImage";
+import { getCanonicalUrl } from "@/lib/pageMeta";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
@@ -43,6 +44,7 @@ export async function generateMetadata({ params }) {
   return {
     title: blog.metaTitle || blog.title,
     description: blog.metaDescription || "",
+    alternates: { canonical: getCanonicalUrl(`/blog/${slug}`) },
     openGraph: {
       title: blog.metaTitle || blog.title,
       description: blog.metaDescription || "",

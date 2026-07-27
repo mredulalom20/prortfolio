@@ -1,10 +1,10 @@
 import ServicePage from "../components/ServicePage";
 import { servicePageConfigs } from "../components/servicePageConfigs";
+import { getPageMeta, toMetadata } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Web Design | Mobarak Hossain Rinku",
-  description: "Editable, responsive WordPress, Shopify, and web design for business growth.",
-};
+export async function generateMetadata() {
+  return toMetadata(await getPageMeta("wordpress-dev"), "/wordpress-dev");
+}
 
 export const dynamic = "force-dynamic";
 

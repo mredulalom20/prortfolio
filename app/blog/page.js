@@ -3,11 +3,13 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import MobileCarousel from "../components/MobileCarousel";
 import SmartImage from "../components/SmartImage";
+import { getCanonicalUrl } from "@/lib/pageMeta";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export const metadata = {
   title: "Blog | MHR",
   description: "Insights on Meta Ads, web design, and digital marketing by Mobarak Hossain Rinku.",
+  alternates: { canonical: getCanonicalUrl("/blog") },
 };
 
 export const dynamic = "force-dynamic";

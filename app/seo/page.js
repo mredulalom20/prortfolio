@@ -1,10 +1,10 @@
 import ServicePage from "../components/ServicePage";
 import { servicePageConfigs } from "../components/servicePageConfigs";
+import { getPageMeta, toMetadata } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "SEO Service | Mobarak Hossain Rinku",
-  description: "Technical SEO, on-page optimization, and practical SEO planning by Mobarak Hossain Rinku.",
-};
+export async function generateMetadata() {
+  return toMetadata(await getPageMeta("seo"), "/seo");
+}
 
 export const dynamic = "force-dynamic";
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 const serviceLinks = [
@@ -18,11 +19,8 @@ export default function Navbar() {
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-            <div className="size-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-background-dark font-black text-xl">M</span>
-            </div>
-            <h2 className="text-xl font-extrabold tracking-tight dark:text-white">MHR</h2>
+          <Link href="/" className="flex items-center group cursor-pointer">
+            <Image src="/mhr-logo.png" alt="MHR logo" width={126} height={50} priority className="h-8 w-auto transition-transform duration-300 group-hover:scale-105" />
           </Link>
 
           <div className="hidden md:flex items-center gap-10">

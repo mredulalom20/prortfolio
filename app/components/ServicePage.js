@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import SmartImage from "./SmartImage";
 import { supabaseAdmin } from "@/lib/supabase";
+import { normalizeImage } from "@/lib/validators";
 
 async function getProjects(service) {
   if (!service) return [];
@@ -12,16 +13,21 @@ async function getProjects(service) {
       .from("projects")
       .select("*")
       .contains("service", [service])
+      .eq("status", "published")
       .is("deleted_at", null)
+      .order("sort_order", { ascending: true })
       .order("created_at", { ascending: false });
 
     let { data, error } = await query;
 
-    if (error && error.message?.includes("deleted_at")) {
+    if (error?.message?.includes("status")) return [];
+
+    if (error && (error.message?.includes("deleted_at") || error.message?.includes("sort_order"))) {
       const result = await supabaseAdmin
         .from("projects")
         .select("*")
         .contains("service", [service])
+        .eq("status", "published")
         .order("created_at", { ascending: false });
       data = result.data;
       error = result.error;
@@ -67,6 +73,44 @@ async function getCertificates(service) {
   } catch {
     return [];
   }
+}
+
+async function getCmsService(slug) {
+  if (!slug) return null;
+
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("services")
+      .select("*")
+      .eq("slug", slug)
+      .eq("published", true)
+      .maybeSingle();
+
+    if (error) return null;
+    return data || null;
+  } catch {
+    return null;
+  }
+}
+
+function mergeServiceConfig(config, cmsService) {
+  if (!cmsService) return config;
+
+  const bulletPoints = Array.isArray(cmsService.bullet_points) ? cmsService.bullet_points : [];
+
+  return {
+    ...config,
+    service: cmsService.slug || config.service,
+    slug: cmsService.slug || config.slug,
+    sort_order: cmsService.sort_order ?? config.sort_order,
+    icon: cmsService.icon || config.icon,
+    description: cmsService.short_description || config.description,
+    short_description: cmsService.short_description || config.short_description,
+    bullet_points: bulletPoints.length ? bulletPoints : config.bullet_points,
+    title: cmsService.title || config.title,
+    cmsTitle: cmsService.title || "",
+    portfolioTitle: cmsService.title ? `Featured ${cmsService.title} Projects` : config.portfolioTitle,
+  };
 }
 
 function SectionLabel({ eyebrow, title, description }) {
@@ -134,15 +178,15 @@ function CertificatesSection({ certificates }) {
 }
 
 function ProjectCard({ project, fallbackIcon }) {
-  const image = project.thumbnail || (Array.isArray(project.images) ? project.images[0] : "");
-  const href = project.externalLink || `/projects/${project.id}`;
+  const image = normalizeImage(project.thumbnail || project.image_refs?.[0] || (Array.isArray(project.images) ? project.images[0] : ""));
+  const href = project.externalLink || `/projects/${project.slug || project.id}`;
   const external = Boolean(project.externalLink);
   const displayCategory = project.category === "CMS Projects" || project.category === "Web Development Projects" ? "Web Design Projects" : project.category;
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-white/5 bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-primary/30">
       <div className="aspect-[4/3] overflow-hidden bg-primary/5">
-        {image ? (
+        {image.url ? (
           <SmartImage src={image} alt={project.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
         ) : (
           <div className="flex h-full items-center justify-center text-primary/40">
@@ -168,12 +212,15 @@ function ProjectCard({ project, fallbackIcon }) {
 }
 
 export default async function ServicePage({ config }) {
+  const cmsService = await getCmsService(config.service);
+  const mergedConfig = mergeServiceConfig(config, cmsService);
   const [projects, settingImage, certificates] = await Promise.all([
-    getProjects(config.service),
-    getSetting(config.imageSettingKey),
-    getCertificates(config.service),
+    getProjects(mergedConfig.service),
+    getSetting(mergedConfig.imageSettingKey),
+    getCertificates(mergedConfig.service),
   ]);
-  const heroImage = settingImage || config.heroImage;
+  const heroImage = settingImage || mergedConfig.heroImage;
+  config = mergedConfig;
 
   return (
     <>

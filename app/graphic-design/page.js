@@ -1,10 +1,10 @@
 import ServicePage from "../components/ServicePage";
 import { servicePageConfigs } from "../components/servicePageConfigs";
+import { getPageMeta, toMetadata } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Graphic Design Services | Mobarak Hossain Rinku",
-  description: "Brand identity, marketing collateral, and digital design services by Mobarak Hossain Rinku.",
-};
+export async function generateMetadata() {
+  return toMetadata(await getPageMeta("graphic-design"), "/graphic-design");
+}
 
 export const dynamic = "force-dynamic";
 

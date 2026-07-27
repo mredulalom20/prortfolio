@@ -108,5 +108,68 @@ insert into site_settings (key, value) values
   ('hero_image', 'img/profile.jpg'),
   ('about_hero_image', 'img/profile.jpg'),
   ('graphic_design_image', ''),
-  ('meta_ads_image', '')
+  ('meta_ads_image', ''),
+  ('gtm_container_id', ''),
+  ('google_site_verification', '')
 on conflict (key) do nothing;
+
+-- 10. CMS Upgrade Additive Migration
+-- Full runnable migration lives in cms-upgrade-migration.sql.
+alter table projects add column if not exists status text not null default 'draft';
+alter table projects add column if not exists content_blocks jsonb not null default '[]'::jsonb;
+alter table projects add column if not exists sort_order integer not null default 0;
+alter table projects add column if not exists tags text[] not null default '{}';
+alter table projects add column if not exists image_refs jsonb not null default '[]'::jsonb;
+alter table projects add column if not exists thumbnail_alt_text text;
+alter table projects add column if not exists meta_title text;
+alter table projects add column if not exists meta_description text;
+alter table projects add column if not exists og_image text;
+alter table projects add column if not exists slug text;
+
+alter table reviews add column if not exists sort_order integer not null default 0;
+alter table reviews add column if not exists project_id uuid references projects(id) on delete set null;
+
+create table if not exists services (
+  id uuid primary key default gen_random_uuid(),
+  icon text not null default '',
+  title text not null,
+  short_description text not null default '',
+  bullet_points text[] not null default '{}',
+  slug text unique not null,
+  sort_order integer not null default 0,
+  published boolean not null default true,
+  meta_title text,
+  meta_description text,
+  og_image text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists site_stats (
+  id uuid primary key default gen_random_uuid(),
+  label text not null,
+  value text not null,
+  sort_order integer not null default 0,
+  published boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists skills (
+  id uuid primary key default gen_random_uuid(),
+  label text not null,
+  percentage integer not null default 0 check (percentage >= 0 and percentage <= 100),
+  icon text not null default '',
+  sort_order integer not null default 0,
+  published boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists page_meta (
+  slug text primary key,
+  meta_title text,
+  meta_description text,
+  og_image text,
+  updated_at timestamptz not null default now()
+);

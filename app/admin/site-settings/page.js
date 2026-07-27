@@ -179,21 +179,25 @@ export default function SiteSettingsPage() {
     }
   };
 
-  const handleSaveUrl = async (settingKey) => {
-    setSaving(settingKey);
+  const handleSaveSettings = async (entries, savingKey = "settings") => {
+    setSaving(savingKey);
     try {
-      const res = await adminFetch("/api/site-settings", {
+      const results = await Promise.all(entries.map(([key, value]) => adminFetch("/api/site-settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: settingKey, value: settings[settingKey] || "" }),
-      });
-      if (!res.ok) throw new Error("Failed to save");
-      showToast("Setting saved!");
+        body: JSON.stringify({ key, value: value || "" }),
+      })));
+      if (results.some((res) => !res.ok)) throw new Error("Failed to save");
+      showToast("Settings saved!");
     } catch (err) {
       showToast(err.message || "Save failed", "error");
     } finally {
       setSaving(null);
     }
+  };
+
+  const handleSaveUrl = async (settingKey) => {
+    handleSaveSettings([[settingKey, settings[settingKey] || ""]], settingKey);
   };
 
   if (loading)
@@ -213,6 +217,47 @@ export default function SiteSettingsPage() {
       </div>
 
       <div className="grid gap-8 max-w-4xl">
+        <div className="bg-surface border border-white/5 rounded-2xl p-8">
+          <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary">query_stats</span>
+            SEO Integrations
+          </h2>
+          <p className="text-slate-400 text-sm mb-6">Add Google Tag Manager and Search Console verification codes without editing code.</p>
+
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-bold text-slate-300">Google Tag Manager Container ID</label>
+              <input
+                type="text"
+                value={settings.gtm_container_id || ""}
+                onChange={(e) => setSettings((prev) => ({ ...prev, gtm_container_id: e.target.value }))}
+                placeholder="GTM-XXXXXXX"
+                className="mt-2 w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/50"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-bold text-slate-300">Google Search Console Verification</label>
+              <input
+                type="text"
+                value={settings.google_site_verification || ""}
+                onChange={(e) => setSettings((prev) => ({ ...prev, google_site_verification: e.target.value }))}
+                placeholder="Paste only the content value from the verification meta tag"
+                className="mt-2 w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/50"
+              />
+            </div>
+            <button
+              onClick={() => handleSaveSettings([
+                ["gtm_container_id", settings.gtm_container_id || ""],
+                ["google_site_verification", settings.google_site_verification || ""],
+              ], "seo_integrations")}
+              disabled={saving === "seo_integrations"}
+              className="bg-primary hover:bg-primary/90 text-background-dark font-bold px-6 py-3 rounded-xl text-sm transition-all disabled:opacity-50"
+            >
+              {saving === "seo_integrations" ? "Saving..." : "Save SEO Integrations"}
+            </button>
+          </div>
+        </div>
+
         <div className="bg-surface border border-white/5 rounded-2xl p-8">
           <h2 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
             <span className="material-symbols-outlined text-primary">smart_display</span>

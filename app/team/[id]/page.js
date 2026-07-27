@@ -1,3 +1,4 @@
+import { getCanonicalUrl } from "@/lib/pageMeta";
 import { supabaseAdmin } from "@/lib/supabase";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }) {
   return {
     title: `${member.name} — ${member.role} | MHR`,
     description: member.bio?.substring(0, 160),
+    alternates: { canonical: getCanonicalUrl(`/team/${id}`) },
   };
 }
 

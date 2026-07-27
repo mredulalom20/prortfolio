@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabase";
 
@@ -71,12 +72,9 @@ export default async function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-5 gap-12 mb-12">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-                <span className="text-background-dark font-bold">M</span>
-              </div>
-              <span className="text-xl font-bold tracking-tight">Mobarak<span className="text-primary text-2xl">.</span></span>
-            </div>
+            <Link href="/" className="inline-flex items-center mb-6">
+              <Image src="/mhr-logo.png" alt="MHR logo" width={126} height={50} className="h-9 w-auto" />
+            </Link>
             <p className="text-slate-400 max-w-sm mb-6">A results-driven designer specialized in building digital experiences that matter.</p>
             <div className="flex flex-wrap gap-3">
               {socialPlatforms.map((platform) => {

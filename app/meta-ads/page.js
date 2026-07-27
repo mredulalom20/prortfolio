@@ -1,10 +1,10 @@
 import ServicePage from "../components/ServicePage";
 import { servicePageConfigs } from "../components/servicePageConfigs";
+import { getPageMeta, toMetadata } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "Ads Expert | Mobarak Hossain Rinku",
-  description: "Paid advertising strategy and campaign management across Meta, Google Ads, and TikTok Ads.",
-};
+export async function generateMetadata() {
+  return toMetadata(await getPageMeta("meta-ads"), "/meta-ads");
+}
 
 export const dynamic = "force-dynamic";
 

@@ -3,11 +3,14 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SmartImage from "../components/SmartImage";
 import { supabaseAdmin } from "@/lib/supabase";
+import { getPageMeta, toMetadata } from "@/lib/pageMeta";
 
-export const metadata = {
-  title: "About | Mobarak Hossain Rinku",
-  description: "About Mobarak Hossain Rinku, a graphic designer, web designer, and ads expert.",
-};
+export async function generateMetadata() {
+  return toMetadata(await getPageMeta("about", {
+    meta_title: "About | Mobarak Hossain Rinku",
+    meta_description: "About Mobarak Hossain Rinku, a graphic designer, web designer, and ads expert.",
+  }), "/about");
+}
 
 export const dynamic = "force-dynamic";
 
