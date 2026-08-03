@@ -88,7 +88,7 @@ export default async function TeamMemberPage({ params }) {
                 <p className="text-[#C6A75E] font-bold tracking-widest uppercase text-sm mb-3">
                   {member.role}
                 </p>
-                <h1 className="text-5xl md:text-6xl font-black tracking-tighter leading-[0.95] text-white">
+                <h1 className="text-[44px] md:text-[56px] font-black tracking-tighter leading-[0.95] text-white">
                   {member.name}
                   <span className="text-[#C6A75E]">.</span>
                 </h1>

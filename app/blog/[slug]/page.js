@@ -74,7 +74,7 @@ export default async function BlogPostPage({ params }) {
               {new Date(blog.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
             </p>
           )}
-          <h1 className="text-3xl md:text-5xl font-black text-white mb-10 leading-tight">{blog.title}</h1>
+          <h1 className="text-[26px] md:text-[44px] font-black text-white mb-10 leading-tight">{blog.title}</h1>
           <article
             className="prose prose-invert prose-lg max-w-none text-slate-300 leading-relaxed"
             dangerouslySetInnerHTML={{ __html: blog.content }}

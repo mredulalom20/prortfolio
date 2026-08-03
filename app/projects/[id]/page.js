@@ -137,7 +137,7 @@ export default async function ProjectCaseStudyPage({ params }) {
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-3xl mb-12">
             <p className="text-xs text-muted uppercase tracking-widest mb-4">Case Study</p>
-            <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-6">{project.title}</h1>
+            <h1 className="text-[32px] md:text-[56px] font-black text-white leading-tight mb-6">{project.title}</h1>
             <p className="text-lg text-slate-300 leading-relaxed">{project.description}</p>
             <div className="flex flex-wrap gap-2 mt-6">
               {serviceLabels.length > 0 ? (

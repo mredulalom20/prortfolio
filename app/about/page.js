@@ -71,7 +71,7 @@ export default async function AboutPage() {
                 <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" /><span className="relative inline-flex h-2 w-2 rounded-full bg-primary" /></span>
                 My Story & Mission
               </div>
-              <h1 className="text-5xl font-black tracking-tighter text-white md:text-7xl">Crafting Digital <span className="text-primary">Masterpieces</span> That Scale.</h1>
+              <h1 className="text-[44px] font-black tracking-tighter text-white md:text-[68px]">Crafting Digital <span className="text-primary">Masterpieces</span> That Scale.</h1>
               <p className="mt-6 text-lg leading-relaxed text-slate-400">
                 I am a multidisciplinary creator dedicated to blending strategic marketing with high-impact visual design. My mission is simple: help visionary brands navigate the digital landscape and achieve growth through creative excellence.
               </p>

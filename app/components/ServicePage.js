@@ -234,7 +234,7 @@ export default async function ServicePage({ config }) {
                 <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" /><span className="relative inline-flex h-2 w-2 rounded-full bg-primary" /></span>
                 {config.eyebrow}
               </div>
-              <h1 className="text-5xl font-black tracking-tighter text-white md:text-7xl">{config.title}</h1>
+              <h1 className="text-[44px] font-black tracking-tighter text-white md:text-[68px]">{config.title}</h1>
               <p className="mt-6 max-w-xl text-xl leading-relaxed text-slate-400">{config.description}</p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link href="/#contact" className="inline-flex items-center gap-2 rounded-xl bg-[#C6A75E] px-7 py-4 font-bold text-background-dark transition-transform hover:-translate-y-0.5">
