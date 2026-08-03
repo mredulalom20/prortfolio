@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const serviceLinks = [
-  { href: "/graphic-design", glyph: "✦", label: "Graphic Design" },
+  { href: "/graphic-design-services-bangladesh", glyph: "✦", label: "Graphic Design" },
   { href: "/ui-design", glyph: "▣", label: "UI/UX Design" },
-  { href: "/meta-ads", glyph: "◉", label: "Ads Expert" },
-  { href: "/wordpress-dev", glyph: "⌘", label: "Web Design" },
+  { href: "/ads-expert-bangladesh", glyph: "◉", label: "Ads Expert" },
+  { href: "/web-design-services-bangladesh", glyph: "⌘", label: "Web Design" },
   { href: "/seo", glyph: "⌁", label: "SEO Service" },
 ];
 

@@ -124,7 +124,13 @@ async function getServices() {
     if (error || !data?.length) return DEFAULT_SERVICES;
     return data.map((service) => ({
       ...service,
-      href: `/${service.slug}`,
+      href: service.slug === "wordpress-dev"
+        ? "/web-design-services-bangladesh"
+        : service.slug === "graphic-design"
+          ? "/graphic-design-services-bangladesh"
+          : service.slug === "meta-ads"
+            ? "/ads-expert-bangladesh"
+            : `/${service.slug}`,
       text: service.short_description,
       bullets: Array.isArray(service.bullet_points) ? service.bullet_points : [],
     }));

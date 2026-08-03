@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import MobileCarousel from "../components/MobileCarousel";
 import SmartImage from "../components/SmartImage";
 import { getCanonicalUrl } from "@/lib/pageMeta";
+import { cleanReachableImageSrc } from "@/lib/urlHealth";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export const metadata = {
@@ -34,7 +35,11 @@ async function getBlogs() {
     }
 
     if (error) return [];
-    return data ?? [];
+
+    return await Promise.all((data ?? []).map(async (blog) => ({
+      ...blog,
+      featuredImage: await cleanReachableImageSrc(blog.featuredImage),
+    })));
   } catch {
     return [];
   }

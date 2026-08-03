@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import SmartImage from "../../components/SmartImage";
 import { getCanonicalUrl } from "@/lib/pageMeta";
+import { cleanReachableImageSrc } from "@/lib/urlHealth";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
@@ -30,8 +31,12 @@ async function getBlog(slug) {
       error = result.error;
     }
 
-    if (error) return null;
-    return data;
+    if (error || !data) return null;
+
+    return {
+      ...data,
+      featuredImage: await cleanReachableImageSrc(data.featuredImage),
+    };
   } catch {
     return null;
   }

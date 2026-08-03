@@ -103,13 +103,13 @@ function mergeServiceConfig(config, cmsService) {
     service: cmsService.slug || config.service,
     slug: cmsService.slug || config.slug,
     sort_order: cmsService.sort_order ?? config.sort_order,
-    icon: cmsService.icon || config.icon,
-    description: cmsService.short_description || config.description,
-    short_description: cmsService.short_description || config.short_description,
-    bullet_points: bulletPoints.length ? bulletPoints : config.bullet_points,
-    title: cmsService.title || config.title,
+    icon: config.ignoreCmsContent ? config.icon : cmsService.icon || config.icon,
+    description: config.ignoreCmsContent ? config.description : cmsService.short_description || config.description,
+    short_description: config.ignoreCmsContent ? config.short_description : cmsService.short_description || config.short_description,
+    bullet_points: config.ignoreCmsContent ? config.bullet_points : bulletPoints.length ? bulletPoints : config.bullet_points,
+    title: config.ignoreCmsTitle ? config.title : cmsService.title || config.title,
     cmsTitle: cmsService.title || "",
-    portfolioTitle: cmsService.title ? `Featured ${cmsService.title} Projects` : config.portfolioTitle,
+    portfolioTitle: config.ignoreCmsTitle ? config.portfolioTitle : cmsService.title ? `Featured ${cmsService.title} Projects` : config.portfolioTitle,
   };
 }
 
@@ -236,6 +236,11 @@ export default async function ServicePage({ config }) {
               </div>
               <h1 className="text-[44px] font-black tracking-tighter text-white md:text-[68px]">{config.title}</h1>
               <p className="mt-6 max-w-xl text-xl leading-relaxed text-slate-400">{config.description}</p>
+              {config.parentService && (
+                <Link href={config.parentService.href} className="mt-4 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-primary underline-offset-4 hover:underline">
+                  {config.parentService.label} <span className="material-symbols-outlined text-base">arrow_back</span>
+                </Link>
+              )}
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link href="/#contact" className="inline-flex items-center gap-2 rounded-xl bg-[#C6A75E] px-7 py-4 font-bold text-background-dark transition-transform hover:-translate-y-0.5">
                   Start Your Project <span className="material-symbols-outlined">arrow_outward</span>
