@@ -3,11 +3,14 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
 function cleanReview(body = {}) {
+  const rating = Number(body.rating);
+
   return {
     name: String(body.name || "").trim(),
     role: String(body.role || "").trim(),
     message: String(body.message || "").trim(),
     avatar_url: String(body.avatar_url || "").trim(),
+    rating: Number.isFinite(rating) ? Math.min(5, Math.max(1, Math.round(rating * 10) / 10)) : 4.9,
     published: body.published ?? true,
     project_id: body.project_id || null,
     sort_order: Number.isFinite(Number(body.sort_order)) ? Number(body.sort_order) : 0,
