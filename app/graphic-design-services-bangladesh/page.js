@@ -9,5 +9,5 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic";
 
 export default function GraphicDesignServicesBangladeshPage() {
-  return <ServicePage config={servicePageConfigs["graphic-design-services-bangladesh"]} />;
+  return <ServicePage config={servicePageConfigs["graphic-design-services-bangladesh"]} pathname="/graphic-design-services-bangladesh" />;
 }

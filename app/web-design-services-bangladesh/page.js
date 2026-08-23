@@ -2,7 +2,9 @@ import Link from "next/link";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import SmartImage from "../components/SmartImage";
+import JsonLdScript from "../components/JsonLdScript";
 import { getPageMeta, toMetadata } from "@/lib/pageMeta";
+import { getServiceSchema, getFaqPageSchema } from "@/lib/schema";
 
 export async function generateMetadata() {
   return toMetadata(await getPageMeta("web-design-services-bangladesh"), "/web-design-services-bangladesh");
@@ -74,8 +76,18 @@ const faqs = [
 export const dynamic = "force-dynamic";
 
 export default function WebDesignServicesBangladeshPage() {
+  const serviceSchema = getServiceSchema({
+    title: "Web Design Services Bangladesh",
+    description: "Web design services in Bangladesh for WordPress and Shopify websites built for speed, structure, and easy editing.",
+    pathname: "/web-design-services-bangladesh",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80",
+  });
+  const faqSchema = getFaqPageSchema(faqs);
+
   return (
     <>
+      <JsonLdScript id="web-design-service-schema" data={serviceSchema} />
+      <JsonLdScript id="web-design-faq-schema" data={faqSchema} />
       <Navbar />
       <main className="min-h-screen overflow-hidden bg-background-dark pt-28 text-slate-100">
         <section className="relative py-16 md:py-24">

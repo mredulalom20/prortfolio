@@ -9,5 +9,5 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic";
 
 export default function SeoPage() {
-  return <ServicePage config={servicePageConfigs.seo} />;
+  return <ServicePage config={servicePageConfigs.seo} pathname="/seo" />;
 }

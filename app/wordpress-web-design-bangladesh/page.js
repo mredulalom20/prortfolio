@@ -9,5 +9,5 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic";
 
 export default function WordPressWebDesignBangladeshPage() {
-  return <ServicePage config={servicePageConfigs["wordpress-web-design-bangladesh"]} />;
+  return <ServicePage config={servicePageConfigs["wordpress-web-design-bangladesh"]} pathname="/wordpress-web-design-bangladesh" />;
 }

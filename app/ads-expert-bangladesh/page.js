@@ -9,5 +9,5 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic";
 
 export default function AdsExpertBangladeshPage() {
-  return <ServicePage config={servicePageConfigs["ads-expert-bangladesh"]} />;
+  return <ServicePage config={servicePageConfigs["ads-expert-bangladesh"]} pathname="/ads-expert-bangladesh" />;
 }

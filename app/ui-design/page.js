@@ -9,5 +9,5 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic";
 
 export default function UiDesignPage() {
-  return <ServicePage config={servicePageConfigs["ui-design"]} />;
+  return <ServicePage config={servicePageConfigs["ui-design"]} pathname="/ui-design" />;
 }

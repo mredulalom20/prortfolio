@@ -9,5 +9,5 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic";
 
 export default function ShopifyWebsiteDesignBangladeshPage() {
-  return <ServicePage config={servicePageConfigs["shopify-website-design-bangladesh"]} />;
+  return <ServicePage config={servicePageConfigs["shopify-website-design-bangladesh"]} pathname="/shopify-website-design-bangladesh" />;
 }

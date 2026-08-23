@@ -2,8 +2,11 @@ import Link from "next/link";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import SmartImage from "./SmartImage";
+import JsonLdScript from "./JsonLdScript";
 import { supabaseAdmin } from "@/lib/supabase";
 import { normalizeImage } from "@/lib/validators";
+import { getCanonicalUrl } from "@/lib/pageMeta";
+import { getServiceSchema, getFaqPageSchema } from "@/lib/schema";
 
 async function getProjects(service) {
   if (!service) return [];
@@ -211,7 +214,7 @@ function ProjectCard({ project, fallbackIcon }) {
   );
 }
 
-export default async function ServicePage({ config }) {
+export default async function ServicePage({ config, pathname }) {
   const cmsService = await getCmsService(config.service);
   const mergedConfig = mergeServiceConfig(config, cmsService);
   const [projects, settingImage, certificates] = await Promise.all([
@@ -221,9 +224,19 @@ export default async function ServicePage({ config }) {
   ]);
   const heroImage = settingImage || mergedConfig.heroImage;
   config = mergedConfig;
+  const schemaTitle = config.schemaTitle || (typeof config.title === "string" ? config.title : config.eyebrow);
+  const serviceSchema = getServiceSchema({
+    title: schemaTitle,
+    description: config.schemaDescription || config.description,
+    pathname,
+    image: heroImage,
+  });
+  const faqSchema = config.faq?.length ? getFaqPageSchema(config.faq) : null;
 
   return (
     <>
+      <JsonLdScript id="service-schema" data={serviceSchema} />
+      {faqSchema && <JsonLdScript id="faq-schema" data={faqSchema} />}
       <Navbar />
       <main className="min-h-screen bg-background-dark pt-28 text-slate-100">
         <section className="relative overflow-hidden py-20">
@@ -326,6 +339,21 @@ export default async function ServicePage({ config }) {
                   <p className="mt-3 leading-relaxed text-slate-400">{item.a}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-white/5 bg-slate-900/30 py-14">
+          <div className="mx-auto max-w-4xl px-6 text-center">
+            <p className="text-sm font-bold uppercase tracking-widest text-primary">Author & Contact</p>
+            <p className="mt-4 text-lg font-bold text-white">Written by Mobarak Hossain Rinku</p>
+            <p className="mt-2 text-slate-400">Freelance web designer and developer based in Dhaka, Bangladesh.</p>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm text-slate-300">
+              <a href="tel:+8801786029947" className="inline-flex items-center gap-2 hover:text-primary">+880 1786-029947</a>
+              <span className="hidden text-slate-600 md:inline">|</span>
+              <a href="mailto:contact@mhrinku.com" className="inline-flex items-center gap-2 hover:text-primary">contact@mhrinku.com</a>
+              <span className="hidden text-slate-600 md:inline">|</span>
+              <span className="inline-flex items-center gap-2">Dhaka, Bangladesh</span>
             </div>
           </div>
         </section>
