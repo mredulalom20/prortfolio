@@ -6131,8 +6131,8 @@
       "source_file": "E:\\mobarok-portfolio\\lib\\schema.js",
       "source_location": "L68",
       "weight": 1.0,
-      "_src": "schema_getserviceschema",
-      "_tgt": "pagemeta_getsiteurl",
+      "_src": "pagemeta_getsiteurl",
+      "_tgt": "schema_getserviceschema",
       "source": "pagemeta_getsiteurl",
       "target": "schema_getserviceschema"
     },
@@ -6143,8 +6143,8 @@
       "source_file": "E:\\mobarok-portfolio\\lib\\schema.js",
       "source_location": "L109",
       "weight": 1.0,
-      "_src": "schema_getarticleschema",
-      "_tgt": "pagemeta_getsiteurl",
+      "_src": "pagemeta_getsiteurl",
+      "_tgt": "schema_getarticleschema",
       "source": "pagemeta_getsiteurl",
       "target": "schema_getarticleschema"
     },
@@ -6179,8 +6179,8 @@
       "source_file": "E:\\mobarok-portfolio\\lib\\schema.js",
       "source_location": "L80",
       "weight": 1.0,
-      "_src": "schema_getserviceschema",
-      "_tgt": "pagemeta_getcanonicalurl",
+      "_src": "pagemeta_getcanonicalurl",
+      "_tgt": "schema_getserviceschema",
       "source": "pagemeta_getcanonicalurl",
       "target": "schema_getserviceschema"
     },
@@ -6191,8 +6191,8 @@
       "source_file": "E:\\mobarok-portfolio\\lib\\schema.js",
       "source_location": "L118",
       "weight": 1.0,
-      "_src": "schema_getarticleschema",
-      "_tgt": "pagemeta_getcanonicalurl",
+      "_src": "pagemeta_getcanonicalurl",
+      "_tgt": "schema_getarticleschema",
       "source": "pagemeta_getcanonicalurl",
       "target": "schema_getarticleschema"
     },

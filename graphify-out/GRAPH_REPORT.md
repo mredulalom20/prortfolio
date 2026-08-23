@@ -1,7 +1,7 @@
 # Graph Report - E:\mobarok-portfolio  (2026-08-23)
 
 ## Corpus Check
-- 99 files · ~257,577 words
+- 99 files · ~258,371 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary

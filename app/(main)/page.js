@@ -213,7 +213,7 @@ export default async function Home() {
                 Available for new projects
               </div>
               <h1 className="mb-6 text-[56px] font-black leading-[0.9] tracking-tighter md:text-[68px] lg:text-[92px]">
-                Mobarak Hossain <span className="text-primary">Rinku.</span>
+                Mobarak Hossain Rinku — <span className="text-primary">Web Designer Bangladesh, Dhaka.</span>
               </h1>
               <p className="mb-8 max-w-xl text-xl font-medium leading-relaxed text-slate-400 md:text-2xl">
                 Graphic Designer <span className="text-primary/50">|</span> Web Designer <span className="text-primary/50">|</span> Ads Manager.
