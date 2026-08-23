@@ -86,6 +86,7 @@ export default function CaseStudiesPage() {
             <div className="grid gap-8 lg:grid-cols-3">
               {caseStudies.map((study, index) => (
                 <article
+                  id={study.slug}
                   key={study.slug}
                   className="group flex flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-primary/50"
                 >
